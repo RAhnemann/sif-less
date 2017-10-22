@@ -9,6 +9,11 @@ SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  For those w
 * Fill in all the fields.  Skipping a field will prevent you from running the script.  Note: Defaults specified in the config are loaded for you.
 * Watch the scrolling text and relax
 
+### What should I know? ###
+* Run SIF-less in Admin Mode.  You'd do it with powershell, right?
+* SIF-less does not prefer 32bit.  It will run, but ensure you have all the IIS SnapIns in place, or you'll see COM issues.
+* SIF is required for SIF-less to run.  It's called SIF-less, not SIF-free.
+
 ### Who do I talk to? ###
 
 * Rob. I'm the owner.  Please feel free to report bugs, fork your own, etc.  Hit me up on Sitecore Community Slack @rob.ahnemann
