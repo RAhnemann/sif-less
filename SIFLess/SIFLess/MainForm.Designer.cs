@@ -33,18 +33,18 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.installButton = new System.Windows.Forms.Button();
             this.testButton = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.sqlPasswordLabel = new System.Windows.Forms.Label();
+            this.sqlLoginLabel = new System.Windows.Forms.Label();
+            this.sqlServerLabel = new System.Windows.Forms.Label();
+            this.solrServiceLabel = new System.Windows.Forms.Label();
+            this.solrFolderLabel = new System.Windows.Forms.Label();
+            this.solrUrlLabel = new System.Windows.Forms.Label();
+            this.xConnectSiteNameLabel = new System.Windows.Forms.Label();
+            this.siteNameLabel = new System.Windows.Forms.Label();
+            this.installPrefixLabel = new System.Windows.Forms.Label();
+            this.xConnectPackageLabel = new System.Windows.Forms.Label();
+            this.scPackageLabel = new System.Windows.Forms.Label();
+            this.configLabel = new System.Windows.Forms.Label();
             this.sqlPasswordTextBox = new System.Windows.Forms.TextBox();
             this.sqlLoginTextBox = new System.Windows.Forms.TextBox();
             this.sqlServerTextBox = new System.Windows.Forms.TextBox();
@@ -60,7 +60,7 @@
             this.xConnectPackageButton = new System.Windows.Forms.Button();
             this.configTextBox = new System.Windows.Forms.TextBox();
             this.sitecorePackageButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.licenseLabel = new System.Windows.Forms.Label();
             this.configFolderButton = new System.Windows.Forms.Button();
             this.licenseTextBox = new System.Windows.Forms.TextBox();
             this.licenseFolderButton = new System.Windows.Forms.Button();
@@ -71,6 +71,7 @@
             this.ezFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ezFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.ezGenOnlyCheckbox = new System.Windows.Forms.CheckBox();
+            this.hcGenerateCheckbox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -95,18 +96,18 @@
             this.tabPage1.Controls.Add(this.ezGenOnlyCheckbox);
             this.tabPage1.Controls.Add(this.installButton);
             this.tabPage1.Controls.Add(this.testButton);
-            this.tabPage1.Controls.Add(this.label10);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.label13);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label11);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label12);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.sqlPasswordLabel);
+            this.tabPage1.Controls.Add(this.sqlLoginLabel);
+            this.tabPage1.Controls.Add(this.sqlServerLabel);
+            this.tabPage1.Controls.Add(this.solrServiceLabel);
+            this.tabPage1.Controls.Add(this.solrFolderLabel);
+            this.tabPage1.Controls.Add(this.solrUrlLabel);
+            this.tabPage1.Controls.Add(this.xConnectSiteNameLabel);
+            this.tabPage1.Controls.Add(this.siteNameLabel);
+            this.tabPage1.Controls.Add(this.installPrefixLabel);
+            this.tabPage1.Controls.Add(this.xConnectPackageLabel);
+            this.tabPage1.Controls.Add(this.scPackageLabel);
+            this.tabPage1.Controls.Add(this.configLabel);
             this.tabPage1.Controls.Add(this.sqlPasswordTextBox);
             this.tabPage1.Controls.Add(this.sqlLoginTextBox);
             this.tabPage1.Controls.Add(this.sqlServerTextBox);
@@ -122,7 +123,7 @@
             this.tabPage1.Controls.Add(this.xConnectPackageButton);
             this.tabPage1.Controls.Add(this.configTextBox);
             this.tabPage1.Controls.Add(this.sitecorePackageButton);
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.licenseLabel);
             this.tabPage1.Controls.Add(this.configFolderButton);
             this.tabPage1.Controls.Add(this.licenseTextBox);
             this.tabPage1.Controls.Add(this.licenseFolderButton);
@@ -154,113 +155,113 @@
             this.testButton.UseVisualStyleBackColor = true;
             this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
-            // label10
+            // sqlPasswordLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 332);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(77, 13);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "SQL Password";
+            this.sqlPasswordLabel.AutoSize = true;
+            this.sqlPasswordLabel.Location = new System.Drawing.Point(6, 332);
+            this.sqlPasswordLabel.Name = "sqlPasswordLabel";
+            this.sqlPasswordLabel.Size = new System.Drawing.Size(77, 13);
+            this.sqlPasswordLabel.TabIndex = 2;
+            this.sqlPasswordLabel.Text = "SQL Password";
             // 
-            // label9
+            // sqlLoginLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 306);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 13);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "SQL Login";
+            this.sqlLoginLabel.AutoSize = true;
+            this.sqlLoginLabel.Location = new System.Drawing.Point(6, 306);
+            this.sqlLoginLabel.Name = "sqlLoginLabel";
+            this.sqlLoginLabel.Size = new System.Drawing.Size(57, 13);
+            this.sqlLoginLabel.TabIndex = 2;
+            this.sqlLoginLabel.Text = "SQL Login";
             // 
-            // label8
+            // sqlServerLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 280);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "SQL Server";
+            this.sqlServerLabel.AutoSize = true;
+            this.sqlServerLabel.Location = new System.Drawing.Point(6, 280);
+            this.sqlServerLabel.Name = "sqlServerLabel";
+            this.sqlServerLabel.Size = new System.Drawing.Size(62, 13);
+            this.sqlServerLabel.TabIndex = 2;
+            this.sqlServerLabel.Text = "SQL Server";
             // 
-            // label13
+            // solrServiceLabel
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 253);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(64, 13);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "Solr Service";
+            this.solrServiceLabel.AutoSize = true;
+            this.solrServiceLabel.Location = new System.Drawing.Point(6, 253);
+            this.solrServiceLabel.Name = "solrServiceLabel";
+            this.solrServiceLabel.Size = new System.Drawing.Size(64, 13);
+            this.solrServiceLabel.TabIndex = 2;
+            this.solrServiceLabel.Text = "Solr Service";
             // 
-            // label7
+            // solrFolderLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 227);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(57, 13);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Solr Folder";
+            this.solrFolderLabel.AutoSize = true;
+            this.solrFolderLabel.Location = new System.Drawing.Point(6, 227);
+            this.solrFolderLabel.Name = "solrFolderLabel";
+            this.solrFolderLabel.Size = new System.Drawing.Size(57, 13);
+            this.solrFolderLabel.TabIndex = 2;
+            this.solrFolderLabel.Text = "Solr Folder";
             // 
-            // label6
+            // solrUrlLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 201);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(50, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Solr URL";
+            this.solrUrlLabel.AutoSize = true;
+            this.solrUrlLabel.Location = new System.Drawing.Point(6, 201);
+            this.solrUrlLabel.Name = "solrUrlLabel";
+            this.solrUrlLabel.Size = new System.Drawing.Size(50, 13);
+            this.solrUrlLabel.TabIndex = 2;
+            this.solrUrlLabel.Text = "Solr URL";
             // 
-            // label11
+            // xConnectSiteNameLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 172);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(83, 13);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "xConnect Name";
+            this.xConnectSiteNameLabel.AutoSize = true;
+            this.xConnectSiteNameLabel.Location = new System.Drawing.Point(6, 172);
+            this.xConnectSiteNameLabel.Name = "xConnectSiteNameLabel";
+            this.xConnectSiteNameLabel.Size = new System.Drawing.Size(83, 13);
+            this.xConnectSiteNameLabel.TabIndex = 2;
+            this.xConnectSiteNameLabel.Text = "xConnect Name";
             // 
-            // label5
+            // siteNameLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 146);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Site Name";
+            this.siteNameLabel.AutoSize = true;
+            this.siteNameLabel.Location = new System.Drawing.Point(6, 146);
+            this.siteNameLabel.Name = "siteNameLabel";
+            this.siteNameLabel.Size = new System.Drawing.Size(56, 13);
+            this.siteNameLabel.TabIndex = 2;
+            this.siteNameLabel.Text = "Site Name";
             // 
-            // label4
+            // installPrefixLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 120);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Install Prefix";
+            this.installPrefixLabel.AutoSize = true;
+            this.installPrefixLabel.Location = new System.Drawing.Point(6, 120);
+            this.installPrefixLabel.Name = "installPrefixLabel";
+            this.installPrefixLabel.Size = new System.Drawing.Size(63, 13);
+            this.installPrefixLabel.TabIndex = 2;
+            this.installPrefixLabel.Text = "Install Prefix";
             // 
-            // label12
+            // xConnectPackageLabel
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 94);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(98, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "xConnect Package";
+            this.xConnectPackageLabel.AutoSize = true;
+            this.xConnectPackageLabel.Location = new System.Drawing.Point(6, 94);
+            this.xConnectPackageLabel.Name = "xConnectPackageLabel";
+            this.xConnectPackageLabel.Size = new System.Drawing.Size(98, 13);
+            this.xConnectPackageLabel.TabIndex = 2;
+            this.xConnectPackageLabel.Text = "xConnect Package";
             // 
-            // label3
+            // scPackageLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Sitecore Package";
+            this.scPackageLabel.AutoSize = true;
+            this.scPackageLabel.Location = new System.Drawing.Point(6, 68);
+            this.scPackageLabel.Name = "scPackageLabel";
+            this.scPackageLabel.Size = new System.Drawing.Size(92, 13);
+            this.scPackageLabel.TabIndex = 2;
+            this.scPackageLabel.Text = "Sitecore Package";
             // 
-            // label2
+            // configLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Config Folder";
+            this.configLabel.AutoSize = true;
+            this.configLabel.Location = new System.Drawing.Point(6, 42);
+            this.configLabel.Name = "configLabel";
+            this.configLabel.Size = new System.Drawing.Size(69, 13);
+            this.configLabel.TabIndex = 2;
+            this.configLabel.Text = "Config Folder";
             // 
             // sqlPasswordTextBox
             // 
@@ -387,14 +388,14 @@
             this.sitecorePackageButton.UseVisualStyleBackColor = true;
             this.sitecorePackageButton.Click += new System.EventHandler(this.sitecorePackage_Click);
             // 
-            // label1
+            // licenseLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "License XML";
+            this.licenseLabel.AutoSize = true;
+            this.licenseLabel.Location = new System.Drawing.Point(6, 11);
+            this.licenseLabel.Name = "licenseLabel";
+            this.licenseLabel.Size = new System.Drawing.Size(69, 13);
+            this.licenseLabel.TabIndex = 2;
+            this.licenseLabel.Text = "License XML";
             // 
             // configFolderButton
             // 
@@ -425,6 +426,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.hcGenerateCheckbox);
             this.tabPage2.Controls.Add(this.mainFlowPanel);
             this.tabPage2.Controls.Add(this.runButton);
             this.tabPage2.Controls.Add(this.selectFileButton);
@@ -451,7 +453,7 @@
             // 
             this.runButton.Location = new System.Drawing.Point(6, 455);
             this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(680, 37);
+            this.runButton.Size = new System.Drawing.Size(529, 37);
             this.runButton.TabIndex = 2;
             this.runButton.Text = "Run";
             this.runButton.UseVisualStyleBackColor = true;
@@ -463,7 +465,7 @@
             this.selectFileButton.Name = "selectFileButton";
             this.selectFileButton.Size = new System.Drawing.Size(680, 37);
             this.selectFileButton.TabIndex = 3;
-            this.selectFileButton.Text = "Select a File";
+            this.selectFileButton.Text = "Select a SIF JSON File";
             this.selectFileButton.UseVisualStyleBackColor = true;
             // 
             // ezFolderDialog
@@ -473,12 +475,26 @@
             // ezGenOnlyCheckbox
             // 
             this.ezGenOnlyCheckbox.AutoSize = true;
+            this.ezGenOnlyCheckbox.Checked = true;
+            this.ezGenOnlyCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(349, 439);
             this.ezGenOnlyCheckbox.Name = "ezGenOnlyCheckbox";
             this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(113, 17);
             this.ezGenOnlyCheckbox.TabIndex = 4;
             this.ezGenOnlyCheckbox.Text = "Generate File Only";
             this.ezGenOnlyCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // hcGenerateCheckbox
+            // 
+            this.hcGenerateCheckbox.AutoSize = true;
+            this.hcGenerateCheckbox.Checked = true;
+            this.hcGenerateCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hcGenerateCheckbox.Location = new System.Drawing.Point(542, 465);
+            this.hcGenerateCheckbox.Name = "hcGenerateCheckbox";
+            this.hcGenerateCheckbox.Size = new System.Drawing.Size(113, 17);
+            this.hcGenerateCheckbox.TabIndex = 5;
+            this.hcGenerateCheckbox.Text = "Generate File Only";
+            this.hcGenerateCheckbox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -490,10 +506,12 @@
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "SIF-Less";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -503,18 +521,18 @@
         private System.Windows.Forms.OpenFileDialog selectConfigDialog;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label solrUrlLabel;
+        private System.Windows.Forms.Label siteNameLabel;
+        private System.Windows.Forms.Label installPrefixLabel;
+        private System.Windows.Forms.Label scPackageLabel;
+        private System.Windows.Forms.Label configLabel;
         private System.Windows.Forms.TextBox solrURLTextBox;
         private System.Windows.Forms.TextBox siteNameTextBox;
         private System.Windows.Forms.TextBox prefixTextBox;
         private System.Windows.Forms.TextBox sitecorePackageTextBox;
         private System.Windows.Forms.TextBox configTextBox;
         private System.Windows.Forms.Button sitecorePackageButton;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label licenseLabel;
         private System.Windows.Forms.Button configFolderButton;
         private System.Windows.Forms.TextBox licenseTextBox;
         private System.Windows.Forms.Button licenseFolderButton;
@@ -524,25 +542,26 @@
         private System.Windows.Forms.Button selectFileButton;
         private System.Windows.Forms.Button installButton;
         private System.Windows.Forms.Button testButton;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label sqlPasswordLabel;
+        private System.Windows.Forms.Label sqlLoginLabel;
+        private System.Windows.Forms.Label sqlServerLabel;
+        private System.Windows.Forms.Label solrFolderLabel;
+        private System.Windows.Forms.Label xConnectSiteNameLabel;
         private System.Windows.Forms.TextBox sqlPasswordTextBox;
         private System.Windows.Forms.TextBox sqlLoginTextBox;
         private System.Windows.Forms.TextBox sqlServerTextBox;
         private System.Windows.Forms.TextBox solrFolderTextBox;
         private System.Windows.Forms.TextBox xConnectName;
         private System.Windows.Forms.Button solrFolderButton;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label xConnectPackageLabel;
         private System.Windows.Forms.TextBox xConnectPackageTextBox;
         private System.Windows.Forms.Button xConnectPackageButton;
         private System.Windows.Forms.OpenFileDialog ezFileDialog;
         private System.Windows.Forms.FolderBrowserDialog ezFolderDialog;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label solrServiceLabel;
         private System.Windows.Forms.TextBox solrServiceTextBox;
         private System.Windows.Forms.CheckBox ezGenOnlyCheckbox;
+        private System.Windows.Forms.CheckBox hcGenerateCheckbox;
     }
 }
 

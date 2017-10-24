@@ -224,9 +224,29 @@ namespace SIFLess
 
             File.WriteAllText(fullFileName, templateText);
 
-            var exeForm = new ExecuteForm();
-            exeForm.Show();
-            exeForm.Run(fullFileName);
+            if (!hcGenerateCheckbox.Checked)
+            {
+                var exeForm = new ExecuteForm();
+                exeForm.Show();
+                exeForm.Run(fullFileName);
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            new ToolTip().SetToolTip(licenseLabel, "Location of your license.xml file");
+            new ToolTip().SetToolTip(configLabel, "The Folder containing all your json config files (e.g. xconnect-solr.json)");
+            new ToolTip().SetToolTip(scPackageLabel, "The location of your Sitecore Package (Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip)");
+            new ToolTip().SetToolTip(xConnectPackageLabel, "The location of your xConnect Package (Sitecore 9.0.0 rev. 171002 (OnPrem)_xp0xconnect.scwdp.zip)");
+            new ToolTip().SetToolTip(installPrefixLabel, "The prefix for this installation. Should be unique to this system.");
+            new ToolTip().SetToolTip(siteNameLabel, "The Site's Name.  This will be http://<SiteName>/sitecore");
+            new ToolTip().SetToolTip(xConnectSiteNameLabel, "The xConnect Site Name. This will be used to access xConnect");
+            new ToolTip().SetToolTip(solrUrlLabel, "The URL to access Solr");
+            new ToolTip().SetToolTip(solrFolderLabel, "The folder where Solr is installed");
+            new ToolTip().SetToolTip(solrServiceLabel, "The name of the Windows Service running Solr");
+            new ToolTip().SetToolTip(sqlServerLabel, "Your SQL instance name");
+            new ToolTip().SetToolTip(sqlLoginLabel, "SQL Admin login");
+            new ToolTip().SetToolTip(sqlPasswordLabel, "SQL Admin password");
         }
     }
 }
