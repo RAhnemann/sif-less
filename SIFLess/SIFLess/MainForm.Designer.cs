@@ -467,6 +467,7 @@
             this.selectFileButton.TabIndex = 3;
             this.selectFileButton.Text = "Select a SIF JSON File";
             this.selectFileButton.UseVisualStyleBackColor = true;
+            this.selectFileButton.Click += new System.EventHandler(this.selectFileButton_Click_1);
             // 
             // ezFolderDialog
             // 

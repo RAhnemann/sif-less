@@ -26,46 +26,7 @@ namespace SIFLess
             InitializeComponent();
         }
 
-
-        private void selectFileButton_Click(object sender, EventArgs e)
-        {
-            var result = selectConfigDialog.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
-                _configFile = selectConfigDialog.FileName;
-                if (!File.Exists(_configFile))
-                {
-                    MessageBox.Show("Config file magically disappeared");
-                }
-
-                var cleanLines = File.ReadAllLines(_configFile).Where(line => !line.Trim().StartsWith("//")).ToArray();
-
-                _parameterList = JsonConvert.DeserializeObject<ParameterList>(string.Join("", cleanLines));
-
-                mainFlowPanel.Controls.Clear();
-                _controls = new List<IParameterControl>();
-
-                foreach (var parameter in _parameterList.Parameters)
-                {
-
-                    if (_fileParameters.Contains(parameter.Name))
-                    {
-                        var fileControl = new Controls.FileControl(parameter.Name, parameter.DefaultValue, parameter.Description);
-
-                        mainFlowPanel.Controls.Add(fileControl);
-                        _controls.Add(fileControl);
-                    }
-                    else
-                    {
-                        var stringControl = new Controls.StringControl(parameter.Name, parameter.DefaultValue, parameter.Description);
-
-                        mainFlowPanel.Controls.Add(stringControl);
-                        _controls.Add(stringControl);
-                    }
-                }
-            }
-        }
+        
 
         private void prefixTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -247,6 +208,46 @@ namespace SIFLess
             new ToolTip().SetToolTip(sqlServerLabel, "Your SQL instance name");
             new ToolTip().SetToolTip(sqlLoginLabel, "SQL Admin login");
             new ToolTip().SetToolTip(sqlPasswordLabel, "SQL Admin password");
+        }
+
+        private void selectFileButton_Click_1(object sender, EventArgs e)
+        {
+            var result = selectConfigDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                _configFile = selectConfigDialog.FileName;
+                if (!File.Exists(_configFile))
+                {
+                    MessageBox.Show("Config file magically disappeared");
+                }
+
+                var cleanLines = File.ReadAllLines(_configFile).Where(line => !line.Trim().StartsWith("//")).ToArray();
+
+                _parameterList = JsonConvert.DeserializeObject<ParameterList>(string.Join("", cleanLines));
+
+                mainFlowPanel.Controls.Clear();
+                _controls = new List<IParameterControl>();
+
+                foreach (var parameter in _parameterList.Parameters)
+                {
+
+                    if (_fileParameters.Contains(parameter.Name))
+                    {
+                        var fileControl = new Controls.FileControl(parameter.Name, parameter.DefaultValue, parameter.Description);
+
+                        mainFlowPanel.Controls.Add(fileControl);
+                        _controls.Add(fileControl);
+                    }
+                    else
+                    {
+                        var stringControl = new Controls.StringControl(parameter.Name, parameter.DefaultValue, parameter.Description);
+
+                        mainFlowPanel.Controls.Add(stringControl);
+                        _controls.Add(stringControl);
+                    }
+                }
+            }
         }
     }
 }
