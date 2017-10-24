@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
@@ -15,6 +16,10 @@ namespace SIFLess
         private List<IParameterControl> _controls;
 
         private string _configFile;
+
+        private bool isEZSiteNameDirty;
+        private bool isEZConnectNameDirty;
+        private bool isEZDirty;
 
         public MainForm()
         {
@@ -62,7 +67,132 @@ namespace SIFLess
             }
         }
 
-        private void runButton_Click(object sender, EventArgs e)
+        private void prefixTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!isEZSiteNameDirty)
+            {
+                siteNameTextBox.Text = $"{prefixTextBox.Text}.sc";
+            }
+
+            if (!isEZConnectNameDirty)
+            {
+                xConnectName.Text = $"{prefixTextBox.Text}.xconnect";
+            }
+        }
+
+        private void siteNameTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            isEZSiteNameDirty = true;
+        }
+
+        private void xConnectName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            isEZConnectNameDirty = true;
+        }
+
+        private void testButton_Click(object sender, EventArgs e)
+        {
+            var parameters = new TestWindow.TestParams
+            {
+                LicensePath = licenseTextBox.Text,
+                SitecoreConfigPath = configTextBox.Text,
+                SitecorePackagePath = sitecorePackageTextBox.Text,
+                xConnectPackagePath = xConnectPackageTextBox.Text,
+                SolrFolder = solrFolderTextBox.Text,
+                SolrURL = solrURLTextBox.Text,
+                SQLLogin = sqlLoginTextBox.Text,
+                SolrServiceName = solrServiceTextBox.Text,
+                SQLPassword = sqlPasswordTextBox.Text,
+                SQLServer = sqlServerTextBox.Text
+            };
+
+            var window = new TestWindow(parameters);
+            window.Show();
+
+            window.Run();
+        }
+
+        private void licenseFolderButton_Click(object sender, EventArgs e)
+        {
+            var dialogResult = ezFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                licenseTextBox.Text = ezFileDialog.FileName;
+            }
+        }
+
+        private void configFolderButton_Click(object sender, EventArgs e)
+        {
+            var dialogResult = ezFolderDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                configTextBox.Text = ezFolderDialog.SelectedPath;
+            }
+        }
+
+        private void sitecorePackage_Click(object sender, EventArgs e)
+        {
+            var dialogResult = ezFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                sitecorePackageTextBox.Text = ezFileDialog.FileName;
+            }
+        }
+
+        private void xConnectPackageButton_Click(object sender, EventArgs e)
+        {
+            var dialogResult = ezFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                xConnectPackageTextBox.Text = ezFileDialog.FileName;
+            }
+        }
+
+        private void solrFolderButton_Click(object sender, EventArgs e)
+        {
+            var dialogResult = ezFolderDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                solrFolderTextBox.Text = ezFolderDialog.SelectedPath;
+            }
+        }
+
+        private void installButton_Click(object sender, EventArgs e)
+        {
+            var ezText = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "EZ.ps1"));
+
+            ezText = ezText.Replace("[SC_PREFIX]", prefixTextBox.Text);
+            ezText = ezText.Replace("[SCRIPT_ROOT]", configTextBox.Text);
+            ezText = ezText.Replace("[XCONNECT_NAME]", xConnectName.Text);
+            ezText = ezText.Replace("[SITE_NAME]", siteNameTextBox.Text);
+            ezText = ezText.Replace("[SOLR_URL]", solrURLTextBox.Text);
+            ezText = ezText.Replace("[SOLR_FOLDER]", solrFolderTextBox.Text);
+            ezText = ezText.Replace("[SOLR_SERVICE]", solrServiceTextBox.Text);
+            ezText = ezText.Replace("[SQL_SERVER]", sqlServerTextBox.Text);
+            ezText = ezText.Replace("[SQL_USER]", sqlLoginTextBox.Text);
+            ezText = ezText.Replace("[SQL_PASSWORD]", sqlPasswordTextBox.Text);
+            ezText = ezText.Replace("[XCONNECT_PACKAGE]", xConnectPackageTextBox.Text);
+            ezText = ezText.Replace("[SITECORE_PACKAGE]", sitecorePackageTextBox.Text);
+            ezText = ezText.Replace("[LICENSE_XML]", licenseTextBox.Text);
+
+            var fileName = $"SIFless-EZ-{DateTimeOffset.Now.ToUnixTimeSeconds()}.ps1";
+            var fullFileName = Path.Combine(Environment.CurrentDirectory, fileName);
+            File.WriteAllText(fullFileName, ezText);
+
+            if (!ezGenOnlyCheckbox.Checked)
+            {
+                var exeForm = new ExecuteForm();
+                exeForm.Show();
+                exeForm.Run(fullFileName);
+            }
+        }
+
+        private void runButton_Click_1(object sender, EventArgs e)
         {
             foreach (var parameter in _parameterList.Parameters)
             {
@@ -78,9 +208,25 @@ namespace SIFLess
                 parameter.Value = control.Value;
             }
 
-            var exeForm = new ExecuteForm(_parameterList, _configFile);
-            exeForm.Show(); //Show it first and THEN run it.
-            exeForm.Run();
+
+            var paramsListBuilder = new StringBuilder();
+            foreach (var param in _parameterList.Parameters)
+                paramsListBuilder.AppendFormat(" -{0} {1}", param.Name, param.Value);
+
+            var templateText = File.ReadAllText(_configFile);
+
+            templateText = templateText.Replace("[CONFIG]", _configFile);
+            templateText = templateText.Replace("[PARAMS]", paramsListBuilder.ToString());
+
+            var configFileName = Path.GetFileNameWithoutExtension(_configFile);
+            var tempFileName = $"SIFless-{configFileName}-{DateTimeOffset.Now.ToUnixTimeSeconds()}.ps1";
+            var fullFileName = Path.Combine(Environment.CurrentDirectory, tempFileName);
+
+            File.WriteAllText(fullFileName, templateText);
+
+            var exeForm = new ExecuteForm();
+            exeForm.Show();
+            exeForm.Run(fullFileName);
         }
     }
 }
