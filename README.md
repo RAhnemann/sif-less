@@ -2,6 +2,12 @@
 
 SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  For those who don't want to mess with parameters and commandline, this is for you.
 
+### Version 0.2.2 ###
+A new "EZ Mode" has been added. It's the default tab when you load. It looks/feels a lot like the SIM tool.  You populate the appropriate fields
+SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  For those who don't want to mess with parameters and commandline, this is for you.
+
+If you want to generate a file only, and run it again, just ensure the "Generate File Only " checkbox is checked.  Regardless of this box, a file will be dropped in the location you run SIF-less.
+
 ### How do you use it? ###
 
 * Run SIF-less.exe
