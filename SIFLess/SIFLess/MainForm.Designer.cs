@@ -31,6 +31,7 @@
             this.selectConfigDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ezGenOnlyCheckbox = new System.Windows.Forms.CheckBox();
             this.installButton = new System.Windows.Forms.Button();
             this.testButton = new System.Windows.Forms.Button();
             this.sqlPasswordLabel = new System.Windows.Forms.Label();
@@ -65,13 +66,12 @@
             this.licenseTextBox = new System.Windows.Forms.TextBox();
             this.licenseFolderButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.hcGenerateCheckbox = new System.Windows.Forms.CheckBox();
             this.mainFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.runButton = new System.Windows.Forms.Button();
             this.selectFileButton = new System.Windows.Forms.Button();
             this.ezFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ezFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.ezGenOnlyCheckbox = new System.Windows.Forms.CheckBox();
-            this.hcGenerateCheckbox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -134,6 +134,18 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "EZ Mode";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ezGenOnlyCheckbox
+            // 
+            this.ezGenOnlyCheckbox.AutoSize = true;
+            this.ezGenOnlyCheckbox.Checked = true;
+            this.ezGenOnlyCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(349, 439);
+            this.ezGenOnlyCheckbox.Name = "ezGenOnlyCheckbox";
+            this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(113, 17);
+            this.ezGenOnlyCheckbox.TabIndex = 4;
+            this.ezGenOnlyCheckbox.Text = "Generate File Only";
+            this.ezGenOnlyCheckbox.UseVisualStyleBackColor = true;
             // 
             // installButton
             // 
@@ -438,6 +450,18 @@
             this.tabPage2.Text = "Hardcore Mode";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // hcGenerateCheckbox
+            // 
+            this.hcGenerateCheckbox.AutoSize = true;
+            this.hcGenerateCheckbox.Checked = true;
+            this.hcGenerateCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hcGenerateCheckbox.Location = new System.Drawing.Point(542, 465);
+            this.hcGenerateCheckbox.Name = "hcGenerateCheckbox";
+            this.hcGenerateCheckbox.Size = new System.Drawing.Size(113, 17);
+            this.hcGenerateCheckbox.TabIndex = 5;
+            this.hcGenerateCheckbox.Text = "Generate File Only";
+            this.hcGenerateCheckbox.UseVisualStyleBackColor = true;
+            // 
             // mainFlowPanel
             // 
             this.mainFlowPanel.AutoScroll = true;
@@ -472,30 +496,6 @@
             // ezFolderDialog
             // 
             this.ezFolderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            // 
-            // ezGenOnlyCheckbox
-            // 
-            this.ezGenOnlyCheckbox.AutoSize = true;
-            this.ezGenOnlyCheckbox.Checked = true;
-            this.ezGenOnlyCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(349, 439);
-            this.ezGenOnlyCheckbox.Name = "ezGenOnlyCheckbox";
-            this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(113, 17);
-            this.ezGenOnlyCheckbox.TabIndex = 4;
-            this.ezGenOnlyCheckbox.Text = "Generate File Only";
-            this.ezGenOnlyCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // hcGenerateCheckbox
-            // 
-            this.hcGenerateCheckbox.AutoSize = true;
-            this.hcGenerateCheckbox.Checked = true;
-            this.hcGenerateCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hcGenerateCheckbox.Location = new System.Drawing.Point(542, 465);
-            this.hcGenerateCheckbox.Name = "hcGenerateCheckbox";
-            this.hcGenerateCheckbox.Size = new System.Drawing.Size(113, 17);
-            this.hcGenerateCheckbox.TabIndex = 5;
-            this.hcGenerateCheckbox.Text = "Generate File Only";
-            this.hcGenerateCheckbox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

@@ -1,0 +1,137 @@
+﻿// -------------------------------------------------------------------------- //
+//         Sitecore Install Framework - XConnect XP0 Configuration            //
+//                                                                            //
+//  Run this configuration to install a single instance of XConnect.          //
+//                                                                            //
+//  NOTE: Only single line comments are accepted in configurations.           //
+// -------------------------------------------------------------------------- //
+{
+    "Parameters": {
+        // Parameters are values that may be passed when Install-SitecoreConfiguration is called.
+        // Parameters must declare a Type and may declare a DefaultValue and Description.
+        // Parameters with no DefaultValue are required when Install-SitecoreConfiguration is called.
+        "SiteName": {
+            "Type": "string",
+            "DefaultValue": "xp0.xconnect",
+            "Description": "The name of the site to be deployed."
+        },
+        "SqlDbPrefix": {
+            "Type": "string",
+			"DefaultValue":"xp0",
+            "Description": "The prefix used for all Sql databases."
+        },
+        "SqlAdminUser": {
+            "Type": "string",
+            "DefaultValue": "sa",
+            "Description": "The Sql admin user account to use when installing databases."
+        },
+        "SqlAdminPassword": {
+            "Type": "string",
+            "DefaultValue": "12345",
+            "Description": "The Sql admin password to use when installing databases."
+        },
+        "SqlServer": {
+            "Type": "string",
+            "DefaultValue": ".\\SQL2016",
+            "Description": "The Sql Server where databases will be installed."
+        }
+    },
+    "Variables": {
+        // Variables are values calculated in a configuration.
+        // They can reference Parameters, other Variables, and config functions.
+        // The prefix for shards created by the tool
+        "Sharding.Database.Prefix": "[concat(parameter('SqlDbPrefix'), '_Xdb.Collection.Shard')]",
+
+        // The database names.
+        "Sql.Database.ShardMapManager":     "[concat(variable('Sharding.Database.Prefix'), 'MapManager')]",
+        "Sql.Database.Shard0":              "[concat(variable('Sharding.Database.Prefix'), '0')]",
+        "Sql.Database.Shard1":              "[concat(variable('Sharding.Database.Prefix'), '1')]",
+
+        // The sites full path on disk
+        "Site.PhysicalPath": "[joinpath(environment('SystemDrive'), 'inetpub', 'wwwroot', parameter('SiteName'))]",
+
+        // The path to the index worker windows service
+        "Services.IndexWorker.Name":        "[concat(parameter('SiteName'), '-IndexWorker')]",
+
+        // The path to the automation engine windows service
+        "Services.MarketingAutomationEngine.Name":          "[concat(parameter('SiteName'), '-MarketingAutomationService')]"
+     },
+    "Tasks": {
+        // Tasks are separate units of work in a configuration.
+        // Each task is an action that will be completed when Install-SitecoreConfiguration is called.
+        // By default, tasks are applied in the order they are declared.
+        // Tasks may reference Parameters, Variables, and config functions.
+        "StopWebsite": {
+            // Stops the website if it is running.
+            "Type": "ManageWebsite",
+            "Params": {
+                "Name": "[parameter('SiteName')]",
+                "Action": "Stop"
+            }
+        },
+        "StopAppPool": {
+            // Stops the app pool if it is running.
+            "Type": "ManageAppPool",
+            "Params": {
+                "Name": "[parameter('SiteName')]",
+                "Action": "Stop"
+            }
+        },
+		"StopServices": {
+            // Stops the services if they running.
+            "Type": "ManageService",
+            "Params": [
+                {
+                    "Name": "[variable('Services.IndexWorker.Name')]",
+                    "Status": "Stopped",
+                    "PostDelay": 3000
+                },
+                {
+                    "Name": "[variable('Services.MarketingAutomationEngine.Name')]",
+                    "Status": "Stopped",
+                    "PostDelay": 3000
+                }
+            ]
+        },
+		"RemoveServices": {
+            // Removes the current service.
+            "Type": "RemoveService",
+            "Params": [
+                { "Name": "[variable('Services.IndexWorker.Name')]" },
+                { "Name": "[variable('Services.MarketingAutomationEngine.Name')]" }
+            ]
+        },
+		"RemoveWebsite":{
+			"Type": "RemoveWebsite",
+			"Params": {
+				"Name": "[parameter('SiteName')]"
+			}
+		},
+		"RemoveAppPool":{
+			"Type": "RemoveAppPool",
+			"Params": {
+				"Name": "[parameter('SiteName')]"
+			}
+		},
+		"RemoveWebsiteFolder":{
+			"Type": "RemoveFolder",
+			"Params": {
+				"Name": "[variable('Site.PhysicalPath')]"
+			}
+		},
+		"RemoveDatabases": {
+			"Type": "RemoveDatabase",
+			"Params": [
+				{ "DatabaseName": "[variable('Sql.Database.ShardMapManager')]", "ServerName": "[parameter('SqlServer')]", "Login": "[parameter('SqlAdminUser')]", "Password": "[parameter('SqlAdminPassword')]" },
+				{ "DatabaseName": "[variable('Sql.Database.Shard0')]", "ServerName": "[parameter('SqlServer')]", "Login": "[parameter('SqlAdminUser')]", "Password": "[parameter('SqlAdminPassword')]" },
+				{ "DatabaseName": "[variable('Sql.Database.Shard1')]", "ServerName": "[parameter('SqlServer')]", "Login": "[parameter('SqlAdminUser')]", "Password": "[parameter('SqlAdminPassword')]" }
+			]
+		}
+    },
+	"Modules":[
+		".\\Invoke-RemoveFolderTask.psm1",
+		".\\Invoke-RemoveAppPoolTask.psm1",
+		".\\Invoke-RemoveWebsiteTask.psm1",
+		".\\Invoke-RemoveDatabaseTask.psm1"
+	]
+}

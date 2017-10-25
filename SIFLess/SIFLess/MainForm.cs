@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -145,6 +146,27 @@ namespace SIFLess
             var fullFileName = Path.Combine(Environment.CurrentDirectory, fileName);
             File.WriteAllText(fullFileName, ezText);
 
+
+            var ezUninstallText = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "EZ-Uninstall.ps1"));
+
+            ezUninstallText = ezUninstallText.Replace("[SC_PREFIX]", prefixTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SCRIPT_ROOT]", configTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[XCONNECT_NAME]", xConnectName.Text);
+            ezUninstallText = ezUninstallText.Replace("[SITE_NAME]", siteNameTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SOLR_URL]", solrURLTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SOLR_FOLDER]", solrFolderTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SOLR_SERVICE]", solrServiceTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SQL_SERVER]", sqlServerTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SQL_USER]", sqlLoginTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SQL_PASSWORD]", sqlPasswordTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[XCONNECT_PACKAGE]", xConnectPackageTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SITECORE_PACKAGE]", sitecorePackageTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[LICENSE_XML]", licenseTextBox.Text);
+
+            var uninstallFileName = $"SIFless-EZUninstall-{DateTimeOffset.Now.ToUnixTimeSeconds()}.ps1";
+            var fullUninstallFileName = Path.Combine(Environment.CurrentDirectory, uninstallFileName);
+            File.WriteAllText(fullUninstallFileName, ezUninstallText);
+
             if (!ezGenOnlyCheckbox.Checked)
             {
                 var exeForm = new ExecuteForm();
@@ -195,6 +217,14 @@ namespace SIFLess
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            if (!new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
+            {
+                MessageBox.Show("This Application must be run as an Administrator.", "Admin Required",
+                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+                Application.Exit();
+            }
+
             new ToolTip().SetToolTip(licenseLabel, "Location of your license.xml file");
             new ToolTip().SetToolTip(configLabel, "The Folder containing all your json config files (e.g. xconnect-solr.json)");
             new ToolTip().SetToolTip(scPackageLabel, "The location of your Sitecore Package (Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip)");

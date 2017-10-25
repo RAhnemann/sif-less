@@ -29,6 +29,8 @@ namespace SIFLess
 
         public void Run(string fileName)
         {
+            DateTime start = DateTime.Now;
+
             //We're gonna need to grant some permissions...just for this process
             using (var psInst = PowerShell.Create())
             {
@@ -59,13 +61,14 @@ namespace SIFLess
                 Application.DoEvents();
             }
 
+            TimeSpan elapsed = DateTime.Now.Subtract(start);
             if (p.ExitCode != 0)
             {
                 MessageBox.Show("Something went wrong. Check the log files", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Done executing: " + fileName);
+                MessageBox.Show($"Done executing in {elapsed.ToReadableString()} " + fileName);
             }
         }
 
