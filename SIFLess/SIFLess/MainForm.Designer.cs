@@ -143,7 +143,7 @@
             this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(349, 439);
             this.ezGenOnlyCheckbox.Name = "ezGenOnlyCheckbox";
             this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(113, 17);
-            this.ezGenOnlyCheckbox.TabIndex = 4;
+            this.ezGenOnlyCheckbox.TabIndex = 140;
             this.ezGenOnlyCheckbox.Text = "Generate File Only";
             this.ezGenOnlyCheckbox.UseVisualStyleBackColor = true;
             // 
@@ -152,7 +152,7 @@
             this.installButton.Location = new System.Drawing.Point(25, 420);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(318, 52);
-            this.installButton.TabIndex = 3;
+            this.installButton.TabIndex = 150;
             this.installButton.Text = "Install";
             this.installButton.UseVisualStyleBackColor = true;
             this.installButton.Click += new System.EventHandler(this.installButton_Click);
@@ -162,7 +162,7 @@
             this.testButton.Location = new System.Drawing.Point(25, 362);
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(318, 52);
-            this.testButton.TabIndex = 3;
+            this.testButton.TabIndex = 130;
             this.testButton.Text = "Test";
             this.testButton.UseVisualStyleBackColor = true;
             this.testButton.Click += new System.EventHandler(this.testButton_Click);
@@ -280,14 +280,14 @@
             this.sqlPasswordTextBox.Location = new System.Drawing.Point(107, 327);
             this.sqlPasswordTextBox.Name = "sqlPasswordTextBox";
             this.sqlPasswordTextBox.Size = new System.Drawing.Size(236, 20);
-            this.sqlPasswordTextBox.TabIndex = 1;
+            this.sqlPasswordTextBox.TabIndex = 120;
             // 
             // sqlLoginTextBox
             // 
             this.sqlLoginTextBox.Location = new System.Drawing.Point(107, 301);
             this.sqlLoginTextBox.Name = "sqlLoginTextBox";
             this.sqlLoginTextBox.Size = new System.Drawing.Size(236, 20);
-            this.sqlLoginTextBox.TabIndex = 1;
+            this.sqlLoginTextBox.TabIndex = 110;
             this.sqlLoginTextBox.Text = "sa";
             // 
             // sqlServerTextBox
@@ -295,7 +295,7 @@
             this.sqlServerTextBox.Location = new System.Drawing.Point(107, 275);
             this.sqlServerTextBox.Name = "sqlServerTextBox";
             this.sqlServerTextBox.Size = new System.Drawing.Size(236, 20);
-            this.sqlServerTextBox.TabIndex = 1;
+            this.sqlServerTextBox.TabIndex = 100;
             this.sqlServerTextBox.Text = ".\\SQL2016";
             // 
             // solrServiceTextBox
@@ -303,7 +303,7 @@
             this.solrServiceTextBox.Location = new System.Drawing.Point(107, 248);
             this.solrServiceTextBox.Name = "solrServiceTextBox";
             this.solrServiceTextBox.Size = new System.Drawing.Size(236, 20);
-            this.solrServiceTextBox.TabIndex = 1;
+            this.solrServiceTextBox.TabIndex = 90;
             this.solrServiceTextBox.Text = "Solr-6.6.1";
             // 
             // solrFolderTextBox
@@ -311,7 +311,7 @@
             this.solrFolderTextBox.Location = new System.Drawing.Point(107, 222);
             this.solrFolderTextBox.Name = "solrFolderTextBox";
             this.solrFolderTextBox.Size = new System.Drawing.Size(236, 20);
-            this.solrFolderTextBox.TabIndex = 1;
+            this.solrFolderTextBox.TabIndex = 80;
             this.solrFolderTextBox.Text = "c:\\Solr-6.6.1\\";
             // 
             // solrURLTextBox
@@ -319,7 +319,7 @@
             this.solrURLTextBox.Location = new System.Drawing.Point(107, 196);
             this.solrURLTextBox.Name = "solrURLTextBox";
             this.solrURLTextBox.Size = new System.Drawing.Size(236, 20);
-            this.solrURLTextBox.TabIndex = 1;
+            this.solrURLTextBox.TabIndex = 70;
             this.solrURLTextBox.Text = "https://localhost:8989/solr";
             // 
             // xConnectName
@@ -327,7 +327,7 @@
             this.xConnectName.Location = new System.Drawing.Point(107, 167);
             this.xConnectName.Name = "xConnectName";
             this.xConnectName.Size = new System.Drawing.Size(236, 20);
-            this.xConnectName.TabIndex = 1;
+            this.xConnectName.TabIndex = 60;
             this.xConnectName.Text = "xp0.xconnect";
             this.xConnectName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.xConnectName_KeyPress);
             // 
@@ -336,7 +336,7 @@
             this.siteNameTextBox.Location = new System.Drawing.Point(107, 141);
             this.siteNameTextBox.Name = "siteNameTextBox";
             this.siteNameTextBox.Size = new System.Drawing.Size(236, 20);
-            this.siteNameTextBox.TabIndex = 1;
+            this.siteNameTextBox.TabIndex = 50;
             this.siteNameTextBox.Text = "xp0.sc";
             this.siteNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.siteNameTextBox_KeyPress);
             // 
@@ -345,7 +345,7 @@
             this.prefixTextBox.Location = new System.Drawing.Point(107, 115);
             this.prefixTextBox.Name = "prefixTextBox";
             this.prefixTextBox.Size = new System.Drawing.Size(236, 20);
-            this.prefixTextBox.TabIndex = 1;
+            this.prefixTextBox.TabIndex = 40;
             this.prefixTextBox.Text = "xp0";
             this.prefixTextBox.TextChanged += new System.EventHandler(this.prefixTextBox_TextChanged);
             // 
@@ -354,14 +354,14 @@
             this.xConnectPackageTextBox.Location = new System.Drawing.Point(107, 89);
             this.xConnectPackageTextBox.Name = "xConnectPackageTextBox";
             this.xConnectPackageTextBox.Size = new System.Drawing.Size(236, 20);
-            this.xConnectPackageTextBox.TabIndex = 1;
+            this.xConnectPackageTextBox.TabIndex = 30;
             // 
             // sitecorePackageTextBox
             // 
             this.sitecorePackageTextBox.Location = new System.Drawing.Point(107, 63);
             this.sitecorePackageTextBox.Name = "sitecorePackageTextBox";
             this.sitecorePackageTextBox.Size = new System.Drawing.Size(236, 20);
-            this.sitecorePackageTextBox.TabIndex = 1;
+            this.sitecorePackageTextBox.TabIndex = 20;
             // 
             // solrFolderButton
             // 
@@ -388,7 +388,7 @@
             this.configTextBox.Location = new System.Drawing.Point(107, 37);
             this.configTextBox.Name = "configTextBox";
             this.configTextBox.Size = new System.Drawing.Size(236, 20);
-            this.configTextBox.TabIndex = 1;
+            this.configTextBox.TabIndex = 10;
             // 
             // sitecorePackageButton
             // 
