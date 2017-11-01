@@ -5,6 +5,7 @@ SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  For those w
 ## Version 0.4.0 ##
 
 * SIF-less now saves your settings between uses.  This should greatly speed up the creation of new sites.
+* Removed unnecessary code that checks for appropriate permissions
 
 ## Version 0.3.0 ##
 
