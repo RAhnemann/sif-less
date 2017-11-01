@@ -279,6 +279,7 @@
             // 
             this.sqlPasswordTextBox.Location = new System.Drawing.Point(107, 327);
             this.sqlPasswordTextBox.Name = "sqlPasswordTextBox";
+            this.sqlPasswordTextBox.PasswordChar = '*';
             this.sqlPasswordTextBox.Size = new System.Drawing.Size(236, 20);
             this.sqlPasswordTextBox.TabIndex = 120;
             // 
@@ -506,7 +507,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "SIF-Less";
+            this.Text = "SIF-less";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

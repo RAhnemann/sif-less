@@ -2,9 +2,12 @@
 
 SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  For those who don't want to mess with parameters and commandline, this is for you.
 
+## Version 0.4.0 ##
+
+* SIF-less now saves your settings between uses.  This should greatly speed up the creation of new sites.
+
 ## Version 0.3.0 ##
 
-* NEW VERSION!
 * SIF-less now forces you to run in Admin mode.  You need to do this with SIF anyway, so....why not?
 * Uninstall is here!  You'll notice that when you Generate the install file "SIFless-EZ-1508971675.ps" you'll now get a "SIFless-EZUninstall-1508971675.ps1" as well. Simply run that from powershell and you're good.
 * You must place the Contents of the Scripts folder in the same location as your JSON configuration files.  

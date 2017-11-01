@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SIFLess.Model;
+using SIFLess.Properties;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using SIFLess.Model;
 
 namespace SIFLess
 {
@@ -217,14 +217,6 @@ namespace SIFLess
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (!new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
-            {
-                MessageBox.Show("This Application must be run as an Administrator.", "Admin Required",
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
-
-                Application.Exit();
-            }
-
             new ToolTip().SetToolTip(licenseLabel, "Location of your license.xml file");
             new ToolTip().SetToolTip(configLabel, "The Folder containing all your json config files (e.g. xconnect-solr.json)");
             new ToolTip().SetToolTip(scPackageLabel, "The location of your Sitecore Package (Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip)");
@@ -238,6 +230,27 @@ namespace SIFLess
             new ToolTip().SetToolTip(sqlServerLabel, "Your SQL instance name");
             new ToolTip().SetToolTip(sqlLoginLabel, "SQL Admin login");
             new ToolTip().SetToolTip(sqlPasswordLabel, "SQL Admin password");
+
+            if (Settings.Default.UpgradeRequired)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.UpgradeRequired = false;
+                Settings.Default.Save();
+            }
+
+            licenseTextBox.Text = Settings.Default.LicenseFilePath;
+            configTextBox.Text = Settings.Default.ConfigPath;
+            sitecorePackageTextBox.Text = Settings.Default.SitecorePackagePath;
+            xConnectPackageTextBox.Text = Settings.Default.xConnectPackagePath;
+            solrFolderTextBox.Text = Settings.Default.SolrFolder;
+            solrServiceTextBox.Text = Settings.Default.SolrServiceName;
+            solrURLTextBox.Text = Settings.Default.SolrUrl;
+
+            sqlServerTextBox.Text = Settings.Default.SQLServer;
+            sqlLoginTextBox.Text = Settings.Default.SQLLogin;
+            sqlPasswordTextBox.Text = Settings.Default.SQLPassword;
+
+            this.Text = $"SIF-less v{this.ProductVersion}";
         }
 
         private void selectFileButton_Click_1(object sender, EventArgs e)
@@ -278,6 +291,22 @@ namespace SIFLess
                     }
                 }
             }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.LicenseFilePath = licenseTextBox.Text.Trim();
+            Settings.Default.SitecorePackagePath = sitecorePackageTextBox.Text.Trim();
+            Settings.Default.ConfigPath = configTextBox.Text.Trim();
+            Settings.Default.SQLLogin = sqlLoginTextBox.Text.Trim();
+            Settings.Default.SQLPassword = sqlPasswordTextBox.Text.Trim();
+            Settings.Default.SQLServer = sqlServerTextBox.Text.Trim();
+            Settings.Default.SolrFolder = solrFolderTextBox.Text.Trim();
+            Settings.Default.SolrServiceName = solrServiceTextBox.Text.Trim();
+            Settings.Default.SolrUrl = solrURLTextBox.Text.Trim();
+            Settings.Default.xConnectPackagePath = xConnectPackageTextBox.Text.Trim();
+
+            Settings.Default.Save();
         }
     }
 }
