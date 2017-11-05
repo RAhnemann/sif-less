@@ -41,6 +41,12 @@
             this.sqlLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.solrServiceLabel = new System.Windows.Forms.Label();
+            this.solrVersionLabel = new System.Windows.Forms.Label();
+            this.solrConfigSetsLabel = new System.Windows.Forms.Label();
+            this.webDeployLabel = new System.Windows.Forms.Label();
+            this.powershellVersionLabel = new System.Windows.Forms.Label();
+            this.sifInstalledLabel = new System.Windows.Forms.Label();
+            this.sifFundLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // licenseLabel
@@ -136,7 +142,7 @@
             // sqlLabel
             // 
             this.sqlLabel.AutoSize = true;
-            this.sqlLabel.Location = new System.Drawing.Point(12, 237);
+            this.sqlLabel.Location = new System.Drawing.Point(13, 277);
             this.sqlLabel.Name = "sqlLabel";
             this.sqlLabel.Size = new System.Drawing.Size(116, 13);
             this.sqlLabel.TabIndex = 0;
@@ -144,7 +150,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(16, 257);
+            this.button1.Location = new System.Drawing.Point(13, 396);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 23);
             this.button1.TabIndex = 1;
@@ -155,17 +161,77 @@
             // solrServiceLabel
             // 
             this.solrServiceLabel.AutoSize = true;
-            this.solrServiceLabel.Location = new System.Drawing.Point(13, 217);
+            this.solrServiceLabel.Location = new System.Drawing.Point(13, 237);
             this.solrServiceLabel.Name = "solrServiceLabel";
             this.solrServiceLabel.Size = new System.Drawing.Size(94, 13);
             this.solrServiceLabel.TabIndex = 0;
             this.solrServiceLabel.Text = "Solr Service Exists";
             // 
+            // solrVersionLabel
+            // 
+            this.solrVersionLabel.AutoSize = true;
+            this.solrVersionLabel.Location = new System.Drawing.Point(13, 257);
+            this.solrVersionLabel.Name = "solrVersionLabel";
+            this.solrVersionLabel.Size = new System.Drawing.Size(91, 13);
+            this.solrVersionLabel.TabIndex = 2;
+            this.solrVersionLabel.Text = "Solr Version is OK";
+            // 
+            // solrConfigSetsLabel
+            // 
+            this.solrConfigSetsLabel.AutoSize = true;
+            this.solrConfigSetsLabel.Location = new System.Drawing.Point(13, 217);
+            this.solrConfigSetsLabel.Name = "solrConfigSetsLabel";
+            this.solrConfigSetsLabel.Size = new System.Drawing.Size(107, 13);
+            this.solrConfigSetsLabel.TabIndex = 3;
+            this.solrConfigSetsLabel.Text = "Solr Config Sets Exist";
+            // 
+            // webDeployLabel
+            // 
+            this.webDeployLabel.AutoSize = true;
+            this.webDeployLabel.Location = new System.Drawing.Point(13, 297);
+            this.webDeployLabel.Name = "webDeployLabel";
+            this.webDeployLabel.Size = new System.Drawing.Size(123, 13);
+            this.webDeployLabel.TabIndex = 4;
+            this.webDeployLabel.Text = "Web Deploy 3+ Installed";
+            // 
+            // powershellVersionLabel
+            // 
+            this.powershellVersionLabel.AutoSize = true;
+            this.powershellVersionLabel.Location = new System.Drawing.Point(13, 317);
+            this.powershellVersionLabel.Name = "powershellVersionLabel";
+            this.powershellVersionLabel.Size = new System.Drawing.Size(124, 13);
+            this.powershellVersionLabel.TabIndex = 4;
+            this.powershellVersionLabel.Text = "Powershell 5.1+ Installed";
+            // 
+            // sifInstalledLabel
+            // 
+            this.sifInstalledLabel.AutoSize = true;
+            this.sifInstalledLabel.Location = new System.Drawing.Point(13, 337);
+            this.sifInstalledLabel.Name = "sifInstalledLabel";
+            this.sifInstalledLabel.Size = new System.Drawing.Size(65, 13);
+            this.sifInstalledLabel.TabIndex = 5;
+            this.sifInstalledLabel.Text = "SIF Installed";
+            // 
+            // sifFundLabel
+            // 
+            this.sifFundLabel.AutoSize = true;
+            this.sifFundLabel.Location = new System.Drawing.Point(13, 357);
+            this.sifFundLabel.Name = "sifFundLabel";
+            this.sifFundLabel.Size = new System.Drawing.Size(134, 13);
+            this.sifFundLabel.TabIndex = 6;
+            this.sifFundLabel.Text = "SIF Fundamentals Installed";
+            // 
             // TestWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(205, 318);
+            this.ClientSize = new System.Drawing.Size(205, 431);
+            this.Controls.Add(this.sifFundLabel);
+            this.Controls.Add(this.sifInstalledLabel);
+            this.Controls.Add(this.powershellVersionLabel);
+            this.Controls.Add(this.webDeployLabel);
+            this.Controls.Add(this.solrConfigSetsLabel);
+            this.Controls.Add(this.solrVersionLabel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.sqlLabel);
             this.Controls.Add(this.solrURLLabel);
@@ -203,5 +269,11 @@
         private System.Windows.Forms.Label sqlLabel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label solrServiceLabel;
+        private System.Windows.Forms.Label solrVersionLabel;
+        private System.Windows.Forms.Label solrConfigSetsLabel;
+        private System.Windows.Forms.Label webDeployLabel;
+        private System.Windows.Forms.Label powershellVersionLabel;
+        private System.Windows.Forms.Label sifInstalledLabel;
+        private System.Windows.Forms.Label sifFundLabel;
     }
 }

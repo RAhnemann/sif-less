@@ -46,6 +46,7 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Exensions.cs" />
     <Compile Include="IParameterControl.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="ParameterConverter.cs" />

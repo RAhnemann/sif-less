@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace SIFLess
 {
@@ -21,13 +23,14 @@ namespace SIFLess
         private bool isEZSiteNameDirty;
         private bool isEZConnectNameDirty;
         private bool isEZDirty;
+        private readonly string _instancesListPath = Path.Combine(Environment.CurrentDirectory, "Instances.xml");
 
         public MainForm()
         {
             InitializeComponent();
         }
 
-        
+
 
         private void prefixTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -251,6 +254,16 @@ namespace SIFLess
             sqlPasswordTextBox.Text = Settings.Default.SQLPassword;
 
             this.Text = $"SIF-less v{this.ProductVersion}";
+
+            if (!File.Exists(_instancesListPath))
+                File.WriteAllText(_instancesListPath, "<Instances />");
+
+            instanceListWatcher.Path = Path.GetDirectoryName(_instancesListPath);
+            instanceListWatcher.Filter = Path.GetFileName(_instancesListPath);
+
+            //We're not quite ready for prime time on this
+            tabControl1.TabPages.Remove(tabPage3);
+            //LoadInstances();
         }
 
         private void selectFileButton_Click_1(object sender, EventArgs e)
@@ -307,6 +320,59 @@ namespace SIFLess
             Settings.Default.xConnectPackagePath = xConnectPackageTextBox.Text.Trim();
 
             Settings.Default.Save();
+        }
+
+        private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                //This guy gets chatty...
+                instanceListWatcher.EnableRaisingEvents = false;
+
+                //Let's give the modifying process a second to finish
+                Thread.Sleep(1000);
+
+                LoadInstances();
+            }
+            finally
+            {
+                instanceListWatcher.EnableRaisingEvents = true;
+            }
+
+        }
+
+        private void LoadInstances()
+        {
+            instancesListBox.Items.Clear();
+
+            var instancesDoc = new XmlDocument();
+
+            instancesDoc.LoadXml(File.ReadAllText(_instancesListPath));
+
+            foreach (XmlNode install in instancesDoc.SelectNodes("Instances/Instance"))
+            {
+                instancesListBox.Items.Add(install.Attributes["prefix"].Value);
+            }
+
+        }
+
+        private void instancesListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            LoadDetails(instancesListBox.SelectedItem.ToString());
+        }
+
+        private void LoadDetails(string prefix)
+        {
+
+        }
+
+        private void ezGenOnlyCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ezGenOnlyCheckbox.Checked)
+                installButton.Text = "Generate Files";
+            else
+                installButton.Text = "Generate Files and Install";
+
         }
     }
 }

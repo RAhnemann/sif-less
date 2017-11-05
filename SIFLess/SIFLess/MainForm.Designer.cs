@@ -70,11 +70,26 @@
             this.mainFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.runButton = new System.Windows.Forms.Button();
             this.selectFileButton = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.instancePrefixLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.instancesListBox = new System.Windows.Forms.ListBox();
             this.ezFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ezFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.instanceListWatcher = new System.IO.FileSystemWatcher();
+            this.instanceSiteNameLabel = new System.Windows.Forms.Label();
+            this.instancePrefixVLabel = new System.Windows.Forms.Label();
+            this.instanceSiteNameVLabel = new System.Windows.Forms.Label();
+            this.instanceXConnectSiteNameLabel = new System.Windows.Forms.Label();
+            this.instanceXConnectSiteNameVLabel = new System.Windows.Forms.Label();
+            this.instanceDateCreatedLabel = new System.Windows.Forms.Label();
+            this.uninstallInstanceButton = new System.Windows.Forms.Button();
+            this.instanceDateCreatedVLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.instanceListWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // selectConfigDialog
@@ -85,6 +100,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -142,10 +158,11 @@
             this.ezGenOnlyCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(349, 439);
             this.ezGenOnlyCheckbox.Name = "ezGenOnlyCheckbox";
-            this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(113, 17);
+            this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(118, 17);
             this.ezGenOnlyCheckbox.TabIndex = 140;
-            this.ezGenOnlyCheckbox.Text = "Generate File Only";
+            this.ezGenOnlyCheckbox.Text = "Generate Files Only";
             this.ezGenOnlyCheckbox.UseVisualStyleBackColor = true;
+            this.ezGenOnlyCheckbox.CheckedChanged += new System.EventHandler(this.ezGenOnlyCheckbox_CheckedChanged);
             // 
             // installButton
             // 
@@ -153,7 +170,7 @@
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(318, 52);
             this.installButton.TabIndex = 150;
-            this.installButton.Text = "Install";
+            this.installButton.Text = "Generate Files";
             this.installButton.UseVisualStyleBackColor = true;
             this.installButton.Click += new System.EventHandler(this.installButton_Click);
             // 
@@ -494,9 +511,130 @@
             this.selectFileButton.UseVisualStyleBackColor = true;
             this.selectFileButton.Click += new System.EventHandler(this.selectFileButton_Click_1);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.uninstallInstanceButton);
+            this.tabPage3.Controls.Add(this.instanceDateCreatedVLabel);
+            this.tabPage3.Controls.Add(this.instanceXConnectSiteNameVLabel);
+            this.tabPage3.Controls.Add(this.instanceSiteNameVLabel);
+            this.tabPage3.Controls.Add(this.instancePrefixVLabel);
+            this.tabPage3.Controls.Add(this.instanceDateCreatedLabel);
+            this.tabPage3.Controls.Add(this.instanceXConnectSiteNameLabel);
+            this.tabPage3.Controls.Add(this.instanceSiteNameLabel);
+            this.tabPage3.Controls.Add(this.instancePrefixLabel);
+            this.tabPage3.Controls.Add(this.label1);
+            this.tabPage3.Controls.Add(this.instancesListBox);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(692, 498);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Instance Manager";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // instancePrefixLabel
+            // 
+            this.instancePrefixLabel.AutoSize = true;
+            this.instancePrefixLabel.Location = new System.Drawing.Point(191, 35);
+            this.instancePrefixLabel.Name = "instancePrefixLabel";
+            this.instancePrefixLabel.Size = new System.Drawing.Size(39, 13);
+            this.instancePrefixLabel.TabIndex = 2;
+            this.instancePrefixLabel.Text = "Prefix: ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Instances";
+            // 
+            // instancesListBox
+            // 
+            this.instancesListBox.FormattingEnabled = true;
+            this.instancesListBox.Location = new System.Drawing.Point(13, 35);
+            this.instancesListBox.Name = "instancesListBox";
+            this.instancesListBox.Size = new System.Drawing.Size(136, 264);
+            this.instancesListBox.TabIndex = 0;
+            this.instancesListBox.SelectedValueChanged += new System.EventHandler(this.instancesListBox_SelectedValueChanged);
+            // 
             // ezFolderDialog
             // 
             this.ezFolderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            // 
+            // instanceListWatcher
+            // 
+            this.instanceListWatcher.EnableRaisingEvents = true;
+            this.instanceListWatcher.SynchronizingObject = this;
+            this.instanceListWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
+            // 
+            // instanceSiteNameLabel
+            // 
+            this.instanceSiteNameLabel.AutoSize = true;
+            this.instanceSiteNameLabel.Location = new System.Drawing.Point(191, 55);
+            this.instanceSiteNameLabel.Name = "instanceSiteNameLabel";
+            this.instanceSiteNameLabel.Size = new System.Drawing.Size(62, 13);
+            this.instanceSiteNameLabel.TabIndex = 2;
+            this.instanceSiteNameLabel.Text = "Site Name: ";
+            // 
+            // instancePrefixVLabel
+            // 
+            this.instancePrefixVLabel.AutoSize = true;
+            this.instancePrefixVLabel.Location = new System.Drawing.Point(300, 35);
+            this.instancePrefixVLabel.Name = "instancePrefixVLabel";
+            this.instancePrefixVLabel.Size = new System.Drawing.Size(0, 13);
+            this.instancePrefixVLabel.TabIndex = 2;
+            // 
+            // instanceSiteNameVLabel
+            // 
+            this.instanceSiteNameVLabel.AutoSize = true;
+            this.instanceSiteNameVLabel.Location = new System.Drawing.Point(300, 55);
+            this.instanceSiteNameVLabel.Name = "instanceSiteNameVLabel";
+            this.instanceSiteNameVLabel.Size = new System.Drawing.Size(0, 13);
+            this.instanceSiteNameVLabel.TabIndex = 2;
+            // 
+            // instanceXConnectSiteNameLabel
+            // 
+            this.instanceXConnectSiteNameLabel.AutoSize = true;
+            this.instanceXConnectSiteNameLabel.Location = new System.Drawing.Point(191, 75);
+            this.instanceXConnectSiteNameLabel.Name = "instanceXConnectSiteNameLabel";
+            this.instanceXConnectSiteNameLabel.Size = new System.Drawing.Size(110, 13);
+            this.instanceXConnectSiteNameLabel.TabIndex = 2;
+            this.instanceXConnectSiteNameLabel.Text = "xConnect Site Name: ";
+            // 
+            // instanceXConnectSiteNameVLabel
+            // 
+            this.instanceXConnectSiteNameVLabel.AutoSize = true;
+            this.instanceXConnectSiteNameVLabel.Location = new System.Drawing.Point(300, 75);
+            this.instanceXConnectSiteNameVLabel.Name = "instanceXConnectSiteNameVLabel";
+            this.instanceXConnectSiteNameVLabel.Size = new System.Drawing.Size(0, 13);
+            this.instanceXConnectSiteNameVLabel.TabIndex = 2;
+            // 
+            // instanceDateCreatedLabel
+            // 
+            this.instanceDateCreatedLabel.AutoSize = true;
+            this.instanceDateCreatedLabel.Location = new System.Drawing.Point(191, 95);
+            this.instanceDateCreatedLabel.Name = "instanceDateCreatedLabel";
+            this.instanceDateCreatedLabel.Size = new System.Drawing.Size(73, 13);
+            this.instanceDateCreatedLabel.TabIndex = 2;
+            this.instanceDateCreatedLabel.Text = "Date Created:";
+            // 
+            // uninstallInstanceButton
+            // 
+            this.uninstallInstanceButton.Location = new System.Drawing.Point(191, 115);
+            this.uninstallInstanceButton.Name = "uninstallInstanceButton";
+            this.uninstallInstanceButton.Size = new System.Drawing.Size(75, 23);
+            this.uninstallInstanceButton.TabIndex = 3;
+            this.uninstallInstanceButton.Text = "Remove";
+            this.uninstallInstanceButton.UseVisualStyleBackColor = true;
+            // 
+            // instanceDateCreatedVLabel
+            // 
+            this.instanceDateCreatedVLabel.AutoSize = true;
+            this.instanceDateCreatedVLabel.Location = new System.Drawing.Point(300, 95);
+            this.instanceDateCreatedVLabel.Name = "instanceDateCreatedVLabel";
+            this.instanceDateCreatedVLabel.Size = new System.Drawing.Size(0, 13);
+            this.instanceDateCreatedVLabel.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -515,6 +653,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.instanceListWatcher)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -565,6 +706,19 @@
         private System.Windows.Forms.TextBox solrServiceTextBox;
         private System.Windows.Forms.CheckBox ezGenOnlyCheckbox;
         private System.Windows.Forms.CheckBox hcGenerateCheckbox;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox instancesListBox;
+        private System.Windows.Forms.Label instancePrefixLabel;
+        private System.IO.FileSystemWatcher instanceListWatcher;
+        private System.Windows.Forms.Label instanceSiteNameLabel;
+        private System.Windows.Forms.Label instanceSiteNameVLabel;
+        private System.Windows.Forms.Label instancePrefixVLabel;
+        private System.Windows.Forms.Button uninstallInstanceButton;
+        private System.Windows.Forms.Label instanceDateCreatedVLabel;
+        private System.Windows.Forms.Label instanceXConnectSiteNameVLabel;
+        private System.Windows.Forms.Label instanceDateCreatedLabel;
+        private System.Windows.Forms.Label instanceXConnectSiteNameLabel;
     }
 }
 

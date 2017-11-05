@@ -1,6 +1,16 @@
 # What is this thing? #
 
-SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  For those who don't want to mess with parameters and commandline, this is for you.
+SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
+
+## Version 0.5.0 ##
+
+* SIF-less now has more validation!
+  * Validates that SIF and SIF Fundamentals are installed
+  * Validates that the Solr URL actually points to a Solr install
+  * Validates that the Solr version is >= 6.6.2 (6.6.1 has a nasty core locking bug)
+  * Validates that the Solr configsets folder is located where it should be
+  * Validates that Powershell 5.1+ is installed
+  * Validates that WebDeploy 3+ is installed
 
 ## Version 0.4.0 ##
 

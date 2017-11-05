@@ -83,6 +83,7 @@
     <Compile Include="TestWindow.Designer.cs">
       <DependentUpon>TestWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility.cs" />
     <EmbeddedResource Include="ExecuteForm.resx">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </EmbeddedResource>

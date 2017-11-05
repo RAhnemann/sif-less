@@ -9,10 +9,15 @@ using System.Linq;
 using System.Management;
 using System.Management.Automation.Language;
 using System.Net;
+using System.Net.Http;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Windows.Forms;
+using System.Xml;
+using Microsoft.Win32;
+using SIFLess.Model;
 
 namespace SIFLess
 {
@@ -54,7 +59,7 @@ namespace SIFLess
 
             CheckCondition(() =>
             {
-                var request = WebRequest.Create(_parameters.SolrURL);
+                var request = WebRequest.Create(_parameters.SolrURL.EnsureEndsWith("/") + "admin/info/system");
 
                 var response = (HttpWebResponse)request.GetResponse();
 
@@ -63,6 +68,8 @@ namespace SIFLess
             }, solrURLLabel);
 
             CheckCondition(() => Directory.Exists(_parameters.SolrFolder), solrFolderLabel);
+
+            CheckCondition(() => Directory.Exists(Path.Combine(_parameters.SolrFolder, @"server\solr\configsets")), solrConfigSetsLabel);
 
             CheckCondition(() =>
             {
@@ -80,6 +87,36 @@ namespace SIFLess
 
             CheckCondition(() =>
             {
+                var minVersion = Version.Parse(WebConfigurationManager.AppSettings["SolrRequiredVersion"]);
+                using (var client = new HttpClient())
+                {
+                    using (var response = client.GetAsync(_parameters.SolrURL.EnsureEndsWith("/") + "admin/info/system").Result)
+                    {
+                        using (var content = response.Content)
+                        {
+                            var responseXML = content.ReadAsStringAsync().Result;
+
+                            var responseDoc = new XmlDocument();
+                            responseDoc.LoadXml(responseXML);
+
+                            var versionNode =
+                                responseDoc.SelectSingleNode("//response/lst[@name='lucene']/str[@name='solr-spec-version']");
+
+                            var versionText = versionNode.InnerText;
+
+                            var runningVersion = Version.Parse(versionText);
+
+                            return runningVersion >= minVersion;
+                        }
+                    }
+                }
+
+                return false;
+
+            }, solrVersionLabel);
+
+            CheckCondition(() =>
+            {
                 using (var sqlConnection = new SqlConnection($"user id={_parameters.SQLLogin};password={_parameters.SQLPassword};Data Source={_parameters.SQLServer};Database=master"))
                 {
                     try
@@ -88,13 +125,44 @@ namespace SIFLess
 
                         return true;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show($"SQL Error: {ex.Message}");
                         return false;
                     }
                 }
             }, sqlLabel);
+
+            CheckCondition(() =>
+            {
+                return Registry.LocalMachine.GetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\IIS Extensions\MSDeploy\3", "Version") != null;
+                
+            }, webDeployLabel);
+
+            CheckCondition(() =>
+            {
+                var versionKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\PowerShell\3\PowerShellEngine");
+
+                var installedVersion = versionKey.GetValue("PowerShellVersion").ToString();
+                return Version.Parse(installedVersion) >= Version.Parse("5.1.0.0");
+
+
+            }, powershellVersionLabel);
+
+            //HACK: There's a better way to do this.
+            CheckCondition(() =>
+            {
+                return Utility.CheckPowerShell("Get-InstalledModule SitecoreInstallFramework",
+                    "Framework to install Sitecore instances");
+
+            }, sifInstalledLabel);
+
+            //HACK: There's a better way to do this, too.
+            CheckCondition(() =>
+            {
+                return Utility.CheckPowerShell("Get-InstalledModule SitecoreFundamentals",
+                    "PowerShell extensions for Sitecore security");
+            }, sifFundLabel);
         }
 
         private void CheckCondition(Func<bool> condition, Label label)
