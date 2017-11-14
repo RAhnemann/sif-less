@@ -2,6 +2,10 @@
 
 SIF-less is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
 
+## Version 0.6.0 ##
+
+* SIF-less now ensures your Solr URL doesn't have a trailing slash. This should fix the core API issues you see in your SIF installs.
+
 ## Version 0.5.0 ##
 
 * SIF-less now has more validation!
