@@ -131,11 +131,14 @@ namespace SIFLess
         {
             var ezText = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "EZ.ps1"));
 
+          var solrPath = solrURLTextBox.Text.EndsWith("/")
+            ? solrURLTextBox.Text.Substring(0, solrURLTextBox.TextLength - 1)
+            : solrURLTextBox.Text;
             ezText = ezText.Replace("[SC_PREFIX]", prefixTextBox.Text);
             ezText = ezText.Replace("[SCRIPT_ROOT]", configTextBox.Text);
             ezText = ezText.Replace("[XCONNECT_NAME]", xConnectName.Text);
             ezText = ezText.Replace("[SITE_NAME]", siteNameTextBox.Text);
-            ezText = ezText.Replace("[SOLR_URL]", solrURLTextBox.Text);
+            ezText = ezText.Replace("[SOLR_URL]", solrPath);
             ezText = ezText.Replace("[SOLR_FOLDER]", solrFolderTextBox.Text);
             ezText = ezText.Replace("[SOLR_SERVICE]", solrServiceTextBox.Text);
             ezText = ezText.Replace("[SQL_SERVER]", sqlServerTextBox.Text);
@@ -156,7 +159,7 @@ namespace SIFLess
             ezUninstallText = ezUninstallText.Replace("[SCRIPT_ROOT]", configTextBox.Text);
             ezUninstallText = ezUninstallText.Replace("[XCONNECT_NAME]", xConnectName.Text);
             ezUninstallText = ezUninstallText.Replace("[SITE_NAME]", siteNameTextBox.Text);
-            ezUninstallText = ezUninstallText.Replace("[SOLR_URL]", solrURLTextBox.Text);
+            ezUninstallText = ezUninstallText.Replace("[SOLR_URL]", solrPath);
             ezUninstallText = ezUninstallText.Replace("[SOLR_FOLDER]", solrFolderTextBox.Text);
             ezUninstallText = ezUninstallText.Replace("[SOLR_SERVICE]", solrServiceTextBox.Text);
             ezUninstallText = ezUninstallText.Replace("[SQL_SERVER]", sqlServerTextBox.Text);
