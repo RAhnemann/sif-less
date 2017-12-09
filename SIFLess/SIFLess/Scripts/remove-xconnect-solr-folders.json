@@ -28,35 +28,27 @@
             "Description": "The prefix for each of the created indexes."
         }
     },
-    "Variables": {
-        // Variables are values calculated in a configuration.
-        // They can reference Parameters, other Variables, and config functions.
+  "Variables": {
+    // Variables are values calculated in a configuration.
+    // They can reference Parameters, other Variables, and config functions.
 
-        // Resolves the full path to Solr on disk in case a relative path was passed.
-        "Solr.FullRoot":    "[resolvepath(parameter('SolrRoot'))]",
-		"Solr.CorePath":    "[joinpath(variable('Solr.FullRoot'), 'server', 'solr')]",
+    // Resolves the full path to Solr on disk in case a relative path was passed.
+    "Solr.FullRoot": "[resolvepath(parameter('SolrRoot'))]",
+    "Solr.CorePath": "[joinpath(variable('Solr.FullRoot'), 'server', 'solr')]",
 
-        // The name of the rebuild core to create.
-        "Xdb.Name":         "[concat(parameter('CorePrefix'), '_xdb')]",
-        "Xdb.Rebuild.Name": "[concat(variable('Xdb.Name'), '_rebuild')]",
+    // The name of the rebuild core to unload.
+    "Xdb.Name": "[concat(parameter('CorePrefix'), '_xdb')]",
+    "Xdb.Rebuild.Name": "[concat(variable('Xdb.Name'), '_rebuild')]",
 
-        // The destination paths of the cores to create.        
-        "Core.Root":        "[joinpath(variable('Solr.CorePath'), variable('Xdb.Name'))]",
-        "Rebuild.Root":     "[joinpath(variable('Solr.CorePath'), variable('Xdb.Rebuild.Name'))]"
-    },
+    // The destination paths of the cores to create.
+    "Core.Root": "[joinpath(variable('Solr.CorePath'), variable('Xdb.Name'))]",
+    "Rebuild.Root": "[joinpath(variable('Solr.CorePath'), variable('Xdb.Rebuild.Name'))]"
+  },
     "Tasks": {
         // Tasks are separate units of work in a configuration.
         // Each task is an action that will be completed when Install-SitecoreConfiguration is called.
         // By default, tasks are applied in the order they are declared.
         // Tasks may reference Parameters, Variables, and config functions. 
-       "UnloadCores":{
-            // Tells Solr to create the new cores.
-            "Type": "ManageSolrCore",
-            "Params": [
-                { "Action": "Unload", "Address": "[parameter('SolrUrl')]", "Arguments": { "Core": "[variable('Xdb.Name')]" } },
-                { "Action": "Unload", "Address": "[parameter('SolrUrl')]", "Arguments": { "Core": "[variable('Xdb.Rebuild.Name')]" } }
-            ]
-        },
 		"RemoveCore":{
 			"Type": "RemoveFolder",
 			"Params": [
