@@ -131,13 +131,19 @@
     <None Include="EZ.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\remove-sitecore-solr.json">
+    <None Include="Scripts\remove-sitecore-solr-folders.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\remove-sitecore-solr-cores.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\remove-sitecore-XP0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\remove-xconnect-solr.json">
+    <None Include="Scripts\remove-xconnect-solr-cores.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\remove-xconnect-solr-folders.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\remove-xconnect-xp0.json">

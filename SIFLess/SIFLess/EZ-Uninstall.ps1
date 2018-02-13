@@ -18,14 +18,35 @@ $SqlAdminPassword="[SQL_PASSWORD]"
 #install solr cores for xdb
 
 $solrParams = @{
-Path = "$PSScriptRoot\remove-xconnect-solr.json"
+Path = "$PSScriptRoot\remove-xconnect-solr-cores.json"
+SolrUrl = $SolrUrl
+SolrRoot = $SolrRoot
+CorePrefix = $prefix
+}
+try{
+	Install-SitecoreConfiguration @solrParams
+}
+catch{
+	$error = $_.Exception
+	
+	#If we are failing because it has already been unloaded, then we can proceed
+	if($error.Message.Contains("Cannot unload non-existent core")){
+		Write-Warning -Message ("Core is not found. May have already been uninstalled. Proceeding to folders." | Out-String)
+	}
+	else{
+		throw $error;
+	}
+}
+
+$solrParams = @{
+Path = "$PSScriptRoot\remove-xconnect-solr-folders.json"
 SolrUrl = $SolrUrl
 SolrRoot = $SolrRoot
 CorePrefix = $prefix
 }
 Install-SitecoreConfiguration @solrParams
 
-#deploy xconnect instance
+#remove xconnect instance
 $xconnectParams = @{
 Path = "$PSScriptRoot\remove-xconnect-xp0.json"
 SiteName = $XConnectCollectionService
@@ -34,16 +55,40 @@ SqlServer = $SqlServer
 SqlAdminUser = $SqlAdminUser
 SqlAdminPassword = $SqlAdminPassword
 }
+
 Install-SitecoreConfiguration @xconnectParams
-#install solr cores for sitecore
+
+#remove solr cores for sitecore
 $solrParams = @{
-Path = "$PSScriptRoot\remove-sitecore-solr.json"
+Path = "$PSScriptRoot\remove-sitecore-solr-cores.json"
+SolrUrl = $SolrUrl
+SolrRoot = $SolrRoot
+CorePrefix = $prefix
+}
+try{
+	Install-SitecoreConfiguration @solrParams
+}
+catch{
+	$error = $_.Exception
+	
+	#If we are failing because it has already been unloaded, then we can proceed
+	if($error.Message.Contains("Cannot unload non-existent core")){
+		Write-Warning -Message ("Core is not found. May have already been uninstalled. Proceeding to folders." | Out-String)
+	}
+	else{
+		throw $error;
+	}
+}
+#remove Sitecore Solr folders
+$solrParams = @{
+Path = "$PSScriptRoot\remove-sitecore-solr-folders.json"
 SolrUrl = $SolrUrl
 SolrRoot = $SolrRoot
 CorePrefix = $prefix
 }
 Install-SitecoreConfiguration @solrParams
-#install sitecore instance
+
+#remove sitecore instance
 $sitecoreParams = @{
 Path = "$PSScriptRoot\remove-sitecore-xp0.json"
 SqlDbPrefix = $prefix
