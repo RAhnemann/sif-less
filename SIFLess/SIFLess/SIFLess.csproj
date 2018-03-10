@@ -36,8 +36,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,6 +77,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms\SitecoreCreateProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SitecoreCreateProfile.Designer.cs">
+      <DependentUpon>SitecoreCreateProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SitecoreProfileManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SitecoreProfileManager.Designer.cs">
+      <DependentUpon>SitecoreProfileManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +98,9 @@
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="ExecuteForm.resx">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SitecoreCreateProfile.resx">
+      <DependentUpon>SitecoreCreateProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -99,6 +114,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\SitecoreProfileManager.resx">
+      <DependentUpon>SitecoreProfileManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestWindow.resx">
       <DependentUpon>TestWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -106,6 +124,7 @@
     <None Include="EZ-Uninstall.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Scripts\Invoke-RemoveAppPoolTask.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -118,7 +137,6 @@
     <None Include="Scripts\Invoke-RemoveWebsiteTask.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

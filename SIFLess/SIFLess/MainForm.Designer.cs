@@ -30,6 +30,11 @@
         {
             this.selectConfigDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.manageSitecoreProfilesLink = new System.Windows.Forms.LinkLabel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.profileListBox = new System.Windows.Forms.ComboBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.ezGenOnlyCheckbox = new System.Windows.Forms.CheckBox();
             this.installButton = new System.Windows.Forms.Button();
@@ -71,21 +76,23 @@
             this.runButton = new System.Windows.Forms.Button();
             this.selectFileButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.uninstallInstanceButton = new System.Windows.Forms.Button();
+            this.instanceDateCreatedVLabel = new System.Windows.Forms.Label();
+            this.instanceXConnectSiteNameVLabel = new System.Windows.Forms.Label();
+            this.instanceSiteNameVLabel = new System.Windows.Forms.Label();
+            this.instancePrefixVLabel = new System.Windows.Forms.Label();
+            this.instanceDateCreatedLabel = new System.Windows.Forms.Label();
+            this.instanceXConnectSiteNameLabel = new System.Windows.Forms.Label();
+            this.instanceSiteNameLabel = new System.Windows.Forms.Label();
             this.instancePrefixLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.instancesListBox = new System.Windows.Forms.ListBox();
             this.ezFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ezFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.instanceListWatcher = new System.IO.FileSystemWatcher();
-            this.instanceSiteNameLabel = new System.Windows.Forms.Label();
-            this.instancePrefixVLabel = new System.Windows.Forms.Label();
-            this.instanceSiteNameVLabel = new System.Windows.Forms.Label();
-            this.instanceXConnectSiteNameLabel = new System.Windows.Forms.Label();
-            this.instanceXConnectSiteNameVLabel = new System.Windows.Forms.Label();
-            this.instanceDateCreatedLabel = new System.Windows.Forms.Label();
-            this.uninstallInstanceButton = new System.Windows.Forms.Button();
-            this.instanceDateCreatedVLabel = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -98,14 +105,68 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(16, 15);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(700, 524);
+            this.tabControl1.Size = new System.Drawing.Size(933, 645);
             this.tabControl1.TabIndex = 2;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.comboBox2);
+            this.tabPage4.Controls.Add(this.manageSitecoreProfilesLink);
+            this.tabPage4.Controls.Add(this.label3);
+            this.tabPage4.Controls.Add(this.label2);
+            this.tabPage4.Controls.Add(this.profileListBox);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(925, 616);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Install Sitecore";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // manageSitecoreProfilesLink
+            // 
+            this.manageSitecoreProfilesLink.AutoSize = true;
+            this.manageSitecoreProfilesLink.Location = new System.Drawing.Point(127, 21);
+            this.manageSitecoreProfilesLink.Name = "manageSitecoreProfilesLink";
+            this.manageSitecoreProfilesLink.Size = new System.Drawing.Size(59, 17);
+            this.manageSitecoreProfilesLink.TabIndex = 3;
+            this.manageSitecoreProfilesLink.TabStop = true;
+            this.manageSitecoreProfilesLink.Text = "Manage";
+            this.manageSitecoreProfilesLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.manageSitecoreProfilesLink_LinkClicked);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 98);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 17);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Connection";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(17, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 17);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Sitecore Profile";
+            // 
+            // profileListBox
+            // 
+            this.profileListBox.FormattingEnabled = true;
+            this.profileListBox.Location = new System.Drawing.Point(42, 41);
+            this.profileListBox.Name = "profileListBox";
+            this.profileListBox.Size = new System.Drawing.Size(195, 24);
+            this.profileListBox.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -143,10 +204,11 @@
             this.tabPage1.Controls.Add(this.configFolderButton);
             this.tabPage1.Controls.Add(this.licenseTextBox);
             this.tabPage1.Controls.Add(this.licenseFolderButton);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(692, 498);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Size = new System.Drawing.Size(925, 616);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "EZ Mode";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -156,9 +218,10 @@
             this.ezGenOnlyCheckbox.AutoSize = true;
             this.ezGenOnlyCheckbox.Checked = true;
             this.ezGenOnlyCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(349, 439);
+            this.ezGenOnlyCheckbox.Location = new System.Drawing.Point(465, 540);
+            this.ezGenOnlyCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.ezGenOnlyCheckbox.Name = "ezGenOnlyCheckbox";
-            this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(118, 17);
+            this.ezGenOnlyCheckbox.Size = new System.Drawing.Size(156, 21);
             this.ezGenOnlyCheckbox.TabIndex = 140;
             this.ezGenOnlyCheckbox.Text = "Generate Files Only";
             this.ezGenOnlyCheckbox.UseVisualStyleBackColor = true;
@@ -166,9 +229,10 @@
             // 
             // installButton
             // 
-            this.installButton.Location = new System.Drawing.Point(25, 420);
+            this.installButton.Location = new System.Drawing.Point(33, 517);
+            this.installButton.Margin = new System.Windows.Forms.Padding(4);
             this.installButton.Name = "installButton";
-            this.installButton.Size = new System.Drawing.Size(318, 52);
+            this.installButton.Size = new System.Drawing.Size(424, 64);
             this.installButton.TabIndex = 150;
             this.installButton.Text = "Generate Files";
             this.installButton.UseVisualStyleBackColor = true;
@@ -176,9 +240,10 @@
             // 
             // testButton
             // 
-            this.testButton.Location = new System.Drawing.Point(25, 362);
+            this.testButton.Location = new System.Drawing.Point(33, 446);
+            this.testButton.Margin = new System.Windows.Forms.Padding(4);
             this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(318, 52);
+            this.testButton.Size = new System.Drawing.Size(424, 64);
             this.testButton.TabIndex = 130;
             this.testButton.Text = "Test";
             this.testButton.UseVisualStyleBackColor = true;
@@ -187,205 +252,229 @@
             // sqlPasswordLabel
             // 
             this.sqlPasswordLabel.AutoSize = true;
-            this.sqlPasswordLabel.Location = new System.Drawing.Point(6, 332);
+            this.sqlPasswordLabel.Location = new System.Drawing.Point(8, 409);
+            this.sqlPasswordLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sqlPasswordLabel.Name = "sqlPasswordLabel";
-            this.sqlPasswordLabel.Size = new System.Drawing.Size(77, 13);
+            this.sqlPasswordLabel.Size = new System.Drawing.Size(101, 17);
             this.sqlPasswordLabel.TabIndex = 2;
             this.sqlPasswordLabel.Text = "SQL Password";
             // 
             // sqlLoginLabel
             // 
             this.sqlLoginLabel.AutoSize = true;
-            this.sqlLoginLabel.Location = new System.Drawing.Point(6, 306);
+            this.sqlLoginLabel.Location = new System.Drawing.Point(8, 377);
+            this.sqlLoginLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sqlLoginLabel.Name = "sqlLoginLabel";
-            this.sqlLoginLabel.Size = new System.Drawing.Size(57, 13);
+            this.sqlLoginLabel.Size = new System.Drawing.Size(75, 17);
             this.sqlLoginLabel.TabIndex = 2;
             this.sqlLoginLabel.Text = "SQL Login";
             // 
             // sqlServerLabel
             // 
             this.sqlServerLabel.AutoSize = true;
-            this.sqlServerLabel.Location = new System.Drawing.Point(6, 280);
+            this.sqlServerLabel.Location = new System.Drawing.Point(8, 345);
+            this.sqlServerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sqlServerLabel.Name = "sqlServerLabel";
-            this.sqlServerLabel.Size = new System.Drawing.Size(62, 13);
+            this.sqlServerLabel.Size = new System.Drawing.Size(82, 17);
             this.sqlServerLabel.TabIndex = 2;
             this.sqlServerLabel.Text = "SQL Server";
             // 
             // solrServiceLabel
             // 
             this.solrServiceLabel.AutoSize = true;
-            this.solrServiceLabel.Location = new System.Drawing.Point(6, 253);
+            this.solrServiceLabel.Location = new System.Drawing.Point(8, 311);
+            this.solrServiceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.solrServiceLabel.Name = "solrServiceLabel";
-            this.solrServiceLabel.Size = new System.Drawing.Size(64, 13);
+            this.solrServiceLabel.Size = new System.Drawing.Size(84, 17);
             this.solrServiceLabel.TabIndex = 2;
             this.solrServiceLabel.Text = "Solr Service";
             // 
             // solrFolderLabel
             // 
             this.solrFolderLabel.AutoSize = true;
-            this.solrFolderLabel.Location = new System.Drawing.Point(6, 227);
+            this.solrFolderLabel.Location = new System.Drawing.Point(8, 279);
+            this.solrFolderLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.solrFolderLabel.Name = "solrFolderLabel";
-            this.solrFolderLabel.Size = new System.Drawing.Size(57, 13);
+            this.solrFolderLabel.Size = new System.Drawing.Size(77, 17);
             this.solrFolderLabel.TabIndex = 2;
             this.solrFolderLabel.Text = "Solr Folder";
             // 
             // solrUrlLabel
             // 
             this.solrUrlLabel.AutoSize = true;
-            this.solrUrlLabel.Location = new System.Drawing.Point(6, 201);
+            this.solrUrlLabel.Location = new System.Drawing.Point(8, 247);
+            this.solrUrlLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.solrUrlLabel.Name = "solrUrlLabel";
-            this.solrUrlLabel.Size = new System.Drawing.Size(50, 13);
+            this.solrUrlLabel.Size = new System.Drawing.Size(65, 17);
             this.solrUrlLabel.TabIndex = 2;
             this.solrUrlLabel.Text = "Solr URL";
             // 
             // xConnectSiteNameLabel
             // 
             this.xConnectSiteNameLabel.AutoSize = true;
-            this.xConnectSiteNameLabel.Location = new System.Drawing.Point(6, 172);
+            this.xConnectSiteNameLabel.Location = new System.Drawing.Point(8, 212);
+            this.xConnectSiteNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xConnectSiteNameLabel.Name = "xConnectSiteNameLabel";
-            this.xConnectSiteNameLabel.Size = new System.Drawing.Size(83, 13);
+            this.xConnectSiteNameLabel.Size = new System.Drawing.Size(107, 17);
             this.xConnectSiteNameLabel.TabIndex = 2;
             this.xConnectSiteNameLabel.Text = "xConnect Name";
             // 
             // siteNameLabel
             // 
             this.siteNameLabel.AutoSize = true;
-            this.siteNameLabel.Location = new System.Drawing.Point(6, 146);
+            this.siteNameLabel.Location = new System.Drawing.Point(8, 180);
+            this.siteNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.siteNameLabel.Name = "siteNameLabel";
-            this.siteNameLabel.Size = new System.Drawing.Size(56, 13);
+            this.siteNameLabel.Size = new System.Drawing.Size(73, 17);
             this.siteNameLabel.TabIndex = 2;
             this.siteNameLabel.Text = "Site Name";
             // 
             // installPrefixLabel
             // 
             this.installPrefixLabel.AutoSize = true;
-            this.installPrefixLabel.Location = new System.Drawing.Point(6, 120);
+            this.installPrefixLabel.Location = new System.Drawing.Point(8, 148);
+            this.installPrefixLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.installPrefixLabel.Name = "installPrefixLabel";
-            this.installPrefixLabel.Size = new System.Drawing.Size(63, 13);
+            this.installPrefixLabel.Size = new System.Drawing.Size(83, 17);
             this.installPrefixLabel.TabIndex = 2;
             this.installPrefixLabel.Text = "Install Prefix";
             // 
             // xConnectPackageLabel
             // 
             this.xConnectPackageLabel.AutoSize = true;
-            this.xConnectPackageLabel.Location = new System.Drawing.Point(6, 94);
+            this.xConnectPackageLabel.Location = new System.Drawing.Point(8, 116);
+            this.xConnectPackageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xConnectPackageLabel.Name = "xConnectPackageLabel";
-            this.xConnectPackageLabel.Size = new System.Drawing.Size(98, 13);
+            this.xConnectPackageLabel.Size = new System.Drawing.Size(125, 17);
             this.xConnectPackageLabel.TabIndex = 2;
             this.xConnectPackageLabel.Text = "xConnect Package";
             // 
             // scPackageLabel
             // 
             this.scPackageLabel.AutoSize = true;
-            this.scPackageLabel.Location = new System.Drawing.Point(6, 68);
+            this.scPackageLabel.Location = new System.Drawing.Point(8, 84);
+            this.scPackageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.scPackageLabel.Name = "scPackageLabel";
-            this.scPackageLabel.Size = new System.Drawing.Size(92, 13);
+            this.scPackageLabel.Size = new System.Drawing.Size(119, 17);
             this.scPackageLabel.TabIndex = 2;
             this.scPackageLabel.Text = "Sitecore Package";
             // 
             // configLabel
             // 
             this.configLabel.AutoSize = true;
-            this.configLabel.Location = new System.Drawing.Point(6, 42);
+            this.configLabel.Location = new System.Drawing.Point(8, 52);
+            this.configLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.configLabel.Name = "configLabel";
-            this.configLabel.Size = new System.Drawing.Size(69, 13);
+            this.configLabel.Size = new System.Drawing.Size(92, 17);
             this.configLabel.TabIndex = 2;
             this.configLabel.Text = "Config Folder";
             // 
             // sqlPasswordTextBox
             // 
-            this.sqlPasswordTextBox.Location = new System.Drawing.Point(107, 327);
+            this.sqlPasswordTextBox.Location = new System.Drawing.Point(143, 402);
+            this.sqlPasswordTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sqlPasswordTextBox.Name = "sqlPasswordTextBox";
             this.sqlPasswordTextBox.PasswordChar = '*';
-            this.sqlPasswordTextBox.Size = new System.Drawing.Size(236, 20);
+            this.sqlPasswordTextBox.Size = new System.Drawing.Size(313, 22);
             this.sqlPasswordTextBox.TabIndex = 120;
             // 
             // sqlLoginTextBox
             // 
-            this.sqlLoginTextBox.Location = new System.Drawing.Point(107, 301);
+            this.sqlLoginTextBox.Location = new System.Drawing.Point(143, 370);
+            this.sqlLoginTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sqlLoginTextBox.Name = "sqlLoginTextBox";
-            this.sqlLoginTextBox.Size = new System.Drawing.Size(236, 20);
+            this.sqlLoginTextBox.Size = new System.Drawing.Size(313, 22);
             this.sqlLoginTextBox.TabIndex = 110;
             this.sqlLoginTextBox.Text = "sa";
             // 
             // sqlServerTextBox
             // 
-            this.sqlServerTextBox.Location = new System.Drawing.Point(107, 275);
+            this.sqlServerTextBox.Location = new System.Drawing.Point(143, 338);
+            this.sqlServerTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sqlServerTextBox.Name = "sqlServerTextBox";
-            this.sqlServerTextBox.Size = new System.Drawing.Size(236, 20);
+            this.sqlServerTextBox.Size = new System.Drawing.Size(313, 22);
             this.sqlServerTextBox.TabIndex = 100;
             this.sqlServerTextBox.Text = ".\\SQL2016";
             // 
             // solrServiceTextBox
             // 
-            this.solrServiceTextBox.Location = new System.Drawing.Point(107, 248);
+            this.solrServiceTextBox.Location = new System.Drawing.Point(143, 305);
+            this.solrServiceTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.solrServiceTextBox.Name = "solrServiceTextBox";
-            this.solrServiceTextBox.Size = new System.Drawing.Size(236, 20);
+            this.solrServiceTextBox.Size = new System.Drawing.Size(313, 22);
             this.solrServiceTextBox.TabIndex = 90;
             this.solrServiceTextBox.Text = "Solr-6.6.1";
             // 
             // solrFolderTextBox
             // 
-            this.solrFolderTextBox.Location = new System.Drawing.Point(107, 222);
+            this.solrFolderTextBox.Location = new System.Drawing.Point(143, 273);
+            this.solrFolderTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.solrFolderTextBox.Name = "solrFolderTextBox";
-            this.solrFolderTextBox.Size = new System.Drawing.Size(236, 20);
+            this.solrFolderTextBox.Size = new System.Drawing.Size(313, 22);
             this.solrFolderTextBox.TabIndex = 80;
             this.solrFolderTextBox.Text = "c:\\Solr-6.6.1\\";
             // 
             // solrURLTextBox
             // 
-            this.solrURLTextBox.Location = new System.Drawing.Point(107, 196);
+            this.solrURLTextBox.Location = new System.Drawing.Point(143, 241);
+            this.solrURLTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.solrURLTextBox.Name = "solrURLTextBox";
-            this.solrURLTextBox.Size = new System.Drawing.Size(236, 20);
+            this.solrURLTextBox.Size = new System.Drawing.Size(313, 22);
             this.solrURLTextBox.TabIndex = 70;
             this.solrURLTextBox.Text = "https://localhost:8989/solr";
             // 
             // xConnectName
             // 
-            this.xConnectName.Location = new System.Drawing.Point(107, 167);
+            this.xConnectName.Location = new System.Drawing.Point(143, 206);
+            this.xConnectName.Margin = new System.Windows.Forms.Padding(4);
             this.xConnectName.Name = "xConnectName";
-            this.xConnectName.Size = new System.Drawing.Size(236, 20);
+            this.xConnectName.Size = new System.Drawing.Size(313, 22);
             this.xConnectName.TabIndex = 60;
             this.xConnectName.Text = "xp0.xconnect";
             this.xConnectName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.xConnectName_KeyPress);
             // 
             // siteNameTextBox
             // 
-            this.siteNameTextBox.Location = new System.Drawing.Point(107, 141);
+            this.siteNameTextBox.Location = new System.Drawing.Point(143, 174);
+            this.siteNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.siteNameTextBox.Name = "siteNameTextBox";
-            this.siteNameTextBox.Size = new System.Drawing.Size(236, 20);
+            this.siteNameTextBox.Size = new System.Drawing.Size(313, 22);
             this.siteNameTextBox.TabIndex = 50;
             this.siteNameTextBox.Text = "xp0.sc";
             this.siteNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.siteNameTextBox_KeyPress);
             // 
             // prefixTextBox
             // 
-            this.prefixTextBox.Location = new System.Drawing.Point(107, 115);
+            this.prefixTextBox.Location = new System.Drawing.Point(143, 142);
+            this.prefixTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.prefixTextBox.Name = "prefixTextBox";
-            this.prefixTextBox.Size = new System.Drawing.Size(236, 20);
+            this.prefixTextBox.Size = new System.Drawing.Size(313, 22);
             this.prefixTextBox.TabIndex = 40;
             this.prefixTextBox.Text = "xp0";
             this.prefixTextBox.TextChanged += new System.EventHandler(this.prefixTextBox_TextChanged);
             // 
             // xConnectPackageTextBox
             // 
-            this.xConnectPackageTextBox.Location = new System.Drawing.Point(107, 89);
+            this.xConnectPackageTextBox.Location = new System.Drawing.Point(143, 110);
+            this.xConnectPackageTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.xConnectPackageTextBox.Name = "xConnectPackageTextBox";
-            this.xConnectPackageTextBox.Size = new System.Drawing.Size(236, 20);
+            this.xConnectPackageTextBox.Size = new System.Drawing.Size(313, 22);
             this.xConnectPackageTextBox.TabIndex = 30;
             // 
             // sitecorePackageTextBox
             // 
-            this.sitecorePackageTextBox.Location = new System.Drawing.Point(107, 63);
+            this.sitecorePackageTextBox.Location = new System.Drawing.Point(143, 78);
+            this.sitecorePackageTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sitecorePackageTextBox.Name = "sitecorePackageTextBox";
-            this.sitecorePackageTextBox.Size = new System.Drawing.Size(236, 20);
+            this.sitecorePackageTextBox.Size = new System.Drawing.Size(313, 22);
             this.sitecorePackageTextBox.TabIndex = 20;
             // 
             // solrFolderButton
             // 
-            this.solrFolderButton.Location = new System.Drawing.Point(349, 222);
+            this.solrFolderButton.Location = new System.Drawing.Point(465, 273);
+            this.solrFolderButton.Margin = new System.Windows.Forms.Padding(4);
             this.solrFolderButton.Name = "solrFolderButton";
-            this.solrFolderButton.Size = new System.Drawing.Size(30, 20);
+            this.solrFolderButton.Size = new System.Drawing.Size(40, 25);
             this.solrFolderButton.TabIndex = 0;
             this.solrFolderButton.Text = "...";
             this.solrFolderButton.UseVisualStyleBackColor = true;
@@ -393,9 +482,10 @@
             // 
             // xConnectPackageButton
             // 
-            this.xConnectPackageButton.Location = new System.Drawing.Point(349, 89);
+            this.xConnectPackageButton.Location = new System.Drawing.Point(465, 110);
+            this.xConnectPackageButton.Margin = new System.Windows.Forms.Padding(4);
             this.xConnectPackageButton.Name = "xConnectPackageButton";
-            this.xConnectPackageButton.Size = new System.Drawing.Size(30, 20);
+            this.xConnectPackageButton.Size = new System.Drawing.Size(40, 25);
             this.xConnectPackageButton.TabIndex = 0;
             this.xConnectPackageButton.Text = "...";
             this.xConnectPackageButton.UseVisualStyleBackColor = true;
@@ -403,16 +493,18 @@
             // 
             // configTextBox
             // 
-            this.configTextBox.Location = new System.Drawing.Point(107, 37);
+            this.configTextBox.Location = new System.Drawing.Point(143, 46);
+            this.configTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.configTextBox.Name = "configTextBox";
-            this.configTextBox.Size = new System.Drawing.Size(236, 20);
+            this.configTextBox.Size = new System.Drawing.Size(313, 22);
             this.configTextBox.TabIndex = 10;
             // 
             // sitecorePackageButton
             // 
-            this.sitecorePackageButton.Location = new System.Drawing.Point(349, 63);
+            this.sitecorePackageButton.Location = new System.Drawing.Point(465, 78);
+            this.sitecorePackageButton.Margin = new System.Windows.Forms.Padding(4);
             this.sitecorePackageButton.Name = "sitecorePackageButton";
-            this.sitecorePackageButton.Size = new System.Drawing.Size(30, 20);
+            this.sitecorePackageButton.Size = new System.Drawing.Size(40, 25);
             this.sitecorePackageButton.TabIndex = 0;
             this.sitecorePackageButton.Text = "...";
             this.sitecorePackageButton.UseVisualStyleBackColor = true;
@@ -421,17 +513,19 @@
             // licenseLabel
             // 
             this.licenseLabel.AutoSize = true;
-            this.licenseLabel.Location = new System.Drawing.Point(6, 11);
+            this.licenseLabel.Location = new System.Drawing.Point(8, 14);
+            this.licenseLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.licenseLabel.Name = "licenseLabel";
-            this.licenseLabel.Size = new System.Drawing.Size(69, 13);
+            this.licenseLabel.Size = new System.Drawing.Size(89, 17);
             this.licenseLabel.TabIndex = 2;
             this.licenseLabel.Text = "License XML";
             // 
             // configFolderButton
             // 
-            this.configFolderButton.Location = new System.Drawing.Point(349, 37);
+            this.configFolderButton.Location = new System.Drawing.Point(465, 46);
+            this.configFolderButton.Margin = new System.Windows.Forms.Padding(4);
             this.configFolderButton.Name = "configFolderButton";
-            this.configFolderButton.Size = new System.Drawing.Size(30, 20);
+            this.configFolderButton.Size = new System.Drawing.Size(40, 25);
             this.configFolderButton.TabIndex = 0;
             this.configFolderButton.Text = "...";
             this.configFolderButton.UseVisualStyleBackColor = true;
@@ -439,16 +533,18 @@
             // 
             // licenseTextBox
             // 
-            this.licenseTextBox.Location = new System.Drawing.Point(107, 6);
+            this.licenseTextBox.Location = new System.Drawing.Point(143, 7);
+            this.licenseTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.licenseTextBox.Name = "licenseTextBox";
-            this.licenseTextBox.Size = new System.Drawing.Size(236, 20);
+            this.licenseTextBox.Size = new System.Drawing.Size(313, 22);
             this.licenseTextBox.TabIndex = 1;
             // 
             // licenseFolderButton
             // 
-            this.licenseFolderButton.Location = new System.Drawing.Point(349, 6);
+            this.licenseFolderButton.Location = new System.Drawing.Point(465, 7);
+            this.licenseFolderButton.Margin = new System.Windows.Forms.Padding(4);
             this.licenseFolderButton.Name = "licenseFolderButton";
-            this.licenseFolderButton.Size = new System.Drawing.Size(30, 20);
+            this.licenseFolderButton.Size = new System.Drawing.Size(40, 25);
             this.licenseFolderButton.TabIndex = 0;
             this.licenseFolderButton.Text = "...";
             this.licenseFolderButton.UseVisualStyleBackColor = true;
@@ -460,10 +556,11 @@
             this.tabPage2.Controls.Add(this.mainFlowPanel);
             this.tabPage2.Controls.Add(this.runButton);
             this.tabPage2.Controls.Add(this.selectFileButton);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(692, 498);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Size = new System.Drawing.Size(925, 616);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Hardcore Mode";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -473,9 +570,10 @@
             this.hcGenerateCheckbox.AutoSize = true;
             this.hcGenerateCheckbox.Checked = true;
             this.hcGenerateCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hcGenerateCheckbox.Location = new System.Drawing.Point(542, 465);
+            this.hcGenerateCheckbox.Location = new System.Drawing.Point(723, 572);
+            this.hcGenerateCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.hcGenerateCheckbox.Name = "hcGenerateCheckbox";
-            this.hcGenerateCheckbox.Size = new System.Drawing.Size(113, 17);
+            this.hcGenerateCheckbox.Size = new System.Drawing.Size(149, 21);
             this.hcGenerateCheckbox.TabIndex = 5;
             this.hcGenerateCheckbox.Text = "Generate File Only";
             this.hcGenerateCheckbox.UseVisualStyleBackColor = true;
@@ -485,17 +583,19 @@
             this.mainFlowPanel.AutoScroll = true;
             this.mainFlowPanel.BackColor = System.Drawing.SystemColors.Control;
             this.mainFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.mainFlowPanel.Location = new System.Drawing.Point(6, 49);
+            this.mainFlowPanel.Location = new System.Drawing.Point(8, 60);
+            this.mainFlowPanel.Margin = new System.Windows.Forms.Padding(4);
             this.mainFlowPanel.Name = "mainFlowPanel";
-            this.mainFlowPanel.Size = new System.Drawing.Size(680, 400);
+            this.mainFlowPanel.Size = new System.Drawing.Size(907, 492);
             this.mainFlowPanel.TabIndex = 4;
             this.mainFlowPanel.WrapContents = false;
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(6, 455);
+            this.runButton.Location = new System.Drawing.Point(8, 560);
+            this.runButton.Margin = new System.Windows.Forms.Padding(4);
             this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(529, 37);
+            this.runButton.Size = new System.Drawing.Size(705, 46);
             this.runButton.TabIndex = 2;
             this.runButton.Text = "Run";
             this.runButton.UseVisualStyleBackColor = true;
@@ -503,9 +603,10 @@
             // 
             // selectFileButton
             // 
-            this.selectFileButton.Location = new System.Drawing.Point(6, 6);
+            this.selectFileButton.Location = new System.Drawing.Point(8, 7);
+            this.selectFileButton.Margin = new System.Windows.Forms.Padding(4);
             this.selectFileButton.Name = "selectFileButton";
-            this.selectFileButton.Size = new System.Drawing.Size(680, 37);
+            this.selectFileButton.Size = new System.Drawing.Size(907, 46);
             this.selectFileButton.TabIndex = 3;
             this.selectFileButton.Text = "Select a SIF JSON File";
             this.selectFileButton.UseVisualStyleBackColor = true;
@@ -524,37 +625,118 @@
             this.tabPage3.Controls.Add(this.instancePrefixLabel);
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Controls.Add(this.instancesListBox);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(692, 498);
+            this.tabPage3.Size = new System.Drawing.Size(925, 616);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Instance Manager";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // uninstallInstanceButton
+            // 
+            this.uninstallInstanceButton.Location = new System.Drawing.Point(255, 142);
+            this.uninstallInstanceButton.Margin = new System.Windows.Forms.Padding(4);
+            this.uninstallInstanceButton.Name = "uninstallInstanceButton";
+            this.uninstallInstanceButton.Size = new System.Drawing.Size(100, 28);
+            this.uninstallInstanceButton.TabIndex = 3;
+            this.uninstallInstanceButton.Text = "Remove";
+            this.uninstallInstanceButton.UseVisualStyleBackColor = true;
+            // 
+            // instanceDateCreatedVLabel
+            // 
+            this.instanceDateCreatedVLabel.AutoSize = true;
+            this.instanceDateCreatedVLabel.Location = new System.Drawing.Point(400, 117);
+            this.instanceDateCreatedVLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instanceDateCreatedVLabel.Name = "instanceDateCreatedVLabel";
+            this.instanceDateCreatedVLabel.Size = new System.Drawing.Size(0, 17);
+            this.instanceDateCreatedVLabel.TabIndex = 2;
+            // 
+            // instanceXConnectSiteNameVLabel
+            // 
+            this.instanceXConnectSiteNameVLabel.AutoSize = true;
+            this.instanceXConnectSiteNameVLabel.Location = new System.Drawing.Point(400, 92);
+            this.instanceXConnectSiteNameVLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instanceXConnectSiteNameVLabel.Name = "instanceXConnectSiteNameVLabel";
+            this.instanceXConnectSiteNameVLabel.Size = new System.Drawing.Size(0, 17);
+            this.instanceXConnectSiteNameVLabel.TabIndex = 2;
+            // 
+            // instanceSiteNameVLabel
+            // 
+            this.instanceSiteNameVLabel.AutoSize = true;
+            this.instanceSiteNameVLabel.Location = new System.Drawing.Point(400, 68);
+            this.instanceSiteNameVLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instanceSiteNameVLabel.Name = "instanceSiteNameVLabel";
+            this.instanceSiteNameVLabel.Size = new System.Drawing.Size(0, 17);
+            this.instanceSiteNameVLabel.TabIndex = 2;
+            // 
+            // instancePrefixVLabel
+            // 
+            this.instancePrefixVLabel.AutoSize = true;
+            this.instancePrefixVLabel.Location = new System.Drawing.Point(400, 43);
+            this.instancePrefixVLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instancePrefixVLabel.Name = "instancePrefixVLabel";
+            this.instancePrefixVLabel.Size = new System.Drawing.Size(0, 17);
+            this.instancePrefixVLabel.TabIndex = 2;
+            // 
+            // instanceDateCreatedLabel
+            // 
+            this.instanceDateCreatedLabel.AutoSize = true;
+            this.instanceDateCreatedLabel.Location = new System.Drawing.Point(255, 117);
+            this.instanceDateCreatedLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instanceDateCreatedLabel.Name = "instanceDateCreatedLabel";
+            this.instanceDateCreatedLabel.Size = new System.Drawing.Size(96, 17);
+            this.instanceDateCreatedLabel.TabIndex = 2;
+            this.instanceDateCreatedLabel.Text = "Date Created:";
+            // 
+            // instanceXConnectSiteNameLabel
+            // 
+            this.instanceXConnectSiteNameLabel.AutoSize = true;
+            this.instanceXConnectSiteNameLabel.Location = new System.Drawing.Point(255, 92);
+            this.instanceXConnectSiteNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instanceXConnectSiteNameLabel.Name = "instanceXConnectSiteNameLabel";
+            this.instanceXConnectSiteNameLabel.Size = new System.Drawing.Size(143, 17);
+            this.instanceXConnectSiteNameLabel.TabIndex = 2;
+            this.instanceXConnectSiteNameLabel.Text = "xConnect Site Name: ";
+            // 
+            // instanceSiteNameLabel
+            // 
+            this.instanceSiteNameLabel.AutoSize = true;
+            this.instanceSiteNameLabel.Location = new System.Drawing.Point(255, 68);
+            this.instanceSiteNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.instanceSiteNameLabel.Name = "instanceSiteNameLabel";
+            this.instanceSiteNameLabel.Size = new System.Drawing.Size(81, 17);
+            this.instanceSiteNameLabel.TabIndex = 2;
+            this.instanceSiteNameLabel.Text = "Site Name: ";
+            // 
             // instancePrefixLabel
             // 
             this.instancePrefixLabel.AutoSize = true;
-            this.instancePrefixLabel.Location = new System.Drawing.Point(191, 35);
+            this.instancePrefixLabel.Location = new System.Drawing.Point(255, 43);
+            this.instancePrefixLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.instancePrefixLabel.Name = "instancePrefixLabel";
-            this.instancePrefixLabel.Size = new System.Drawing.Size(39, 13);
+            this.instancePrefixLabel.Size = new System.Drawing.Size(51, 17);
             this.instancePrefixLabel.TabIndex = 2;
             this.instancePrefixLabel.Text = "Prefix: ";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 19);
+            this.label1.Location = new System.Drawing.Point(13, 23);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.Size = new System.Drawing.Size(68, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Instances";
             // 
             // instancesListBox
             // 
             this.instancesListBox.FormattingEnabled = true;
-            this.instancesListBox.Location = new System.Drawing.Point(13, 35);
+            this.instancesListBox.ItemHeight = 16;
+            this.instancesListBox.Location = new System.Drawing.Point(17, 43);
+            this.instancesListBox.Margin = new System.Windows.Forms.Padding(4);
             this.instancesListBox.Name = "instancesListBox";
-            this.instancesListBox.Size = new System.Drawing.Size(136, 264);
+            this.instancesListBox.Size = new System.Drawing.Size(180, 324);
             this.instancesListBox.TabIndex = 0;
             this.instancesListBox.SelectedValueChanged += new System.EventHandler(this.instancesListBox_SelectedValueChanged);
             // 
@@ -568,80 +750,21 @@
             this.instanceListWatcher.SynchronizingObject = this;
             this.instanceListWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
             // 
-            // instanceSiteNameLabel
+            // comboBox2
             // 
-            this.instanceSiteNameLabel.AutoSize = true;
-            this.instanceSiteNameLabel.Location = new System.Drawing.Point(191, 55);
-            this.instanceSiteNameLabel.Name = "instanceSiteNameLabel";
-            this.instanceSiteNameLabel.Size = new System.Drawing.Size(62, 13);
-            this.instanceSiteNameLabel.TabIndex = 2;
-            this.instanceSiteNameLabel.Text = "Site Name: ";
-            // 
-            // instancePrefixVLabel
-            // 
-            this.instancePrefixVLabel.AutoSize = true;
-            this.instancePrefixVLabel.Location = new System.Drawing.Point(300, 35);
-            this.instancePrefixVLabel.Name = "instancePrefixVLabel";
-            this.instancePrefixVLabel.Size = new System.Drawing.Size(0, 13);
-            this.instancePrefixVLabel.TabIndex = 2;
-            // 
-            // instanceSiteNameVLabel
-            // 
-            this.instanceSiteNameVLabel.AutoSize = true;
-            this.instanceSiteNameVLabel.Location = new System.Drawing.Point(300, 55);
-            this.instanceSiteNameVLabel.Name = "instanceSiteNameVLabel";
-            this.instanceSiteNameVLabel.Size = new System.Drawing.Size(0, 13);
-            this.instanceSiteNameVLabel.TabIndex = 2;
-            // 
-            // instanceXConnectSiteNameLabel
-            // 
-            this.instanceXConnectSiteNameLabel.AutoSize = true;
-            this.instanceXConnectSiteNameLabel.Location = new System.Drawing.Point(191, 75);
-            this.instanceXConnectSiteNameLabel.Name = "instanceXConnectSiteNameLabel";
-            this.instanceXConnectSiteNameLabel.Size = new System.Drawing.Size(110, 13);
-            this.instanceXConnectSiteNameLabel.TabIndex = 2;
-            this.instanceXConnectSiteNameLabel.Text = "xConnect Site Name: ";
-            // 
-            // instanceXConnectSiteNameVLabel
-            // 
-            this.instanceXConnectSiteNameVLabel.AutoSize = true;
-            this.instanceXConnectSiteNameVLabel.Location = new System.Drawing.Point(300, 75);
-            this.instanceXConnectSiteNameVLabel.Name = "instanceXConnectSiteNameVLabel";
-            this.instanceXConnectSiteNameVLabel.Size = new System.Drawing.Size(0, 13);
-            this.instanceXConnectSiteNameVLabel.TabIndex = 2;
-            // 
-            // instanceDateCreatedLabel
-            // 
-            this.instanceDateCreatedLabel.AutoSize = true;
-            this.instanceDateCreatedLabel.Location = new System.Drawing.Point(191, 95);
-            this.instanceDateCreatedLabel.Name = "instanceDateCreatedLabel";
-            this.instanceDateCreatedLabel.Size = new System.Drawing.Size(73, 13);
-            this.instanceDateCreatedLabel.TabIndex = 2;
-            this.instanceDateCreatedLabel.Text = "Date Created:";
-            // 
-            // uninstallInstanceButton
-            // 
-            this.uninstallInstanceButton.Location = new System.Drawing.Point(191, 115);
-            this.uninstallInstanceButton.Name = "uninstallInstanceButton";
-            this.uninstallInstanceButton.Size = new System.Drawing.Size(75, 23);
-            this.uninstallInstanceButton.TabIndex = 3;
-            this.uninstallInstanceButton.Text = "Remove";
-            this.uninstallInstanceButton.UseVisualStyleBackColor = true;
-            // 
-            // instanceDateCreatedVLabel
-            // 
-            this.instanceDateCreatedVLabel.AutoSize = true;
-            this.instanceDateCreatedVLabel.Location = new System.Drawing.Point(300, 95);
-            this.instanceDateCreatedVLabel.Name = "instanceDateCreatedVLabel";
-            this.instanceDateCreatedVLabel.Size = new System.Drawing.Size(0, 13);
-            this.instanceDateCreatedVLabel.TabIndex = 2;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(42, 118);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 24);
+            this.comboBox2.TabIndex = 4;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 548);
+            this.ClientSize = new System.Drawing.Size(965, 674);
             this.Controls.Add(this.tabControl1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -649,6 +772,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -719,6 +844,12 @@
         private System.Windows.Forms.Label instanceXConnectSiteNameVLabel;
         private System.Windows.Forms.Label instanceDateCreatedLabel;
         private System.Windows.Forms.Label instanceXConnectSiteNameLabel;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ComboBox profileListBox;
+        private System.Windows.Forms.LinkLabel manageSitecoreProfilesLink;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }
 
