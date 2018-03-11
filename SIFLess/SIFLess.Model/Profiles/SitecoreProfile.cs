@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SIFLess.Model
+namespace SIFLess.Model.Profiles
 {
     public class SitecoreProfile
     {
@@ -16,7 +13,7 @@ namespace SIFLess.Model
         }
 
         [Browsable(false)]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public string Topology { get; set; }

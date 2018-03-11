@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using SIFLess.Model;
-using SIFLess.Properties;
+using SIFLess.Model.Profiles;
 
 namespace SIFLess
 {
     public partial class SitecoreCreateProfile : Form
     {
-        private bool _requiresvalidation = true;
-
-        private SitecoreProfile _profile;
+        private readonly SitecoreProfile _profile;
         public SitecoreCreateProfile(SitecoreProfile profile)
         {
             InitializeComponent();
@@ -41,10 +33,8 @@ namespace SIFLess
 
         private void InitData()
         {
-            versionList.Items.Add("9.0 Initial Release");
-            versionList.Items.Add("9.0 Update 1");
-            topologyList.Items.Add("XM");
-            topologyList.Items.Add("XP");
+            ConfigurationManager.AppSettings["Topologies"].Split('|').ToList().ForEach(t => topologyList.Items.Add(t));
+            ConfigurationManager.AppSettings["Versions"].Split('|').ToList().ForEach(v => versionList.Items.Add(v));
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -111,9 +101,9 @@ namespace SIFLess
             }
 
             //Save our profile
-            SIFLessProfiles currentProfiles = ProfileManager.Fetch();
+            SifLessProfiles currentProfiles = ProfileManager.Fetch();
 
-            
+
 
             if (_profile == null)
             {
@@ -123,7 +113,7 @@ namespace SIFLess
                     Topology = topologyList.SelectedItem.ToString(),
                     Version = versionList.SelectedItem.ToString(),
                     DataFolder = dataRepoTextBox.Text,
-                    ID = Guid.NewGuid()
+                    Id = Guid.NewGuid()
                 };
 
                 foreach (var ctrl in fileGroupBox.Controls)
@@ -139,11 +129,11 @@ namespace SIFLess
             }
             else
             {
-                var profile = currentProfiles.SiteforeProfiles.Find(p => p.ID == _profile.ID);
+                var profile = currentProfiles.SiteforeProfiles.Find(p => p.Id == _profile.Id);
 
                 profile.Name = profileTextBox.Text;
                 profile.Topology = topologyList.SelectedItem.ToString();
-                profile.Version =versionList.SelectedItem.ToString();
+                profile.Version = versionList.SelectedItem.ToString();
                 profile.DataFolder = dataRepoTextBox.Text;
 
                 profile.Files.Clear();
@@ -158,7 +148,7 @@ namespace SIFLess
             }
 
             ProfileManager.Update(currentProfiles);
- 
+
             this.Close();
 
         }

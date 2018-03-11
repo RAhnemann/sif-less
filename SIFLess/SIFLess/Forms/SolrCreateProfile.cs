@@ -15,15 +15,14 @@ using System.Windows.Forms;
 using System.Xml;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
 namespace SIFLess
 {
     public partial class SolrCreateProfile : Form
     {
-        private bool _requiresvalidation = true;
-
-        private SolrProfile _profile;
+        private readonly SolrProfile _profile;
         public SolrCreateProfile(SolrProfile profile)
         {
             InitializeComponent();
@@ -34,8 +33,6 @@ namespace SIFLess
             urlTextBox.Text = profile.Url;
             serviceComboBox.SelectedItem = profile.ServiceName;
             corePathTextBox.Text = profile.CorePath;
-
-
         }  
 
         public SolrCreateProfile()
@@ -181,7 +178,7 @@ namespace SIFLess
 
             #endregion
 
-            SIFLessProfiles currentProfiles = ProfileManager.Fetch();
+            SifLessProfiles currentProfiles = ProfileManager.Fetch();
 
             if (_profile == null)
             {
@@ -191,14 +188,14 @@ namespace SIFLess
                     Url = urlTextBox.Text,
                     ServiceName = serviceComboBox.SelectedItem.ToString(),
                     CorePath = corePathTextBox.Text,
-                    ID = Guid.NewGuid()
+                    Id = Guid.NewGuid()
                 };
 
                 currentProfiles.SolrProfiles.Add(newProfile);
             }
             else
             {
-                var profile = currentProfiles.SolrProfiles.Find(p => p.ID == _profile.ID);
+                var profile = currentProfiles.SolrProfiles.Find(p => p.Id == _profile.Id);
 
                 profile.Name = profileTextBox.Text;
                 profile.Url = urlTextBox.Text;

@@ -46,16 +46,23 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\Configurations.cs" />
+    <Compile Include="Configuration\Field.cs" />
+    <Compile Include="Configuration\FieldMaps.cs" />
+    <Compile Include="Configuration\File.cs" />
+    <Compile Include="Configuration\ScriptMap.cs" />
     <Compile Include="Exensions.cs" />
     <Compile Include="IParameterControl.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="ParameterConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParameterList.cs" />
-    <Compile Include="SIFLessProfiles.cs" />
-    <Compile Include="SolrProfile.cs" />
-    <Compile Include="SQLProfile.cs" />
-    <Compile Include="SitecoreProfile.cs" />
+    <Compile Include="Profiles\SIFLessProfiles.cs" />
+    <Compile Include="SitecoreConfigFile.cs" />
+    <Compile Include="Profiles\SolrProfile.cs" />
+    <Compile Include="Profiles\SQLProfile.cs" />
+    <Compile Include="Profiles\SitecoreProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

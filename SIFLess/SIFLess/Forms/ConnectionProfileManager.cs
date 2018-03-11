@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
 namespace SIFLess
@@ -64,7 +65,7 @@ namespace SIFLess
 
             if (currentProfiles.SqlProfiles != null)
             {
-                var bindingList = new BindingList<SQLProfile>(currentProfiles.SqlProfiles);
+                var bindingList = new BindingList<SqlProfile>(currentProfiles.SqlProfiles);
                 profileGrid.DataSource = bindingList;
             }
         }

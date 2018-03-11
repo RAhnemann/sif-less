@@ -1,0 +1,128 @@
+﻿<Configurations>
+  <Configuration topology="XM-CM" version="9.0 Initial Release" wrapper="blank.ps1">
+    <File type="data" name="Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip" />
+    <File type="config" name="sitecore-solr.json">
+      <ScriptMap location="BODY">
+        <![CDATA[
+        $solrParams = @{
+        Path = '$PSScriptRoot\sitecore-solr.json'
+        SolrUrl = $SolrUrl
+        SolrRoot = $SolrRoot
+        SolrService = $SolrService
+        CorePrefix = $Prefix
+        }
+        Install-SitecoreConfiguration @solrParams
+        ]]>
+      </ScriptMap>
+    </File>
+    <File type="config" name="sitecore-XM1-cm.json">
+      <FieldMaps>
+        <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"/>
+      </FieldMaps>
+      <ScriptMap location="BODY">
+        <![CDATA[
+        $sitecoreParams = @{
+        Path = '$PSScriptRoot\sitecore-XM1-cm.json'
+        Package = '$PSScriptRoot\Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip'
+        LicenseFile = $LicenseFilePath
+        SqlDbPrefix = $Prefix
+        SolrCorePrefix = $Prefix
+        SolrUrl = $SolrUrl
+        SiteName = '[SITENAME']
+        SqlServer = $SqlServer
+        SqlAdminPassword = $SqlAdminPassword
+        SqlAdminUser = $SqlAdminUser
+        }
+        Install-SitecoreConfiguration @sitecoreParams
+        ]]>
+      </ScriptMap>
+    </File>
+    <ScriptMap location="HEAD">
+      <![CDATA[
+      $Prefix = '[PREFIX]'
+      $PSScriptRoot = '[DATA_FOLDER]'
+      $SolrUrl = '[SOLR_URL]'
+      $SolrRoot = '[SOLR_ROOT]'
+      $SolrService = '[SOLR_SERVICE]'
+      $SqlServer = '[SQL_SERVER]'
+      $SqlAdminUser = '[SQL_USER]'
+      $SqlAdminPassword = '[SQL_PASSWORD]'
+      $LicenseFilePath = '[LICENSE_FILE]'
+      ]]>
+    </ScriptMap>
+  </Configuration>
+  <Configuration topology="XM-CM-CD" version="9.0 Initial Release">
+    <File type="data" name="Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip" />
+    <File type="data" name="Sitecore 9.0.0 rev. 171002 (OnPrem)_cd.scwdp.zip" />
+    <File type="config" name="sitecore-solr.json">
+      <ScriptMap>
+        <![CDATA[
+        $solrParams = @{
+        Path = '$PSScriptRoot\sitecore-solr.json'
+        SolrUrl = $SolrUrl
+        SolrRoot = $SolrRoot
+        SolrService = $SolrService
+        CorePrefix = $Prefix
+        }
+        Install-SitecoreConfiguration @solrParams
+        ]]>
+      </ScriptMap>
+    </File>
+    <File type="config" name="sitecore-XM1-cm.json">
+      <FieldMaps>
+        <Field name="cm_sitename" type="text" map="CM_SITENAME" label="CM Site Name" description="The Name of the CM Website"/>
+      </FieldMaps>
+      <ScriptMap>
+        <![CDATA[
+        $sitecore_cm_Params = @{
+        Path = '$PSScriptRoot\sitecore-XM1-cm.json'
+        Package = '$PSScriptRoot\Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip'
+        LicenseFile = $LicenseFilePath
+        SqlDbPrefix = $Prefix
+        SolrCorePrefix = $Prefix
+        SolrUrl = $SolrUrl
+        SiteName = '[CM_SITENAME']
+        SqlServer = $SqlServer
+        SqlAdminPassword = $SqlAdminPassword
+        SqlAdminUser = $SqlAdminUser
+        }
+        Install-SitecoreConfiguration @sitecore_cm_Params
+        ]]>
+      </ScriptMap>
+    </File>
+    <File type="config" name="sitecore-XM1-cd.json">
+      <FieldMaps>
+        <Field name="cd_sitename" type="text" map="CD_SITENAME" label="CD Site Name" description="The Name of the CD Website"/>
+      </FieldMaps>
+      <ScriptMap>
+        <![CDATA[
+        $sitecore_cd_Params = @{
+        Path = '$PSScriptRoot\sitecore-XM1-cd.json'
+        Package = '$PSScriptRoot\Sitecore 9.0.0 rev. 171002 (OnPrem)_cd.scwdp.zip'
+        LicenseFile = $LicenseFilePath
+        SqlDbPrefix = $Prefix
+        SolrCorePrefix = $Prefix
+        SolrUrl = $SolrUrl
+        SiteName = '[CD_SITENAME']
+        SqlServer = $SqlServer
+        }
+        Install-SitecoreConfiguration @sitecore_cd_Params
+        ]]>
+      </ScriptMap>
+    </File>
+
+    <ScriptMap>
+      <![CDATA[
+      $Prefix = '[PREFIX]'
+      $PSScriptRoot = '[DATA_FOLDER]'
+      $SolrUrl = '[SOLR_URL]'
+      $SolrRoot = '[SOLR_ROOT]'
+      $SolrService = '[SOLR_SERVICE]'
+      $SqlServer = '[SQL_SERVER]'
+      $SqlAdminUser = '[SQL_USER]'
+      $SqlAdminPassword = '[SQL_PASSWORD]'
+      $LicenseFilePath = '[LICENSE_FILE]'
+      ]]>
+    </ScriptMap>
+  </Configuration>
+</Configurations>

@@ -37,27 +37,30 @@
             // fieldLabel
             // 
             this.fieldLabel.AutoSize = true;
-            this.fieldLabel.Location = new System.Drawing.Point(3, 5);
+            this.fieldLabel.Location = new System.Drawing.Point(4, 6);
+            this.fieldLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.fieldLabel.Name = "fieldLabel";
-            this.fieldLabel.Size = new System.Drawing.Size(35, 13);
+            this.fieldLabel.Size = new System.Drawing.Size(46, 17);
             this.fieldLabel.TabIndex = 0;
             this.fieldLabel.Text = "label1";
             // 
             // valueTextBox
             // 
-            this.valueTextBox.Location = new System.Drawing.Point(140, 2);
+            this.valueTextBox.Location = new System.Drawing.Point(152, 2);
+            this.valueTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.valueTextBox.Name = "valueTextBox";
-            this.valueTextBox.Size = new System.Drawing.Size(377, 20);
+            this.valueTextBox.Size = new System.Drawing.Size(189, 22);
             this.valueTextBox.TabIndex = 1;
             // 
             // StringControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.fieldLabel);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StringControl";
-            this.Size = new System.Drawing.Size(520, 24);
+            this.Size = new System.Drawing.Size(360, 30);
             this.Load += new System.EventHandler(this.UserControl1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
 namespace SIFLess

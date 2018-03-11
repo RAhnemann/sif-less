@@ -1,23 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace SIFLess.Model
+namespace SIFLess.Model.Profiles
 {
-    public class SQLProfile
+    public class SolrProfile
     {
-       
-
         [Browsable(false)]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public string ServerName { get; set; }
+        public string Url { get; set; }
 
-        public string Login { get; set; }
+        public string ServiceName { get; set; }
 
         [Browsable(false)]
-        public string Password { get; set; }
+        public string CorePath { get; set; }
         
         public override string ToString()
         {

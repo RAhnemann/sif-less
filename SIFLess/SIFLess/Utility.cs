@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using SIFLess.Model.Configuration;
+using Configuration = SIFLess.Model.Configuration.Configuration;
 
 namespace SIFLess
 {
@@ -55,49 +60,86 @@ namespace SIFLess
             return stringBuilder.ToString().Contains(expected);
         }
 
-        public static List<string> GetFilesForInstance(string topology, string version)
+        public static Configuration GetInstanceConfiguration(string topology, string version)
         {
-            var files = new List<string>();
-            switch (version)
+            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                ConfigurationManager.AppSettings["ConfigManifestPath"]);
+
+            var serializer = new XmlSerializer(typeof(ConfigurationSet));
+
+            ConfigurationSet configs;
+            using (var reader = new StreamReader(configPath))
             {
-                case "9.0 Initial Release":
-                    if (topology == "XM")
-                    {
-
-                    }
-                    else if (topology == "XP")
-                    {
-                        files.Add("Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip");
-                        files.Add("Sitecore 9.0.0 rev. 171002 (OnPrem)_xp0xconnect.scwdp.zip");
-                        files.Add("sitecore-solr.json");
-                        files.Add("sitecore-XP0.json");
-                        files.Add("xconnect-createcert.json");
-                        files.Add("xconnect-solr.json");
-                        files.Add("xconnect-XP0.json");
-                    }
-
-                    break;
-                case "9.0 Update 1":
-                    if (topology == "XM")
-                    {
-                        files.Add("Sitecore 9.0.1 rev. 171219 (OnPrem)_cm.scwdp.zip");
-                        files.Add("sitecore-solr.json");
-                        files.Add("sitecore-XM1-cm.json");
-                    }
-                    else if (topology == "XP")
-                    {
-                        files.Add("Sitecore 9.0.1 rev. 171219 (OnPrem)_single.scwdp.zip");
-                        files.Add("Sitecore 9.0.1 rev. 171219 (OnPrem)_xp0xconnect.scwdp.zip");
-                        files.Add("sitecore-solr.json");
-                        files.Add("sitecore-XP0.json");
-                        files.Add("xconnect-createcert.json");
-                        files.Add("xconnect-solr.json");
-                        files.Add("xconnect-XP0.json");
-                    }
-                    break;
+                try
+                {
+                    configs = (ConfigurationSet)serializer.Deserialize(reader);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    throw;
+                }
+                finally
+                {
+                    reader.Close();
+                }
             }
 
-            return files;
+            if (configs != null)
+            {
+                var config = configs.Configurations.Find(c => c.Topology == topology && c.Version == version);
+
+                return config;
+            }
+            else
+            {
+                throw new Exception($"Couldn't find associated config for [{topology}][{version}]");
+            }
+
+
+        }
+        public static List<string> GetFilesForInstance(string topology, string version)
+        {
+            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                ConfigurationManager.AppSettings["ConfigManifestPath"]);
+
+            var serializer = new XmlSerializer(typeof(ConfigurationSet));
+
+            ConfigurationSet configs;
+            using (var reader = new StreamReader(configPath))
+            {
+                try
+                {
+                    configs = (ConfigurationSet)serializer.Deserialize(reader);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    throw;
+                }
+                finally
+                {
+                    reader.Close();
+                }
+            }
+
+            if (configs != null)
+            {
+                var config = configs.Configurations.Find(c => c.Topology == topology && c.Version == version);
+
+                var files = new List<string>();
+
+                foreach (var file in config.Files)
+                {
+                    files.Add(file.Name);
+                }
+
+                return files;
+            }
+            else
+            {
+                throw new Exception($"Couldn't find associated config for [{topology}][{version}]");
+            }
 
         }
     }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
 namespace SIFLess
@@ -19,8 +20,8 @@ namespace SIFLess
     {
         private bool _requiresvalidation = true;
 
-        private SQLProfile _profile;
-        public ConnectionCreateProfile(SQLProfile profile)
+        private SqlProfile _profile;
+        public ConnectionCreateProfile(SqlProfile profile)
         {
             InitializeComponent();
 
@@ -144,24 +145,24 @@ namespace SIFLess
                 }
             }
 
-            SIFLessProfiles currentProfiles = ProfileManager.Fetch();
+            SifLessProfiles currentProfiles = ProfileManager.Fetch();
 
             if (_profile == null)
             {
-                SQLProfile newProfile = new SQLProfile
+                SqlProfile newProfile = new SqlProfile
                 {
                     Name = profileTextBox.Text,
                     ServerName = connectionNameTextBox.Text,
                     Login = loginTextBox.Text,
                     Password = passwordTextBox.Text,
-                    ID = Guid.NewGuid()
+                    Id = Guid.NewGuid()
                 };
 
                 currentProfiles.SqlProfiles.Add(newProfile);
             }
             else
             {
-                var profile = currentProfiles.SqlProfiles.Find(p => p.ID == _profile.ID);
+                var profile = currentProfiles.SqlProfiles.Find(p => p.Id == _profile.Id);
 
                 profile.Name = profileTextBox.Text;
                 profile.ServerName = connectionNameTextBox.Text;

@@ -7,22 +7,23 @@ using System.Threading.Tasks;
 using System.Web.Caching;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
 namespace SIFLess
 {
     public class ProfileManager
     {
-        public static SIFLessProfiles Fetch()
+        public static SifLessProfiles Fetch()
         {
             var profileText = Settings.Default.SIFlessProfiles;
 
             if (string.IsNullOrWhiteSpace(profileText))
             {
-                SIFLessProfiles newProfileData = new SIFLessProfiles
+                SifLessProfiles newProfileData = new SifLessProfiles
                 {
                     SiteforeProfiles = new List<SitecoreProfile>(),
-                    SqlProfiles = new List<SQLProfile>(),
+                    SqlProfiles = new List<SqlProfile>(),
                     SolrProfiles = new List<SolrProfile>()
                 };
 
@@ -31,7 +32,7 @@ namespace SIFLess
                 return newProfileData;
             }
 
-            var currentData = JsonConvert.DeserializeObject<SIFLessProfiles>(profileText);
+            var currentData = JsonConvert.DeserializeObject<SifLessProfiles>(profileText);
 
             if (currentData.SiteforeProfiles == null)
                 currentData.SiteforeProfiles = new List<SitecoreProfile>();
@@ -40,11 +41,11 @@ namespace SIFLess
                 currentData.SolrProfiles = new List<SolrProfile>();
 
             if (currentData.SqlProfiles == null)
-                currentData.SqlProfiles = new List<SQLProfile>();
+                currentData.SqlProfiles = new List<SqlProfile>();
 
             return currentData;
         }
-        public static void Update(SIFLessProfiles profileData)
+        public static void Update(SifLessProfiles profileData)
         {
             Settings.Default.SIFlessProfiles = JsonConvert.SerializeObject(profileData);
             Settings.Default.Save();

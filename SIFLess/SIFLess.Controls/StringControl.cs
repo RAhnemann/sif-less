@@ -4,10 +4,8 @@ using SIFLess.Model;
 
 namespace SIFLess.Controls
 {
-    public partial class StringControl: UserControl, IParameterControl
+    public partial class StringControl : UserControl, IParameterControl
     {
-        private readonly string _fieldName;
-        private readonly string _defaultValue;
         private readonly string _description;
 
         public StringControl()
@@ -15,21 +13,26 @@ namespace SIFLess.Controls
             InitializeComponent();
         }
 
-        public string Value => valueTextBox.Text;
-        public string Field => _fieldName;
-
-        public StringControl(string fieldName, string defaultValue, string description) :this()
+        public string Value
         {
-            _fieldName = fieldName;
-            _defaultValue = defaultValue;
-            _description = description;
+            get => valueTextBox.Text;
+            set => valueTextBox.Text = value;
+        }
 
+        public string Field { get; }
+
+        public string FieldMap { get; }
+
+        public StringControl(string fieldName, string fieldMapName, string description) : this()
+        {
+            Field = fieldName;
+            _description = description;
+            FieldMap = fieldMapName;
         }
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
-            fieldLabel.Text = _fieldName;
-            valueTextBox.Text = _defaultValue;
+            fieldLabel.Text = Field;
             fieldTip.SetToolTip(fieldLabel, _description);
         }
     }
