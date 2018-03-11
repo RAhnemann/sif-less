@@ -28,21 +28,27 @@ namespace SIFLess
         public MainForm()
         {
             InitializeComponent();
-            
         }
 
         /// <summary>
         /// Reset all the Profiles in the Profile Dropdown
         /// </summary>
-        public void RefreshProfiles()
+        public void RefreshSitecoreProfiles()
         {
             profileListBox.Items.Clear();
 
-            var profiles = Settings.Default.SitecoreProfiles;
-
-            List<SitecoreProfile> scProfiles = JsonConvert.DeserializeObject<List<SitecoreProfile>>(profiles);
+            var currentProfiles = ProfileManager.Fetch();
             
-            scProfiles.ForEach(p=>profileListBox.Items.Add(p));
+            currentProfiles.SiteforeProfilese.ForEach(p=>profileListBox.Items.Add(p));
+        }
+
+        public void RefreshConnectionProfiles()
+        {
+            connectionListBox.Items.Clear();
+
+            var currentProfiles = ProfileManager.Fetch();
+
+            currentProfiles.SqlProfiles.ForEach(p => connectionListBox.Items.Add(p));
         }
 
         private void prefixTextBox_TextChanged(object sender, EventArgs e)
@@ -237,20 +243,7 @@ namespace SIFLess
         private void MainForm_Load(object sender, EventArgs e)
         {
            
-            //new ToolTip().SetToolTip(licenseLabel, "Location of your license.xml file");
-            //new ToolTip().SetToolTip(configLabel, "The Folder containing all your json config files (e.g. xconnect-solr.json)");
-            //new ToolTip().SetToolTip(scPackageLabel, "The location of your Sitecore Package (Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip)");
-            //new ToolTip().SetToolTip(xConnectPackageLabel, "The location of your xConnect Package (Sitecore 9.0.0 rev. 171002 (OnPrem)_xp0xconnect.scwdp.zip)");
-            //new ToolTip().SetToolTip(installPrefixLabel, "The prefix for this installation. Should be unique to this system.");
-            //new ToolTip().SetToolTip(siteNameLabel, "The Site's Name.  This will be http://<SiteName>/sitecore");
-            //new ToolTip().SetToolTip(xConnectSiteNameLabel, "The xConnect Site Name. This will be used to access xConnect");
-            //new ToolTip().SetToolTip(solrUrlLabel, "The URL to access Solr");
-            //new ToolTip().SetToolTip(solrFolderLabel, "The folder where Solr is installed");
-            //new ToolTip().SetToolTip(solrServiceLabel, "The name of the Windows Service running Solr");
-            //new ToolTip().SetToolTip(sqlServerLabel, "Your SQL instance name");
-            //new ToolTip().SetToolTip(sqlLoginLabel, "SQL Admin login");
-            //new ToolTip().SetToolTip(sqlPasswordLabel, "SQL Admin password");
-
+           
             if (Settings.Default.UpgradeRequired)
             {
                 Settings.Default.Upgrade();
@@ -258,19 +251,9 @@ namespace SIFLess
                 Settings.Default.Save();
             }
 
-            RefreshProfiles();
-
-            licenseTextBox.Text = Settings.Default.LicenseFilePath;
-            configTextBox.Text = Settings.Default.ConfigPath;
-            sitecorePackageTextBox.Text = Settings.Default.SitecorePackagePath;
-            xConnectPackageTextBox.Text = Settings.Default.xConnectPackagePath;
-            solrFolderTextBox.Text = Settings.Default.SolrFolder;
-            solrServiceTextBox.Text = Settings.Default.SolrServiceName;
-            solrURLTextBox.Text = Settings.Default.SolrUrl;
-
-            sqlServerTextBox.Text = Settings.Default.SQLServer;
-            sqlLoginTextBox.Text = Settings.Default.SQLLogin;
-            sqlPasswordTextBox.Text = Settings.Default.SQLPassword;
+            RefreshSitecoreProfiles();
+            RefreshConnectionProfiles();
+           
 
             this.Text = $"SIF-less v{this.ProductVersion}";
 
@@ -327,18 +310,18 @@ namespace SIFLess
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.Default.LicenseFilePath = licenseTextBox.Text.Trim();
-            Settings.Default.SitecorePackagePath = sitecorePackageTextBox.Text.Trim();
-            Settings.Default.ConfigPath = configTextBox.Text.Trim();
-            Settings.Default.SQLLogin = sqlLoginTextBox.Text.Trim();
-            Settings.Default.SQLPassword = sqlPasswordTextBox.Text.Trim();
-            Settings.Default.SQLServer = sqlServerTextBox.Text.Trim();
-            Settings.Default.SolrFolder = solrFolderTextBox.Text.Trim();
-            Settings.Default.SolrServiceName = solrServiceTextBox.Text.Trim();
-            Settings.Default.SolrUrl = solrURLTextBox.Text.Trim();
-            Settings.Default.xConnectPackagePath = xConnectPackageTextBox.Text.Trim();
+            //Settings.Default.LicenseFilePath = licenseTextBox.Text.Trim();
+            //Settings.Default.SitecorePackagePath = sitecorePackageTextBox.Text.Trim();
+            //Settings.Default.ConfigPath = configTextBox.Text.Trim();
+            //Settings.Default.SQLLogin = sqlLoginTextBox.Text.Trim();
+            //Settings.Default.SQLPassword = sqlPasswordTextBox.Text.Trim();
+            //Settings.Default.SQLServer = sqlServerTextBox.Text.Trim();
+            //Settings.Default.SolrFolder = solrFolderTextBox.Text.Trim();
+            //Settings.Default.SolrServiceName = solrServiceTextBox.Text.Trim();
+            //Settings.Default.SolrUrl = solrURLTextBox.Text.Trim();
+            //Settings.Default.xConnectPackagePath = xConnectPackageTextBox.Text.Trim();
 
-            Settings.Default.Save();
+            //Settings.Default.Save();
         }
 
         private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
@@ -403,7 +386,15 @@ namespace SIFLess
         {
             SitecoreProfileManager mgr = new SitecoreProfileManager();
             mgr.ShowDialog();
-            RefreshProfiles();
+            RefreshSitecoreProfiles();
+        }
+
+        private void manageConnectionProfileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ConnectionProfileManager mgr = new ConnectionProfileManager();
+            mgr.ShowDialog();
+            RefreshConnectionProfiles();
+
         }
     }
 }

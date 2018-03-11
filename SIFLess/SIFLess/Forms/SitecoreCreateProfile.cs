@@ -111,9 +111,9 @@ namespace SIFLess
             }
 
             //Save our profile
-            var profileText = Settings.Default.SitecoreProfiles;
+            SIFLessProfiles currentProfiles = ProfileManager.Fetch();
 
-            List<SitecoreProfile> profiles;
+            
 
             if (_profile == null)
             {
@@ -134,22 +134,12 @@ namespace SIFLess
                     }
                 }
 
-                if (string.IsNullOrWhiteSpace(profileText))
-                {
-                    profiles = new List<SitecoreProfile>() { newProfile };
-                }
-                else
-                {
-                    profiles = JsonConvert.DeserializeObject<List<SitecoreProfile>>(profileText);
-                    profiles.Add(newProfile);
-                }
+                currentProfiles.SiteforeProfilese.Add(newProfile);
 
             }
             else
             {
-                profiles = JsonConvert.DeserializeObject<List<SitecoreProfile>>(profileText);
-
-                var profile = profiles.Find(p => p.ID == _profile.ID);
+                var profile = currentProfiles.SiteforeProfilese.Find(p => p.ID == _profile.ID);
 
                 profile.Name = profileTextBox.Text;
                 profile.Topology = topologyList.SelectedItem.ToString();
@@ -167,11 +157,7 @@ namespace SIFLess
                 }
             }
 
-
-
-
-            Settings.Default.SitecoreProfiles = JsonConvert.SerializeObject(profiles);
-            Settings.Default.Save();
+            ProfileManager.Update(currentProfiles);
  
             this.Close();
 

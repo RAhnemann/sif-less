@@ -13,15 +13,15 @@ using SIFLess.Properties;
 
 namespace SIFLess
 {
-    public partial class SitecoreProfileManager : Form
+    public partial class ConnectionProfileManager : Form
     {
         private MainForm _mainForm;
 
-        public SitecoreProfileManager(MainForm main) : this()
+        public ConnectionProfileManager(MainForm main) : this()
         {
             _mainForm = main;
         }
-        public SitecoreProfileManager()
+        public ConnectionProfileManager()
         {
             InitializeComponent();
             RefreshList();
@@ -51,7 +51,7 @@ namespace SIFLess
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SitecoreCreateProfile profile = new SitecoreCreateProfile();
+            ConnectionCreateProfile profile = new ConnectionCreateProfile();
 
             profile.ShowDialog();
 
@@ -61,8 +61,8 @@ namespace SIFLess
         private void RefreshList()
         {
             var currentProfiles = ProfileManager.Fetch();
-
-            var bindingList = new BindingList<SitecoreProfile>(currentProfiles.SiteforeProfilese);
+           
+            var bindingList = new BindingList<SQLProfile>(currentProfiles.SqlProfiles);
             profileGrid.DataSource = bindingList;
 
         }
@@ -72,13 +72,13 @@ namespace SIFLess
             if (e.ColumnIndex == 0 || e.ColumnIndex == 1)
             {
                 var currentProfiles = ProfileManager.Fetch();
-                
-                var scProfile = currentProfiles.SiteforeProfilese[e.RowIndex];
+
+                var scProfile = currentProfiles.SqlProfiles[e.RowIndex];
 
                 //Edit
                 if (e.ColumnIndex == 0)
                 {
-                    SitecoreCreateProfile profile = new SitecoreCreateProfile(scProfile);
+                    ConnectionCreateProfile profile = new ConnectionCreateProfile(scProfile);
 
                     profile.ShowDialog();
                     RefreshList();

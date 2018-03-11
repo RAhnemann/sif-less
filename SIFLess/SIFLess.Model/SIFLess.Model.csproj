@@ -52,6 +52,8 @@
     <Compile Include="ParameterConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParameterList.cs" />
+    <Compile Include="SIFLessProfiles.cs" />
+    <Compile Include="SQLProfile.cs" />
     <Compile Include="SitecoreProfile.cs" />
   </ItemGroup>
   <ItemGroup>

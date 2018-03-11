@@ -69,12 +69,25 @@
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Forms\ConnectionProfileManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConnectionProfileManager.Designer.cs">
+      <DependentUpon>ConnectionProfileManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConnectionCreateProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConnectionCreateProfile.Designer.cs">
+      <DependentUpon>ConnectionCreateProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProfileManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SitecoreCreateProfile.cs">
@@ -99,8 +112,14 @@
     <EmbeddedResource Include="ExecuteForm.resx">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConnectionCreateProfile.resx">
+      <DependentUpon>ConnectionCreateProfile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SitecoreCreateProfile.resx">
       <DependentUpon>SitecoreCreateProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConnectionProfileManager.resx">
+      <DependentUpon>ConnectionProfileManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
