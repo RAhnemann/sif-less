@@ -69,6 +69,18 @@
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Forms\SolrProfileManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SolrProfileManager.Designer.cs">
+      <DependentUpon>SolrProfileManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SolrCreateProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SolrCreateProfile.Designer.cs">
+      <DependentUpon>SolrCreateProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ConnectionProfileManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,10 +93,10 @@
     <Compile Include="Forms\ConnectionCreateProfile.Designer.cs">
       <DependentUpon>ConnectionCreateProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProfileManager.cs" />
@@ -112,6 +124,12 @@
     <EmbeddedResource Include="ExecuteForm.resx">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SolrProfileManager.resx">
+      <DependentUpon>SolrProfileManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SolrCreateProfile.resx">
+      <DependentUpon>SolrCreateProfile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConnectionCreateProfile.resx">
       <DependentUpon>ConnectionCreateProfile.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,7 +139,7 @@
     <EmbeddedResource Include="Forms\ConnectionProfileManager.resx">
       <DependentUpon>ConnectionProfileManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -134,12 +134,12 @@ namespace SIFLess
                     }
                 }
 
-                currentProfiles.SiteforeProfilese.Add(newProfile);
+                currentProfiles.SiteforeProfiles.Add(newProfile);
 
             }
             else
             {
-                var profile = currentProfiles.SiteforeProfilese.Find(p => p.ID == _profile.ID);
+                var profile = currentProfiles.SiteforeProfiles.Find(p => p.ID == _profile.ID);
 
                 profile.Name = profileTextBox.Text;
                 profile.Topology = topologyList.SelectedItem.ToString();

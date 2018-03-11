@@ -13,15 +13,15 @@ using SIFLess.Properties;
 
 namespace SIFLess
 {
-    public partial class SitecoreProfileManager : Form
+    public partial class SolrProfileManager : Form
     {
         private MainForm _mainForm;
 
-        public SitecoreProfileManager(MainForm main) : this()
+        public SolrProfileManager(MainForm main) : this()
         {
             _mainForm = main;
         }
-        public SitecoreProfileManager()
+        public SolrProfileManager()
         {
             InitializeComponent();
             RefreshList();
@@ -51,7 +51,7 @@ namespace SIFLess
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SitecoreCreateProfile profile = new SitecoreCreateProfile();
+            SolrCreateProfile profile = new SolrCreateProfile();
 
             profile.ShowDialog();
 
@@ -62,13 +62,11 @@ namespace SIFLess
         {
             var currentProfiles = ProfileManager.Fetch();
 
-            if (currentProfiles.SiteforeProfiles != null)
+            if (currentProfiles.SolrProfiles != null)
             {
-                var bindingList = new BindingList<SitecoreProfile>(currentProfiles.SiteforeProfiles);
-
+                var bindingList = new BindingList<SolrProfile>(currentProfiles.SolrProfiles);
                 profileGrid.DataSource = bindingList;
             }
-
         }
 
         private void profileGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -77,12 +75,12 @@ namespace SIFLess
             {
                 var currentProfiles = ProfileManager.Fetch();
 
-                var scProfile = currentProfiles.SiteforeProfiles[e.RowIndex];
+                var scProfile = currentProfiles.SolrProfiles[e.RowIndex];
 
                 //Edit
                 if (e.ColumnIndex == 0)
                 {
-                    SitecoreCreateProfile profile = new SitecoreCreateProfile(scProfile);
+                    SolrCreateProfile profile = new SolrCreateProfile(scProfile);
 
                     profile.ShowDialog();
                     RefreshList();

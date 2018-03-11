@@ -4,6 +4,7 @@ using System.Deployment.Application;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Caching;
 using Newtonsoft.Json;
 using SIFLess.Model;
 using SIFLess.Properties;
@@ -20,8 +21,9 @@ namespace SIFLess
             {
                 SIFLessProfiles newProfileData = new SIFLessProfiles
                 {
-                    SiteforeProfilese = new List<SitecoreProfile>(),
-                    SqlProfiles = new List<SQLProfile>()
+                    SiteforeProfiles = new List<SitecoreProfile>(),
+                    SqlProfiles = new List<SQLProfile>(),
+                    SolrProfiles = new List<SolrProfile>()
                 };
 
                 Update(newProfileData);
@@ -29,7 +31,18 @@ namespace SIFLess
                 return newProfileData;
             }
 
-            return JsonConvert.DeserializeObject<SIFLessProfiles>(profileText);
+            var currentData = JsonConvert.DeserializeObject<SIFLessProfiles>(profileText);
+
+            if (currentData.SiteforeProfiles == null)
+                currentData.SiteforeProfiles = new List<SitecoreProfile>();
+
+            if (currentData.SolrProfiles == null)
+                currentData.SolrProfiles = new List<SolrProfile>();
+
+            if (currentData.SqlProfiles == null)
+                currentData.SqlProfiles = new List<SQLProfile>();
+
+            return currentData;
         }
         public static void Update(SIFLessProfiles profileData)
         {

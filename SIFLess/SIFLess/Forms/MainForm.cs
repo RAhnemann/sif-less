@@ -38,8 +38,8 @@ namespace SIFLess
             profileListBox.Items.Clear();
 
             var currentProfiles = ProfileManager.Fetch();
-            
-            currentProfiles.SiteforeProfilese.ForEach(p=>profileListBox.Items.Add(p));
+
+            currentProfiles.SiteforeProfiles?.ForEach(p => profileListBox.Items.Add(p));
         }
 
         public void RefreshConnectionProfiles()
@@ -48,7 +48,16 @@ namespace SIFLess
 
             var currentProfiles = ProfileManager.Fetch();
 
-            currentProfiles.SqlProfiles.ForEach(p => connectionListBox.Items.Add(p));
+            currentProfiles.SqlProfiles?.ForEach(p => connectionListBox.Items.Add(p));
+        }
+
+        public void RefreshSolrProfiles()
+        {
+            solrListBox.Items.Clear();
+
+            var currentProfiles = ProfileManager.Fetch();
+
+            currentProfiles.SolrProfiles?.ForEach(p => solrListBox.Items.Add(p));
         }
 
         private void prefixTextBox_TextChanged(object sender, EventArgs e)
@@ -150,9 +159,9 @@ namespace SIFLess
         {
             var ezText = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "EZ.ps1"));
 
-          var solrPath = solrURLTextBox.Text.EndsWith("/")
-            ? solrURLTextBox.Text.Substring(0, solrURLTextBox.TextLength - 1)
-            : solrURLTextBox.Text;
+            var solrPath = solrURLTextBox.Text.EndsWith("/")
+              ? solrURLTextBox.Text.Substring(0, solrURLTextBox.TextLength - 1)
+              : solrURLTextBox.Text;
             ezText = ezText.Replace("[SC_PREFIX]", prefixTextBox.Text);
             ezText = ezText.Replace("[SCRIPT_ROOT]", configTextBox.Text);
             ezText = ezText.Replace("[XCONNECT_NAME]", xConnectName.Text);
@@ -242,8 +251,8 @@ namespace SIFLess
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-           
-           
+
+
             if (Settings.Default.UpgradeRequired)
             {
                 Settings.Default.Upgrade();
@@ -253,7 +262,7 @@ namespace SIFLess
 
             RefreshSitecoreProfiles();
             RefreshConnectionProfiles();
-           
+            RefreshSolrProfiles();
 
             this.Text = $"SIF-less v{this.ProductVersion}";
 
@@ -395,6 +404,13 @@ namespace SIFLess
             mgr.ShowDialog();
             RefreshConnectionProfiles();
 
+        }
+
+        private void manageSolrLinkButtonsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SolrProfileManager mgr = new SolrProfileManager();
+            mgr.ShowDialog();
+            RefreshSolrProfiles();
         }
     }
 }

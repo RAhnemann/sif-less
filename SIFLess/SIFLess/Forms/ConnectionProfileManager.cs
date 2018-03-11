@@ -61,10 +61,12 @@ namespace SIFLess
         private void RefreshList()
         {
             var currentProfiles = ProfileManager.Fetch();
-           
-            var bindingList = new BindingList<SQLProfile>(currentProfiles.SqlProfiles);
-            profileGrid.DataSource = bindingList;
 
+            if (currentProfiles.SqlProfiles != null)
+            {
+                var bindingList = new BindingList<SQLProfile>(currentProfiles.SqlProfiles);
+                profileGrid.DataSource = bindingList;
+            }
         }
 
         private void profileGrid_CellClick(object sender, DataGridViewCellEventArgs e)
