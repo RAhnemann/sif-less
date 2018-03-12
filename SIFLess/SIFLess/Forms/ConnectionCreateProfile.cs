@@ -18,9 +18,8 @@ namespace SIFLess
 {
     public partial class ConnectionCreateProfile : Form
     {
-        private bool _requiresvalidation = true;
+        private readonly SqlProfile _profile;
 
-        private SqlProfile _profile;
         public ConnectionCreateProfile(SqlProfile profile)
         {
             InitializeComponent();
@@ -32,15 +31,13 @@ namespace SIFLess
             loginTextBox.Text = profile.Login;
             passwordTextBox.Text = profile.Password;
 
-
+            validateButton.Text = "Update Profile";
         }
 
         public ConnectionCreateProfile()
         {
             InitializeComponent();
         }
-
-
 
         private void validateButton_Click(object sender, EventArgs e)
         {
@@ -68,11 +65,13 @@ namespace SIFLess
                 MessageBox.Show("Enter a Password");
                 return;
             }
-            
-            SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();
-            sqlBuilder.DataSource = connectionNameTextBox.Text;
-            sqlBuilder.UserID = loginTextBox.Text;
-            sqlBuilder.Password = passwordTextBox.Text;
+
+            var sqlBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource = connectionNameTextBox.Text,
+                UserID = loginTextBox.Text,
+                Password = passwordTextBox.Text
+            };
 
             //check the connection and other things:
             using (SqlConnection connection =new SqlConnection(sqlBuilder.ConnectionString))
@@ -145,11 +144,11 @@ namespace SIFLess
                 }
             }
 
-            SifLessProfiles currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = ProfileManager.Fetch();
 
             if (_profile == null)
             {
-                SqlProfile newProfile = new SqlProfile
+                var newProfile = new SqlProfile
                 {
                     Name = profileTextBox.Text,
                     ServerName = connectionNameTextBox.Text,

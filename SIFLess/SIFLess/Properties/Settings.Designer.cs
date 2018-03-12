@@ -46,5 +46,41 @@ namespace SIFLess.Properties {
                 this["SIFlessProfiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastSitecoreProfile {
+            get {
+                return ((string)(this["LastSitecoreProfile"]));
+            }
+            set {
+                this["LastSitecoreProfile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastSolrProfile {
+            get {
+                return ((string)(this["LastSolrProfile"]));
+            }
+            set {
+                this["LastSolrProfile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastSqlProfile {
+            get {
+                return ((string)(this["LastSqlProfile"]));
+            }
+            set {
+                this["LastSqlProfile"] = value;
+            }
+        }
     }
 }

@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Newtonsoft.Json;
 using SIFLess.Model;
 using SIFLess.Model.Profiles;
-using SIFLess.Properties;
 
 namespace SIFLess
 {
@@ -27,12 +18,15 @@ namespace SIFLess
         {
             InitializeComponent();
             InitServices();
-            _profile = profile;
 
+            _profile = profile;
+           
             profileTextBox.Text = profile.Name;
             urlTextBox.Text = profile.Url;
             serviceComboBox.SelectedItem = profile.ServiceName;
             corePathTextBox.Text = profile.CorePath;
+
+            validateButton.Text = "Update Profile";
         }  
 
         public SolrCreateProfile()
@@ -40,9 +34,7 @@ namespace SIFLess
             InitializeComponent();
             InitServices();
         }
-
-
-
+        
         private void validateButton_Click(object sender, EventArgs e)
         {
 
@@ -82,7 +74,7 @@ namespace SIFLess
                     return;
                 }
 
-                if (!File.Exists(Path.Combine(corePathTextBox.Text, "solr.xml")))
+                if (!File.Exists(Path.Combine(corePathTextBox.Text.EnsureEndsWith("\\"), "server\\solr\\solr.xml")))
                 {
                     MessageBox.Show("Couldn't find solr.xml in Core Folder");
                     validateCoreFolderLabel.ForeColor = Color.Red;
@@ -108,7 +100,14 @@ namespace SIFLess
                     return;
                 }
 
-                var request = WebRequest.Create(urlTextBox.Text.EnsureEndsWith("/") + "admin/info/system");
+                if (!urlTextBox.Text.ToLower().EndsWith("/solr"))
+                {
+                    MessageBox.Show("Solr Url should end at /solr");
+                    validateUrlLabel.ForeColor = Color.Red;
+                    return;
+                }
+
+                var request = WebRequest.Create(urlTextBox.Text + "/admin/info/system");
 
                 var response = (HttpWebResponse)request.GetResponse();
 
@@ -137,7 +136,7 @@ namespace SIFLess
                 var minVersion = Version.Parse("6.6.2");
                 using (var client = new HttpClient())
                 {
-                    using (var response = client.GetAsync(urlTextBox.Text.EnsureEndsWith("/") + "admin/info/system").Result)
+                    using (var response = client.GetAsync(urlTextBox.Text + "/admin/info/system").Result)
                     {
                         using (var content = response.Content)
                         {

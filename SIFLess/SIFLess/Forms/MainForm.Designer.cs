@@ -33,7 +33,7 @@
             this.customFieldsGroupBox = new System.Windows.Forms.GroupBox();
             this.manageSolrLinkButtonsLink = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.prefixTextBox = new System.Windows.Forms.TextBox();
             this.manageConnectionProfileLink = new System.Windows.Forms.LinkLabel();
             this.solrListBox = new System.Windows.Forms.ComboBox();
             this.connectionListBox = new System.Windows.Forms.ComboBox();
@@ -55,6 +55,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.instancesListBox = new System.Windows.Forms.ListBox();
             this.generateScriptsButton = new System.Windows.Forms.Button();
+            this.saveScriptDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -77,7 +78,7 @@
             this.tabPage4.Controls.Add(this.customFieldsGroupBox);
             this.tabPage4.Controls.Add(this.manageSolrLinkButtonsLink);
             this.tabPage4.Controls.Add(this.label6);
-            this.tabPage4.Controls.Add(this.textBox3);
+            this.tabPage4.Controls.Add(this.prefixTextBox);
             this.tabPage4.Controls.Add(this.manageConnectionProfileLink);
             this.tabPage4.Controls.Add(this.solrListBox);
             this.tabPage4.Controls.Add(this.connectionListBox);
@@ -124,14 +125,14 @@
             this.label6.TabIndex = 63;
             this.label6.Text = "Install Prefix";
             // 
-            // textBox3
+            // prefixTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(42, 231);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(195, 22);
-            this.textBox3.TabIndex = 64;
-            this.textBox3.Text = "sitecore9";
+            this.prefixTextBox.Location = new System.Drawing.Point(42, 231);
+            this.prefixTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.prefixTextBox.Name = "prefixTextBox";
+            this.prefixTextBox.Size = new System.Drawing.Size(195, 22);
+            this.prefixTextBox.TabIndex = 64;
+            this.prefixTextBox.Text = "sitecore9";
             // 
             // manageConnectionProfileLink
             // 
@@ -340,6 +341,7 @@
             this.generateScriptsButton.TabIndex = 0;
             this.generateScriptsButton.Text = "Generate Scripts";
             this.generateScriptsButton.UseVisualStyleBackColor = true;
+            this.generateScriptsButton.Click += new System.EventHandler(this.generateScriptsButton_Click);
             // 
             // MainForm
             // 
@@ -384,13 +386,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox connectionListBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox prefixTextBox;
         private System.Windows.Forms.LinkLabel manageConnectionProfileLink;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.LinkLabel manageSolrLinkButtonsLink;
         private System.Windows.Forms.ComboBox solrListBox;
         private System.Windows.Forms.GroupBox customFieldsGroupBox;
         private System.Windows.Forms.Button generateScriptsButton;
+        private System.Windows.Forms.SaveFileDialog saveScriptDialog;
     }
 }
 

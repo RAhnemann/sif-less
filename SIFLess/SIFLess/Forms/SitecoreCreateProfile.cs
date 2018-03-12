@@ -15,20 +15,23 @@ namespace SIFLess
         {
             InitializeComponent();
             InitData();
+
             _profile = profile;
+
             profileTextBox.Text = profile.Name;
             topologyList.SelectedIndex = topologyList.FindStringExact(profile.Topology);
             versionList.SelectedIndex = versionList.FindStringExact(profile.Version);
             dataRepoTextBox.Text = profile.DataFolder;
 
             RebuildFiles();
+
+            validateButton.Text = "Update Profile";
         }
 
         public SitecoreCreateProfile()
         {
             InitializeComponent();
             InitData();
-
         }
 
         private void InitData()
@@ -69,6 +72,12 @@ namespace SIFLess
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(licenseFileTextBox.Text))
+            {
+                MessageBox.Show("Select a License File");
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(dataRepoTextBox.Text) || !Directory.Exists(dataRepoTextBox.Text))
             {
                 MessageBox.Show("Invalid Data File Repo");
@@ -101,18 +110,19 @@ namespace SIFLess
             }
 
             //Save our profile
-            SifLessProfiles currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = ProfileManager.Fetch();
 
 
 
             if (_profile == null)
             {
-                SitecoreProfile newProfile = new SitecoreProfile
+                var newProfile = new SitecoreProfile
                 {
                     Name = profileTextBox.Text,
                     Topology = topologyList.SelectedItem.ToString(),
                     Version = versionList.SelectedItem.ToString(),
                     DataFolder = dataRepoTextBox.Text,
+                    LicenseFile = licenseFileTextBox.Text,
                     Id = Guid.NewGuid()
                 };
 
@@ -135,6 +145,7 @@ namespace SIFLess
                 profile.Topology = topologyList.SelectedItem.ToString();
                 profile.Version = versionList.SelectedItem.ToString();
                 profile.DataFolder = dataRepoTextBox.Text;
+                profile.LicenseFile = licenseFileTextBox.Text;
 
                 profile.Files.Clear();
 
@@ -155,21 +166,14 @@ namespace SIFLess
 
         private void versionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RequireValidation();
             RebuildFiles();
         }
 
         private void topologyList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RequireValidation();
             RebuildFiles();
         }
-
-        private void RequireValidation()
-        {
-
-        }
-
+        
         private void RebuildFiles()
         {
             fileGroupBox.Controls.Clear();
@@ -197,6 +201,14 @@ namespace SIFLess
             }
         }
 
+        private void setLicenseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var result = licenseSelectDialog.ShowDialog();
 
+            if (result == DialogResult.OK)
+            {
+                licenseFileTextBox.Text = licenseSelectDialog.FileName;
+            }
+        }
     }
 }

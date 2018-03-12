@@ -42,12 +42,16 @@
             this.topologyList = new System.Windows.Forms.ComboBox();
             this.versionList = new System.Windows.Forms.ComboBox();
             this.dataRepoTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.setLicenseLabel = new System.Windows.Forms.LinkLabel();
+            this.licenseFileTextBox = new System.Windows.Forms.TextBox();
+            this.licenseSelectDialog = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 151);
+            this.label1.Location = new System.Drawing.Point(12, 122);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 1;
@@ -83,9 +87,9 @@
             this.configList.Enabled = false;
             this.configList.FormattingEnabled = true;
             this.configList.ItemHeight = 16;
-            this.configList.Location = new System.Drawing.Point(46, 319);
+            this.configList.Location = new System.Drawing.Point(38, 319);
             this.configList.Name = "configList";
-            this.configList.Size = new System.Drawing.Size(448, 84);
+            this.configList.Size = new System.Drawing.Size(456, 84);
             this.configList.TabIndex = 6;
             // 
             // label4
@@ -149,7 +153,7 @@
             // versionList
             // 
             this.versionList.FormattingEnabled = true;
-            this.versionList.Location = new System.Drawing.Point(38, 171);
+            this.versionList.Location = new System.Drawing.Point(38, 142);
             this.versionList.Name = "versionList";
             this.versionList.Size = new System.Drawing.Size(456, 24);
             this.versionList.TabIndex = 12;
@@ -162,11 +166,46 @@
             this.dataRepoTextBox.Size = new System.Drawing.Size(456, 22);
             this.dataRepoTextBox.TabIndex = 13;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 182);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(57, 17);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "License";
+            // 
+            // setLicenseLabel
+            // 
+            this.setLicenseLabel.AutoSize = true;
+            this.setLicenseLabel.Location = new System.Drawing.Point(75, 182);
+            this.setLicenseLabel.Name = "setLicenseLabel";
+            this.setLicenseLabel.Size = new System.Drawing.Size(29, 17);
+            this.setLicenseLabel.TabIndex = 16;
+            this.setLicenseLabel.TabStop = true;
+            this.setLicenseLabel.Text = "Set";
+            this.setLicenseLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.setLicenseLabel_LinkClicked);
+            // 
+            // licenseFileTextBox
+            // 
+            this.licenseFileTextBox.Location = new System.Drawing.Point(38, 202);
+            this.licenseFileTextBox.Name = "licenseFileTextBox";
+            this.licenseFileTextBox.Size = new System.Drawing.Size(456, 22);
+            this.licenseFileTextBox.TabIndex = 17;
+            // 
+            // licenseSelectDialog
+            // 
+            this.licenseSelectDialog.FileName = "openFileDialog1";
+            this.licenseSelectDialog.Filter = "License files (license.xml)|license.xml";
+            // 
             // SitecoreCreateProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(506, 727);
+            this.Controls.Add(this.licenseFileTextBox);
+            this.Controls.Add(this.setLicenseLabel);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.dataRepoTextBox);
             this.Controls.Add(this.versionList);
             this.Controls.Add(this.topologyList);
@@ -202,5 +241,9 @@
         private System.Windows.Forms.ComboBox topologyList;
         private System.Windows.Forms.ComboBox versionList;
         private System.Windows.Forms.TextBox dataRepoTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.LinkLabel setLicenseLabel;
+        private System.Windows.Forms.TextBox licenseFileTextBox;
+        private System.Windows.Forms.OpenFileDialog licenseSelectDialog;
     }
 }

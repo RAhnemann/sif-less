@@ -7,10 +7,13 @@ namespace SIFLess.Model.Configuration
     {
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
+
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
-        [XmlElement(ElementName = "ScriptMap")]
-        public ScriptMap ScriptMap { get; set; }
+
+        [XmlElement(ElementName = "ScriptMaps")]
+        public ScriptMaps ScriptMaps { get; set; }
+
         [XmlElement(ElementName = "FieldMaps")]
         public FieldMaps FieldMaps { get; set; }
     }

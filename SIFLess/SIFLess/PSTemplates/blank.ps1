@@ -1,3 +1,14 @@
-﻿Import-Module SitecoreInstallFramework
-[HEAD]
-[BODY]
+﻿param (
+    [switch]$uninstall
+);
+Import-Module SitecoreInstallFramework
+[GLOBAL]
+
+if($uninstall)
+{
+	[UNINSTALL]
+}
+else
+{
+	[INSTALL]
+}

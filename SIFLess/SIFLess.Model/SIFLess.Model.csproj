@@ -51,6 +51,7 @@
     <Compile Include="Configuration\Field.cs" />
     <Compile Include="Configuration\FieldMaps.cs" />
     <Compile Include="Configuration\File.cs" />
+    <Compile Include="Configuration\ScriptMaps.cs" />
     <Compile Include="Configuration\ScriptMap.cs" />
     <Compile Include="Exensions.cs" />
     <Compile Include="IParameterControl.cs" />

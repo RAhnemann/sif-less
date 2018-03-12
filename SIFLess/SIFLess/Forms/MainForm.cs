@@ -1,17 +1,14 @@
-﻿using Newtonsoft.Json;
-using SIFLess.Model;
-using SIFLess.Properties;
+﻿using SIFLess.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
 using SIFLess.Controls;
 using SIFLess.Model.Configuration;
 using SIFLess.Model.Profiles;
+using ioFile = System.IO.File;
 
 namespace SIFLess
 {
@@ -117,6 +114,81 @@ namespace SIFLess
                 position += 25;
             }
         }
+
+
+        private void generateScriptsButton_Click(object sender, EventArgs e)
+        {
+            //We need some validation
+
+            var profile = profileListBox.SelectedItem as SitecoreProfile;
+
+            var configuration = Utility.GetInstanceConfiguration(profile.Topology, profile.Version);
+
+            var wrapperPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configuration.Wrapper);
+
+            if (!ioFile.Exists(wrapperPath))
+            {
+                MessageBox.Show("Wrapper File not found: " + wrapperPath);
+                return;
+            }
+
+            var wrapper = ioFile.ReadAllText(wrapperPath);
+
+
+            var allMaps = new Dictionary<string, List<ScriptMap>>();
+
+            foreach (var mapType in configuration.ScriptMapNames.Split('|'))
+            {
+                allMaps.Add(mapType, new List<ScriptMap>());
+            }
+
+            var configScriptMaps = configuration.ScriptMaps;
+
+            foreach (var scriptMap in configScriptMaps.ScriptMapList)
+            {
+                allMaps[scriptMap.Location].Add(scriptMap);
+            }
+
+            foreach (var file in configuration.Files.Where(f => f.Type == "config"))
+            {
+                foreach (var scriptMap in file.ScriptMaps.ScriptMapList)
+                {
+                    allMaps[scriptMap.Location].Add(scriptMap);
+                }
+            }
+
+            foreach (var mapType in allMaps)
+            {
+                var scriptText = new StringBuilder();
+                allMaps[mapType.Key].ForEach(st=>scriptText.Append(st.Text));
+                wrapper = wrapper.Replace($"[{mapType.Key}]", scriptText.ToString());
+            }
+            
+            var wrapperWithBaseBooks = ReplaceAllBaseBookmarks(wrapper);
+
+            foreach (var control in customFieldsGroupBox.Controls)
+            {
+                if (control is StringControl sControl)
+                {
+                    wrapperWithBaseBooks = wrapperWithBaseBooks.Replace($"[{sControl.FieldMap}]", sControl.Value);
+                }
+            }
+
+            saveScriptDialog.FileName =
+                $"SIFless-EZ-{(Int32) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds}.{prefixTextBox.Text}.ps1";
+
+            var result = saveScriptDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                var filePath = saveScriptDialog.FileName;
+
+                ioFile.WriteAllText(filePath, wrapperWithBaseBooks);
+
+                MessageBox.Show("File Saved to: " + filePath);
+            }
+
+        }
         #endregion
 
         #region Methods
@@ -146,6 +218,30 @@ namespace SIFLess
             var currentProfiles = ProfileManager.Fetch();
 
             currentProfiles.SolrProfiles?.ForEach(p => solrListBox.Items.Add(p));
+        }
+
+        private string ReplaceAllBaseBookmarks(string wrapperContents)
+        {
+            var input = wrapperContents;
+            var scProfile = profileListBox.SelectedItem as SitecoreProfile;
+            var sqlProfile = connectionListBox.SelectedItem as SqlProfile;
+            var solrProfile = solrListBox.SelectedItem as SolrProfile;
+
+            input = input.Replace("[PREFIX]", prefixTextBox.Text.Trim());
+            input = input.Replace("[DATA_FOLDER]", scProfile.DataFolder);
+            input = input.Replace("[LICENSE_FILE]", scProfile.LicenseFile);
+
+            //Solr
+            input = input.Replace("[SOLR_URL]", solrProfile.Url);
+            input = input.Replace("[SOLR_ROOT]", solrProfile.CorePath);
+            input = input.Replace("[SOLR_SERVICE]", solrProfile.ServiceName);
+
+            //sql
+            input = input.Replace("[SQL_SERVER]", sqlProfile.ServerName);
+            input = input.Replace("[SQL_USER]", sqlProfile.Login);
+            input = input.Replace("[SQL_PASSWORD]", sqlProfile.Password);
+
+            return input;
         }
         #endregion
 
@@ -242,6 +338,6 @@ namespace SIFLess
             //    exeForm.Run(fullFileName);
             //}
         }
-        
+
     }
 }

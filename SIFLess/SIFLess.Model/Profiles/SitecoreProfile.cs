@@ -19,8 +19,13 @@ namespace SIFLess.Model.Profiles
         public string Topology { get; set; }
 
         public string Version { get; set; }
+
         [Browsable(false)]
         public string DataFolder { get; set; }
+
+        [Browsable(false)]
+        public string LicenseFile { get; set; }
+
         [Browsable(false)]
         public List<string> Files { get; set; }
 
