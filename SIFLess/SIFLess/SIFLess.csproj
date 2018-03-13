@@ -115,6 +115,7 @@
     <Compile Include="Forms\SitecoreProfileManager.Designer.cs">
       <DependentUpon>SitecoreProfileManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="SIFGenerator.cs" />
     <Compile Include="TestWindow.cs">
       <SubType>Form</SubType>
     </Compile>
