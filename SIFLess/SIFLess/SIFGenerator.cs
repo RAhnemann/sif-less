@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -14,7 +15,7 @@ namespace SIFLess
 {
     public class SIFGenerator
     {
-        public static string Generate(SitecoreProfile scProfile, SqlProfile sqlProfile, SolrProfile solrProfile)
+        public static string Generate(string prefix, SitecoreProfile scProfile, SqlProfile sqlProfile, SolrProfile solrProfile, NameValueCollection values)
         {
             var configuration = Utility.GetInstanceConfiguration(scProfile.Topology, scProfile.Version);
 
@@ -22,7 +23,7 @@ namespace SIFLess
 
             if (!ioFile.Exists(wrapperPath))
             {
-              //TODO
+                //TODO
                 throw new Exception("Couldn't find Wrapper: " + wrapperPath);
             }
 
@@ -58,25 +59,21 @@ namespace SIFLess
                 wrapper = wrapper.Replace($"[{mapType.Key}]", scriptText.ToString());
             }
 
-            var wrapperWithBaseBooks = ReplaceAllBaseBookmarks(wrapper);
+            var wrapperWithBaseBooks = ReplaceAllBaseBookmarks(wrapper, prefix, scProfile, sqlProfile, solrProfile);
 
-            foreach (var control in customFieldsGroupBox.Controls)
+            foreach (string key in values.Keys)
             {
-                if (control is StringControl sControl)
-                {
-                    wrapperWithBaseBooks = wrapperWithBaseBooks.Replace($"[{sControl.FieldMap}]", sControl.Value);
-                }
+                wrapperWithBaseBooks = wrapperWithBaseBooks.Replace($"[{key}]", values[key]);
             }
+
+            return wrapperWithBaseBooks;
         }
 
-        private static string ReplaceAllBaseBookmarks(string wrapperContents)
+        private static string ReplaceAllBaseBookmarks(string wrapperContents, string prefix, SitecoreProfile scProfile, SqlProfile sqlProfile, SolrProfile solrProfile)
         {
             var input = wrapperContents;
-            var scProfile = profileListBox.SelectedItem as SitecoreProfile;
-            var sqlProfile = connectionListBox.SelectedItem as SqlProfile;
-            var solrProfile = solrListBox.SelectedItem as SolrProfile;
 
-            input = input.Replace("[PREFIX]", prefixTextBox.Text.Trim());
+            input = input.Replace("[PREFIX]", prefix);
             input = input.Replace("[DATA_FOLDER]", scProfile.DataFolder);
             input = input.Replace("[LICENSE_FILE]", scProfile.LicenseFile);
 

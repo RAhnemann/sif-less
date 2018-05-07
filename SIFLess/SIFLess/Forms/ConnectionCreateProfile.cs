@@ -11,19 +11,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 using SIFLess.Properties;
+using Unity;
 
 namespace SIFLess
 {
     public partial class ConnectionCreateProfile : Form
     {
-        private readonly SqlProfile _profile;
+        private  SqlProfile _profile;
+        private readonly IProfileManager _profileManager;
 
-        public ConnectionCreateProfile(SqlProfile profile)
+
+        public void SetProfile(SqlProfile profile)
         {
-            InitializeComponent();
-
             _profile = profile;
 
             profileTextBox.Text = profile.Name;
@@ -33,9 +35,9 @@ namespace SIFLess
 
             validateButton.Text = "Update Profile";
         }
-
-        public ConnectionCreateProfile()
+        public ConnectionCreateProfile(IProfileManager profileManager)
         {
+            _profileManager = profileManager;
             InitializeComponent();
         }
 
@@ -74,7 +76,7 @@ namespace SIFLess
             };
 
             //check the connection and other things:
-            using (SqlConnection connection =new SqlConnection(sqlBuilder.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(sqlBuilder.ConnectionString))
             {
                 try
                 {
@@ -91,10 +93,10 @@ namespace SIFLess
 
                 try
                 {
-                   SqlCommand command = new SqlCommand("SELECT @@VERSION", connection);
+                    SqlCommand command = new SqlCommand("SELECT @@VERSION", connection);
                     var result = command.ExecuteScalar().ToString();
 
-                    if (result.IndexOf("SQL Server 2016") >=0 || result.IndexOf("SQL Server 2017") >=0)
+                    if (result.IndexOf("SQL Server 2016") >= 0 || result.IndexOf("SQL Server 2017") >= 0)
                     {
                         validateVersionLabel.ForeColor = Color.Green;
                     }
@@ -144,7 +146,7 @@ namespace SIFLess
                 }
             }
 
-            var currentProfiles = ProfileManager.Fetch();
+            var sifProfiles = _profileManager.Fetch();
 
             if (_profile == null)
             {
@@ -157,11 +159,11 @@ namespace SIFLess
                     Id = Guid.NewGuid()
                 };
 
-                currentProfiles.SqlProfiles.Add(newProfile);
+                sifProfiles.SqlProfiles.Add(newProfile);
             }
             else
             {
-                var profile = currentProfiles.SqlProfiles.Find(p => p.Id == _profile.Id);
+                var profile = sifProfiles.SqlProfiles.Find(p => p.Id == _profile.Id);
 
                 profile.Name = profileTextBox.Text;
                 profile.ServerName = connectionNameTextBox.Text;
@@ -169,8 +171,7 @@ namespace SIFLess
                 profile.Password = passwordTextBox.Text;
             }
 
-
-            ProfileManager.Update(currentProfiles);
+            _profileManager.Update(sifProfiles);
 
             this.Close();
 

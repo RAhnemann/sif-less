@@ -4,7 +4,13 @@ namespace SIFLess.Model.Profiles
 {
     public class SifLessProfiles
     {
-        public List<SitecoreProfile> SiteforeProfiles { get; set; }
+        public SifLessProfiles()
+        {
+            SitecoreProfiles = new List<SitecoreProfile>();
+            SqlProfiles = new List<SqlProfile>();
+            SolrProfiles = new List<SolrProfile>();
+        }
+        public List<SitecoreProfile> SitecoreProfiles { get; set; }
 
         public List<SqlProfile> SqlProfiles { get; set; }
 

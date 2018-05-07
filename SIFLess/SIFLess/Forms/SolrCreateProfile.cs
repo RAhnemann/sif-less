@@ -7,32 +7,32 @@ using System.ServiceProcess;
 using System.Windows.Forms;
 using System.Xml;
 using SIFLess.Model;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 
 namespace SIFLess
 {
     public partial class SolrCreateProfile : Form
     {
-        private readonly SolrProfile _profile;
-        public SolrCreateProfile(SolrProfile profile)
+        private  SolrProfile _profile;
+        private readonly IProfileManager _profileManager;
+
+        public SolrCreateProfile(IProfileManager profileManager)
         {
+            _profileManager = profileManager;
             InitializeComponent();
             InitServices();
+        }
 
+        public void SetProfile(SolrProfile profile)
+        {
             _profile = profile;
-           
             profileTextBox.Text = profile.Name;
             urlTextBox.Text = profile.Url;
             serviceComboBox.SelectedItem = profile.ServiceName;
             corePathTextBox.Text = profile.CorePath;
 
             validateButton.Text = "Update Profile";
-        }  
-
-        public SolrCreateProfile()
-        {
-            InitializeComponent();
-            InitServices();
         }
         
         private void validateButton_Click(object sender, EventArgs e)
@@ -90,6 +90,7 @@ namespace SIFLess
                 return;
             }               
             #endregion
+
             #region Url Check
             try
             {
@@ -177,7 +178,7 @@ namespace SIFLess
 
             #endregion
 
-            SifLessProfiles currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
             if (_profile == null)
             {
@@ -203,7 +204,7 @@ namespace SIFLess
             }
 
 
-            ProfileManager.Update(currentProfiles);
+            _profileManager.Update(currentProfiles);
 
             this.Close();
 

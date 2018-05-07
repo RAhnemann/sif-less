@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
@@ -16,14 +17,11 @@ namespace SIFLess
 {
     public partial class SitecoreProfileManager : Form
     {
-        private MainForm _mainForm;
+        private readonly IProfileManager _profileManager;
 
-        public SitecoreProfileManager(MainForm main) : this()
+        public SitecoreProfileManager(IProfileManager profileManager)
         {
-            _mainForm = main;
-        }
-        public SitecoreProfileManager()
-        {
+            _profileManager = profileManager;
             InitializeComponent();
             RefreshList();
 
@@ -52,7 +50,7 @@ namespace SIFLess
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SitecoreCreateProfile profile = new SitecoreCreateProfile();
+            SitecoreCreateProfile profile = new SitecoreCreateProfile(_profileManager);
 
             profile.ShowDialog();
 
@@ -61,11 +59,11 @@ namespace SIFLess
 
         private void RefreshList()
         {
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
-            if (currentProfiles.SiteforeProfiles != null)
+            if (currentProfiles.SitecoreProfiles != null)
             {
-                var bindingList = new BindingList<SitecoreProfile>(currentProfiles.SiteforeProfiles);
+                var bindingList = new BindingList<SitecoreProfile>(currentProfiles.SitecoreProfiles);
 
                 profileGrid.DataSource = bindingList;
             }
@@ -76,16 +74,19 @@ namespace SIFLess
         {
             if (e.ColumnIndex == 0 || e.ColumnIndex == 1)
             {
-                var currentProfiles = ProfileManager.Fetch();
+                var currentProfiles = _profileManager.Fetch();
 
-                var scProfile = currentProfiles.SiteforeProfiles[e.RowIndex];
+                var scProfile = currentProfiles.SitecoreProfiles[e.RowIndex];
 
                 //Edit
                 if (e.ColumnIndex == 0)
                 {
-                    SitecoreCreateProfile profile = new SitecoreCreateProfile(scProfile);
+                    var profileWindow = new SitecoreCreateProfile(_profileManager);
 
-                    profile.ShowDialog();
+                    profileWindow.SetProfile(scProfile);
+
+                    profileWindow.ShowDialog();
+
                     RefreshList();
                 }
             }

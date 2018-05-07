@@ -4,18 +4,25 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 
 namespace SIFLess
 {
     public partial class SitecoreCreateProfile : Form
     {
-        private readonly SitecoreProfile _profile;
-        public SitecoreCreateProfile(SitecoreProfile profile)
+        private  SitecoreProfile _profile;
+        private readonly IProfileManager _profileManager;
+
+        public SitecoreCreateProfile(IProfileManager profileManager)
         {
+            _profileManager = profileManager;
             InitializeComponent();
             InitData();
+        }
 
+        public void SetProfile(SitecoreProfile profile)
+        {
             _profile = profile;
 
             profileTextBox.Text = profile.Name;
@@ -26,12 +33,6 @@ namespace SIFLess
             RebuildFiles();
 
             validateButton.Text = "Update Profile";
-        }
-
-        public SitecoreCreateProfile()
-        {
-            InitializeComponent();
-            InitData();
         }
 
         private void InitData()
@@ -110,7 +111,7 @@ namespace SIFLess
             }
 
             //Save our profile
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
 
 
@@ -134,12 +135,12 @@ namespace SIFLess
                     }
                 }
 
-                currentProfiles.SiteforeProfiles.Add(newProfile);
+                currentProfiles.SitecoreProfiles.Add(newProfile);
 
             }
             else
             {
-                var profile = currentProfiles.SiteforeProfiles.Find(p => p.Id == _profile.Id);
+                var profile = currentProfiles.SitecoreProfiles.Find(p => p.Id == _profile.Id);
 
                 profile.Name = profileTextBox.Text;
                 profile.Topology = topologyList.SelectedItem.ToString();
@@ -158,7 +159,7 @@ namespace SIFLess
                 }
             }
 
-            ProfileManager.Update(currentProfiles);
+            _profileManager.Update(currentProfiles);
 
             this.Close();
 

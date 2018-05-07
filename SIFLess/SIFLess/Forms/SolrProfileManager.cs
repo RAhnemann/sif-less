@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
@@ -16,14 +17,12 @@ namespace SIFLess
 {
     public partial class SolrProfileManager : Form
     {
-        private MainForm _mainForm;
+        private readonly IProfileManager _profileManager;
 
-        public SolrProfileManager(MainForm main) : this()
+        public SolrProfileManager(IProfileManager profileManager)
         {
-            _mainForm = main;
-        }
-        public SolrProfileManager()
-        {
+            _profileManager = profileManager;
+
             InitializeComponent();
             RefreshList();
 
@@ -52,8 +51,8 @@ namespace SIFLess
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SolrCreateProfile profile = new SolrCreateProfile();
-
+            SolrCreateProfile profile = new SolrCreateProfile(_profileManager);
+            
             profile.ShowDialog();
 
             RefreshList();
@@ -61,7 +60,7 @@ namespace SIFLess
 
         private void RefreshList()
         {
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
             if (currentProfiles.SolrProfiles != null)
             {
@@ -74,14 +73,16 @@ namespace SIFLess
         {
             if (e.ColumnIndex == 0 || e.ColumnIndex == 1)
             {
-                var currentProfiles = ProfileManager.Fetch();
+                var currentProfiles = _profileManager.Fetch();
 
                 var scProfile = currentProfiles.SolrProfiles[e.RowIndex];
 
                 //Edit
                 if (e.ColumnIndex == 0)
                 {
-                    SolrCreateProfile profile = new SolrCreateProfile(scProfile);
+                    SolrCreateProfile profile = new SolrCreateProfile(_profileManager);
+
+                    profile.SetProfile(scProfile);
 
                     profile.ShowDialog();
                     RefreshList();

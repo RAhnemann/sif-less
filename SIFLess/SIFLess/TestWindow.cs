@@ -111,8 +111,6 @@ namespace SIFLess
                     }
                 }
 
-                return false;
-
             }, solrVersionLabel);
 
             CheckCondition(() =>
@@ -184,7 +182,7 @@ namespace SIFLess
                     label.ForeColor = Color.Red;
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 label.Text = "X " + label.Text;
                 label.ForeColor = Color.Red;

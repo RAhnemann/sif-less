@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
@@ -16,14 +17,12 @@ namespace SIFLess
 {
     public partial class ConnectionProfileManager : Form
     {
-        private MainForm _mainForm;
+        private IProfileManager _profileManager;
 
-        public ConnectionProfileManager(MainForm main) : this()
+        public ConnectionProfileManager(IProfileManager profileManager)
         {
-            _mainForm = main;
-        }
-        public ConnectionProfileManager()
-        {
+            _profileManager = profileManager;
+
             InitializeComponent();
             RefreshList();
 
@@ -52,7 +51,7 @@ namespace SIFLess
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ConnectionCreateProfile profile = new ConnectionCreateProfile();
+            ConnectionCreateProfile profile = new ConnectionCreateProfile(_profileManager);
 
             profile.ShowDialog();
 
@@ -61,7 +60,7 @@ namespace SIFLess
 
         private void RefreshList()
         {
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
             if (currentProfiles.SqlProfiles != null)
             {
@@ -74,16 +73,19 @@ namespace SIFLess
         {
             if (e.ColumnIndex == 0 || e.ColumnIndex == 1)
             {
-                var currentProfiles = ProfileManager.Fetch();
+                var currentProfiles = _profileManager.Fetch();
 
-                var scProfile = currentProfiles.SqlProfiles[e.RowIndex];
+                var sqlProfile = currentProfiles.SqlProfiles[e.RowIndex];
 
                 //Edit
                 if (e.ColumnIndex == 0)
                 {
-                    ConnectionCreateProfile profile = new ConnectionCreateProfile(scProfile);
+                    ConnectionCreateProfile profileWindow = new ConnectionCreateProfile(_profileManager);
 
-                    profile.ShowDialog();
+                    profileWindow.SetProfile(sqlProfile);
+
+                    profileWindow.ShowDialog();
+
                     RefreshList();
                 }
             }

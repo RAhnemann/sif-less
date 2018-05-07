@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIFLess", "SIFLess\SIFLess.csproj", "{8BEC5909-A95D-4AED-817A-D4AF72A87433}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIFLess.Managers.Profile", "SIFLess.Managers.Profile\SIFLess.Managers.Profile.csproj", "{F80F9E5B-C610-4C9B-BA9C-1E9A66277796}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,8 +34,15 @@ Global
 		{B63368A8-04B5-49C3-A20F-00F1FDB7205E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B63368A8-04B5-49C3-A20F-00F1FDB7205E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B63368A8-04B5-49C3-A20F-00F1FDB7205E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80F9E5B-C610-4C9B-BA9C-1E9A66277796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80F9E5B-C610-4C9B-BA9C-1E9A66277796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80F9E5B-C610-4C9B-BA9C-1E9A66277796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80F9E5B-C610-4C9B-BA9C-1E9A66277796}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C5783F1-04BA-49BE-8909-50C2346894B0}
 	EndGlobalSection
 EndGlobal

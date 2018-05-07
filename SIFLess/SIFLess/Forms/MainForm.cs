@@ -1,42 +1,44 @@
 ﻿using SIFLess.Properties;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity.Configuration;
 using SIFLess.Controls;
 using SIFLess.Model.Configuration;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
+using Unity;
 using ioFile = System.IO.File;
+using SIFLess.Managers.Profile;
+using Unity.Lifetime;
 
 namespace SIFLess
 {
     public partial class MainForm : Form
     {
+        private readonly IProfileManager _profileManager;
 
         public MainForm()
         {
             InitializeComponent();
+
+           
+            IUnityContainer container = new UnityContainer();
+            container.LoadConfiguration();
+
+            _profileManager = container.Resolve<IProfileManager>();
         }
 
         #region Events
         private void MainForm_Load(object sender, EventArgs e)
         {
-
-
-            if (Settings.Default.UpgradeRequired)
-            {
-                Settings.Default.Upgrade();
-                Settings.Default.UpgradeRequired = false;
-                Settings.Default.Save();
-            }
-
             RefreshSitecoreProfiles();
             RefreshConnectionProfiles();
             RefreshSolrProfiles();
 
-            //this.Text = $"SIF-less v{this.ProductVersion}";
+            this.Text = $"SIF-less v{this.ProductVersion}";
 
             //if (!File.Exists(_instancesListPath))
             //    File.WriteAllText(_instancesListPath, "<Instances />");
@@ -49,21 +51,16 @@ namespace SIFLess
             ////LoadInstances();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
-        }
-
         private void manageSitecoreProfilesLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            SitecoreProfileManager mgr = new SitecoreProfileManager();
+            SitecoreProfileManager mgr = new SitecoreProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshSitecoreProfiles();
         }
 
         private void manageConnectionProfileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ConnectionProfileManager mgr = new ConnectionProfileManager();
+            ConnectionProfileManager mgr = new ConnectionProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshConnectionProfiles();
 
@@ -71,7 +68,7 @@ namespace SIFLess
 
         private void manageSolrLinkButtonsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            SolrProfileManager mgr = new SolrProfileManager();
+            SolrProfileManager mgr = new SolrProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshSolrProfiles();
         }
@@ -124,9 +121,27 @@ namespace SIFLess
             var sqlProfile = connectionListBox.SelectedItem as SqlProfile;
             var solrProfile = solrListBox.SelectedItem as SolrProfile;
 
-            var ps1Generated = SIFGenerator.Generate(scProfile, sqlProfile, solrProfile);
+            if (scProfile == null)
+            {
+                MessageBox.Show("No Sitecore profile selected");
+                return;
+            }
 
-            saveScriptDialog.FileName =$"SIFless-EZ-{(Int32) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds}.{prefixTextBox.Text}.ps1";
+            if (sqlProfile == null)
+            {
+                MessageBox.Show("No SQL Profile selected");
+                return;
+            }
+
+            if (solrProfile == null)
+            {
+                MessageBox.Show("No solr profile selected");
+                return;
+            }
+
+            var ps1Generated = SIFGenerator.Generate(prefixTextBox.Text, scProfile, sqlProfile, solrProfile, ExtractFieldValues());
+
+            saveScriptDialog.FileName = $"SIFless-EZ-{(Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds}.{prefixTextBox.Text}.ps1";
 
             var result = saveScriptDialog.ShowDialog();
 
@@ -147,16 +162,16 @@ namespace SIFLess
         {
             profileListBox.Items.Clear();
 
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
-            currentProfiles.SiteforeProfiles?.ForEach(p => profileListBox.Items.Add(p));
+            currentProfiles.SitecoreProfiles?.ForEach(p => profileListBox.Items.Add(p));
         }
 
         public void RefreshConnectionProfiles()
         {
             connectionListBox.Items.Clear();
 
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
             currentProfiles.SqlProfiles?.ForEach(p => connectionListBox.Items.Add(p));
         }
@@ -165,12 +180,26 @@ namespace SIFLess
         {
             solrListBox.Items.Clear();
 
-            var currentProfiles = ProfileManager.Fetch();
+            var currentProfiles = _profileManager.Fetch();
 
             currentProfiles.SolrProfiles?.ForEach(p => solrListBox.Items.Add(p));
         }
 
-       
+        public NameValueCollection ExtractFieldValues()
+        {
+            var values = new NameValueCollection();
+
+            foreach (var control in customFieldsGroupBox.Controls)
+            {
+                if (control is StringControl scControl)
+                {
+                    values.Add(scControl.Field, scControl.Value);
+                }
+            }
+
+            return values;
+        }
+
         #endregion
 
         private void installButton_Click(object sender, EventArgs e)

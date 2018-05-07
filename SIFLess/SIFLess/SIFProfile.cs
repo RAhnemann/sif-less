@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 using System.Web.Caching;
 using Newtonsoft.Json;
 using SIFLess.Model;
+using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 using SIFLess.Properties;
 
 namespace SIFLess
 {
-    public class ProfileManager
+    public class SIFProfile 
     {
-        public static SifLessProfiles Fetch()
+       
+        public SifLessProfiles Fetch()
         {
             var profileText = Settings.Default.SIFlessProfiles;
 
@@ -22,7 +24,7 @@ namespace SIFLess
             {
                 SifLessProfiles newProfileData = new SifLessProfiles
                 {
-                    SiteforeProfiles = new List<SitecoreProfile>(),
+                    SitecoreProfiles = new List<SitecoreProfile>(),
                     SqlProfiles = new List<SqlProfile>(),
                     SolrProfiles = new List<SolrProfile>()
                 };
@@ -34,8 +36,8 @@ namespace SIFLess
 
             var currentData = JsonConvert.DeserializeObject<SifLessProfiles>(profileText);
 
-            if (currentData.SiteforeProfiles == null)
-                currentData.SiteforeProfiles = new List<SitecoreProfile>();
+            if (currentData.SitecoreProfiles == null)
+                currentData.SitecoreProfiles = new List<SitecoreProfile>();
 
             if (currentData.SolrProfiles == null)
                 currentData.SolrProfiles = new List<SolrProfile>();
@@ -45,7 +47,7 @@ namespace SIFLess
 
             return currentData;
         }
-        public static void Update(SifLessProfiles profileData)
+        public void Update(SifLessProfiles profileData)
         {
             Settings.Default.SIFlessProfiles = JsonConvert.SerializeObject(profileData);
             Settings.Default.Save();
