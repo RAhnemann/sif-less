@@ -15,5 +15,7 @@ namespace SIFLess.Model.Profiles
         public List<SqlProfile> SqlProfiles { get; set; }
 
         public List<SolrProfile> SolrProfiles { get; set; }
+
+        public string Version { get; set; }
     }
 }

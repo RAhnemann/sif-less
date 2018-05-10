@@ -32,6 +32,7 @@
             this.profileTextBox = new System.Windows.Forms.TextBox();
             this.validateButton = new System.Windows.Forms.Button();
             this.fileGroupBox = new System.Windows.Forms.GroupBox();
+            this.validateServiceLabel = new System.Windows.Forms.Label();
             this.validateVersionLabel = new System.Windows.Forms.Label();
             this.validateUrlLabel = new System.Windows.Forms.Label();
             this.validateCoreFolderLabel = new System.Windows.Forms.Label();
@@ -43,32 +44,34 @@
             this.setCorePathBox = new System.Windows.Forms.LinkLabel();
             this.serviceComboBox = new System.Windows.Forms.ComboBox();
             this.solrCorePathBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.validateServiceLabel = new System.Windows.Forms.Label();
             this.fileGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 9);
+            this.label2.Location = new System.Drawing.Point(9, 7);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 17);
+            this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Profile Name";
             // 
             // profileTextBox
             // 
-            this.profileTextBox.Location = new System.Drawing.Point(38, 29);
+            this.profileTextBox.Location = new System.Drawing.Point(28, 24);
+            this.profileTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.profileTextBox.Name = "profileTextBox";
-            this.profileTextBox.Size = new System.Drawing.Size(456, 22);
-            this.profileTextBox.TabIndex = 3;
+            this.profileTextBox.Size = new System.Drawing.Size(343, 20);
+            this.profileTextBox.TabIndex = 0;
             // 
             // validateButton
             // 
-            this.validateButton.Location = new System.Drawing.Point(15, 453);
+            this.validateButton.Location = new System.Drawing.Point(11, 368);
+            this.validateButton.Margin = new System.Windows.Forms.Padding(2);
             this.validateButton.Name = "validateButton";
-            this.validateButton.Size = new System.Drawing.Size(479, 29);
-            this.validateButton.TabIndex = 10;
+            this.validateButton.Size = new System.Drawing.Size(359, 24);
+            this.validateButton.TabIndex = 40;
             this.validateButton.Text = "Create Profile";
             this.validateButton.UseVisualStyleBackColor = true;
             this.validateButton.Click += new System.EventHandler(this.validateButton_Click);
@@ -79,88 +82,109 @@
             this.fileGroupBox.Controls.Add(this.validateVersionLabel);
             this.fileGroupBox.Controls.Add(this.validateUrlLabel);
             this.fileGroupBox.Controls.Add(this.validateCoreFolderLabel);
-            this.fileGroupBox.Location = new System.Drawing.Point(15, 270);
+            this.fileGroupBox.Location = new System.Drawing.Point(11, 219);
+            this.fileGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.fileGroupBox.Name = "fileGroupBox";
-            this.fileGroupBox.Size = new System.Drawing.Size(479, 153);
+            this.fileGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.fileGroupBox.Size = new System.Drawing.Size(359, 124);
             this.fileGroupBox.TabIndex = 11;
             this.fileGroupBox.TabStop = false;
             this.fileGroupBox.Text = "Validation";
             // 
+            // validateServiceLabel
+            // 
+            this.validateServiceLabel.AutoSize = true;
+            this.validateServiceLabel.Location = new System.Drawing.Point(15, 45);
+            this.validateServiceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.validateServiceLabel.Name = "validateServiceLabel";
+            this.validateServiceLabel.Size = new System.Drawing.Size(101, 13);
+            this.validateServiceLabel.TabIndex = 0;
+            this.validateServiceLabel.Text = "Services is Running";
+            // 
             // validateVersionLabel
             // 
             this.validateVersionLabel.AutoSize = true;
-            this.validateVersionLabel.Location = new System.Drawing.Point(20, 76);
+            this.validateVersionLabel.Location = new System.Drawing.Point(15, 65);
+            this.validateVersionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.validateVersionLabel.Name = "validateVersionLabel";
-            this.validateVersionLabel.Size = new System.Drawing.Size(145, 17);
+            this.validateVersionLabel.Size = new System.Drawing.Size(108, 13);
             this.validateVersionLabel.TabIndex = 0;
             this.validateVersionLabel.Text = "Solr is correct version";
             // 
             // validateUrlLabel
             // 
             this.validateUrlLabel.AutoSize = true;
-            this.validateUrlLabel.Location = new System.Drawing.Point(20, 50);
+            this.validateUrlLabel.Location = new System.Drawing.Point(15, 85);
+            this.validateUrlLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.validateUrlLabel.Name = "validateUrlLabel";
-            this.validateUrlLabel.Size = new System.Drawing.Size(70, 17);
+            this.validateUrlLabel.Size = new System.Drawing.Size(54, 13);
             this.validateUrlLabel.TabIndex = 0;
             this.validateUrlLabel.Text = "Url Works";
             // 
             // validateCoreFolderLabel
             // 
             this.validateCoreFolderLabel.AutoSize = true;
-            this.validateCoreFolderLabel.Location = new System.Drawing.Point(20, 33);
+            this.validateCoreFolderLabel.Location = new System.Drawing.Point(15, 25);
+            this.validateCoreFolderLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.validateCoreFolderLabel.Name = "validateCoreFolderLabel";
-            this.validateCoreFolderLabel.Size = new System.Drawing.Size(175, 17);
+            this.validateCoreFolderLabel.Size = new System.Drawing.Size(130, 13);
             this.validateCoreFolderLabel.TabIndex = 0;
             this.validateCoreFolderLabel.Text = "Folder Is Valid Core Folder";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 66);
+            this.label3.Location = new System.Drawing.Point(9, 54);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(159, 17);
+            this.label3.Size = new System.Drawing.Size(119, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Solr Url (ends with /solr)";
             // 
             // urlTextBox
             // 
-            this.urlTextBox.Location = new System.Drawing.Point(38, 86);
+            this.urlTextBox.Location = new System.Drawing.Point(28, 70);
+            this.urlTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(456, 22);
-            this.urlTextBox.TabIndex = 3;
+            this.urlTextBox.Size = new System.Drawing.Size(343, 20);
+            this.urlTextBox.TabIndex = 10;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 131);
+            this.label4.Location = new System.Drawing.Point(9, 106);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(84, 17);
+            this.label4.Size = new System.Drawing.Size(64, 13);
             this.label4.TabIndex = 2;
             this.label4.Text = "Solr Service";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 202);
+            this.label5.Location = new System.Drawing.Point(7, 164);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 17);
+            this.label5.Size = new System.Drawing.Size(75, 13);
             this.label5.TabIndex = 2;
             this.label5.Text = "Solr Core Path";
             // 
             // corePathTextBox
             // 
-            this.corePathTextBox.Location = new System.Drawing.Point(35, 222);
+            this.corePathTextBox.Location = new System.Drawing.Point(26, 180);
+            this.corePathTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.corePathTextBox.Name = "corePathTextBox";
-            this.corePathTextBox.Size = new System.Drawing.Size(456, 22);
-            this.corePathTextBox.TabIndex = 3;
+            this.corePathTextBox.Size = new System.Drawing.Size(343, 20);
+            this.corePathTextBox.TabIndex = 30;
             // 
             // setCorePathBox
             // 
             this.setCorePathBox.AutoSize = true;
-            this.setCorePathBox.Location = new System.Drawing.Point(109, 202);
+            this.setCorePathBox.Location = new System.Drawing.Point(82, 164);
+            this.setCorePathBox.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.setCorePathBox.Name = "setCorePathBox";
-            this.setCorePathBox.Size = new System.Drawing.Size(29, 17);
-            this.setCorePathBox.TabIndex = 12;
+            this.setCorePathBox.Size = new System.Drawing.Size(23, 13);
+            this.setCorePathBox.TabIndex = 35;
             this.setCorePathBox.TabStop = true;
             this.setCorePathBox.Text = "Set";
             this.setCorePathBox.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.setCorePathBox_LinkClicked);
@@ -168,25 +192,17 @@
             // serviceComboBox
             // 
             this.serviceComboBox.FormattingEnabled = true;
-            this.serviceComboBox.Location = new System.Drawing.Point(38, 152);
+            this.serviceComboBox.Location = new System.Drawing.Point(28, 124);
+            this.serviceComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.serviceComboBox.Name = "serviceComboBox";
-            this.serviceComboBox.Size = new System.Drawing.Size(456, 24);
-            this.serviceComboBox.TabIndex = 13;
-            // 
-            // validateServiceLabel
-            // 
-            this.validateServiceLabel.AutoSize = true;
-            this.validateServiceLabel.Location = new System.Drawing.Point(17, 104);
-            this.validateServiceLabel.Name = "validateServiceLabel";
-            this.validateServiceLabel.Size = new System.Drawing.Size(133, 17);
-            this.validateServiceLabel.TabIndex = 0;
-            this.validateServiceLabel.Text = "Services is Running";
+            this.serviceComboBox.Size = new System.Drawing.Size(343, 21);
+            this.serviceComboBox.TabIndex = 20;
             // 
             // SolrCreateProfile
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(506, 495);
+            this.ClientSize = new System.Drawing.Size(380, 402);
             this.Controls.Add(this.serviceComboBox);
             this.Controls.Add(this.setCorePathBox);
             this.Controls.Add(this.fileGroupBox);
@@ -198,6 +214,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.profileTextBox);
             this.Controls.Add(this.label2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SolrCreateProfile";
             this.Text = "Create Profile";
             this.fileGroupBox.ResumeLayout(false);

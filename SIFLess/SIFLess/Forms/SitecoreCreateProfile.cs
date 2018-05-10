@@ -14,6 +14,11 @@ namespace SIFLess
         private  SitecoreProfile _profile;
         private readonly IProfileManager _profileManager;
 
+        private const int LABEL_WIDTH = 478;
+        private const int LABEL_LEFT = 20;
+        private const int LABEL_TOP_START = 20;
+        private const int LABEL_TOP_OFFSET = 21;
+
         public SitecoreCreateProfile(IProfileManager profileManager)
         {
             _profileManager = profileManager;
@@ -29,6 +34,7 @@ namespace SIFLess
             topologyList.SelectedIndex = topologyList.FindStringExact(profile.Topology);
             versionList.SelectedIndex = versionList.FindStringExact(profile.Version);
             dataRepoTextBox.Text = profile.DataFolder;
+            licenseFileTextBox.Text = profile.LicenseFile;
 
             RebuildFiles();
 
@@ -112,9 +118,7 @@ namespace SIFLess
 
             //Save our profile
             var currentProfiles = _profileManager.Fetch();
-
-
-
+            
             if (_profile == null)
             {
                 var newProfile = new SitecoreProfile
@@ -162,7 +166,6 @@ namespace SIFLess
             _profileManager.Update(currentProfiles);
 
             this.Close();
-
         }
 
         private void versionList_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,16 +189,15 @@ namespace SIFLess
             var scVer = versionList.SelectedItem.ToString();
             var files = Utility.GetFilesForInstance(topology, scVer);
 
-
             var offset = 0;
             foreach (var fileName in files)
             {
                 var newLabel = new Label
                 {
                     Text = fileName,
-                    Width = 478,
-                    Left = 20,
-                    Top = 20 + (21 * offset)
+                    Width = LABEL_WIDTH,
+                    Left = LABEL_LEFT,
+                    Top = LABEL_TOP_START + (LABEL_TOP_OFFSET * offset)
                 };
                 fileGroupBox.Controls.Add(newLabel);
                 offset++;

@@ -24,11 +24,13 @@ namespace SIFLess
         {
             InitializeComponent();
 
-           
             IUnityContainer container = new UnityContainer();
             container.LoadConfiguration();
 
             _profileManager = container.Resolve<IProfileManager>();
+
+            //Hiding
+            mainTabControl.TabPages.Remove(instanceTab);
         }
 
         #region Events
@@ -63,7 +65,6 @@ namespace SIFLess
             ConnectionProfileManager mgr = new ConnectionProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshConnectionProfiles();
-
         }
 
         private void manageSolrLinkButtonsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -75,7 +76,12 @@ namespace SIFLess
 
         private void profileListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            customFieldsGroupBox.Controls.Clear();
+
             var profile = profileListBox.SelectedItem as SitecoreProfile;
+
+            if (profile == null)
+                return;
 
             //Load all the files for the profile
             var configuration = Utility.GetInstanceConfiguration(profile.Topology, profile.Version);
@@ -96,8 +102,6 @@ namespace SIFLess
                 }
             }
 
-            customFieldsGroupBox.Controls.Clear();
-
             var position = 20;
             foreach (var field in fields)
             {
@@ -111,7 +115,6 @@ namespace SIFLess
                 position += 25;
             }
         }
-
 
         private void generateScriptsButton_Click(object sender, EventArgs e)
         {

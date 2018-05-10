@@ -88,7 +88,32 @@ namespace SIFLess
                 MessageBox.Show("Error validating folder: " + ex.Message);
                 validateCoreFolderLabel.ForeColor = Color.Red;
                 return;
-            }               
+            }
+            #endregion
+
+            #region Service Check
+
+            try
+            {
+                using (ServiceController sc = new ServiceController(serviceComboBox.SelectedItem.ToString()))
+                {
+                    if (sc.Status != ServiceControllerStatus.Running)
+                    {
+                        validateServiceLabel.ForeColor = Color.Red;
+                        MessageBox.Show($"Service Not in Running State: State={sc.Status.ToString()}");
+                        return;
+                    }
+                    else
+                    {
+                        validateServiceLabel.ForeColor = Color.Green;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error checking service");
+                return;
+            }
             #endregion
 
             #region Url Check
@@ -177,6 +202,8 @@ namespace SIFLess
             }
 
             #endregion
+
+           
 
             var currentProfiles = _profileManager.Fetch();
 

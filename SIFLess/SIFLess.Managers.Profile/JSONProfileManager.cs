@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
@@ -15,7 +11,7 @@ namespace SIFLess.Managers.Profile
     {
         public SifLessProfiles Fetch()
         {
-            var configPath = string.Empty;
+            string configPath;
 
             if (string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ProfilePath"]))
             {
@@ -23,9 +19,9 @@ namespace SIFLess.Managers.Profile
 
                 if (!File.Exists(configPath))
                 {
-                    return new SifLessProfiles();
+                    return new SifLessProfiles() { Version = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString() };
                 }
-              
+
             }
             else
             {
@@ -37,7 +33,7 @@ namespace SIFLess.Managers.Profile
 
         public void Update(SifLessProfiles profileData)
         {
-            var configPath = string.Empty;
+            string configPath;
 
             if (string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ProfilePath"]))
             {
