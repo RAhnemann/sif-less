@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
+using System.Configuration;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using SIFLess.Model;
 using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
-using SIFLess.Properties;
-using Unity;
+using SIFLess.Model.Validation;
 
 namespace SIFLess
 {
@@ -22,6 +14,8 @@ namespace SIFLess
     {
         private  SqlProfile _profile;
         private readonly IProfileManager _profileManager;
+        private readonly List<ISqlValidator> _validators;
+        private readonly List<Label> _validatorLabels;
 
 
         public void SetProfile(SqlProfile profile)
@@ -39,6 +33,29 @@ namespace SIFLess
         {
             _profileManager = profileManager;
             InitializeComponent();
+
+            var configSection = (ValidationConfigurationSection)ConfigurationManager.GetSection("sifless.validation");
+
+            var typesNames = configSection.Validators.SQL.Cast<ValidatorType>().ToList();
+
+            _validators = new List<ISqlValidator>();
+            _validatorLabels = new List<Label>();
+
+            typesNames.ForEach(typeName =>
+            {
+                Type type = Type.GetType(typeName.Type);
+                var handle = Activator.CreateInstance(type);
+
+                var validator = (ISqlValidator) handle;
+                var label = new Label() {Text = validator.Text, Width=300};
+
+                validationPanel.Controls.Add(label);
+
+                _validators.Add(validator);
+                _validatorLabels.Add(label);
+            });
+
+            validationPanel.Controls.SetChildIndex(validateButton, 100);
         }
 
         private void validateButton_Click(object sender, EventArgs e)
@@ -68,81 +85,32 @@ namespace SIFLess
                 return;
             }
 
-            var sqlBuilder = new SqlConnectionStringBuilder
+            var sqlProfile = new SqlProfile
             {
-                DataSource = connectionNameTextBox.Text,
-                UserID = loginTextBox.Text,
+                Name = profileTextBox.Text,
+                ServerName = connectionNameTextBox.Text,
+                Login = loginTextBox.Text,
                 Password = passwordTextBox.Text
             };
 
-            //check the connection and other things:
-            using (SqlConnection connection = new SqlConnection(sqlBuilder.ConnectionString))
+            for(var i = 0; i< _validators.Count; i++)
             {
-                try
+                var validator = _validators[i];
+
+                var isValid = validator.Validate(sqlProfile);
+
+                if (isValid)
                 {
-                    connection.Open();
-                    validateLoginLabel.ForeColor = Color.Green;
+                    _validatorLabels[i].ForeColor = Color.Green;
                 }
-                catch (Exception exception)
+                else
                 {
-                    validateLoginLabel.ForeColor = Color.Red;
-                    MessageBox.Show("Error Opening SQL: " + exception.Message);
-                    connection.Close();
+                    _validatorLabels[i].ForeColor = Color.Red;
+
+                    MessageBox.Show(validator.ErrorMessage, "Validation Failed", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    //Stop.
                     return;
-                }
-
-                try
-                {
-                    SqlCommand command = new SqlCommand("SELECT @@VERSION", connection);
-                    var result = command.ExecuteScalar().ToString();
-
-                    if (result.IndexOf("SQL Server 2016") >= 0 || result.IndexOf("SQL Server 2017") >= 0)
-                    {
-                        validateVersionLabel.ForeColor = Color.Green;
-                    }
-                    else
-                    {
-                        validateVersionLabel.ForeColor = Color.Red;
-                        MessageBox.Show("Invalid SQL Version: " + result);
-                        return;
-                    }
-                }
-                catch (Exception exception)
-                {
-                    validateVersionLabel.ForeColor = Color.Red;
-                    MessageBox.Show("Error Validating Version: " + exception.Message);
-                    return;
-                }
-
-                try
-                {
-                    SqlCommand command = new SqlCommand("SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE')",
-                        connection);
-                    var result = command.ExecuteScalar().ToString();
-
-                    if (result == "1")
-                    {
-                        validateDBCreateLabel.ForeColor = Color.Green;
-
-                    }
-                    else
-                    {
-                        validateDBCreateLabel.ForeColor = Color.Red;
-                        MessageBox.Show("Unable to Create Databases");
-                        return;
-                    }
-
-
-                }
-                catch (Exception exception)
-                {
-                    validateLoginLabel.ForeColor = Color.Red;
-                    MessageBox.Show("Error Opening SQL: " + exception.Message);
-                    return;
-                }
-                finally
-                {
-                    connection.Close();
                 }
             }
 
@@ -150,16 +118,9 @@ namespace SIFLess
 
             if (_profile == null)
             {
-                var newProfile = new SqlProfile
-                {
-                    Name = profileTextBox.Text,
-                    ServerName = connectionNameTextBox.Text,
-                    Login = loginTextBox.Text,
-                    Password = passwordTextBox.Text,
-                    Id = Guid.NewGuid()
-                };
+                sqlProfile.Id = Guid.NewGuid();
 
-                sifProfiles.SqlProfiles.Add(newProfile);
+                sifProfiles.SqlProfiles.Add(sqlProfile);
             }
             else
             {

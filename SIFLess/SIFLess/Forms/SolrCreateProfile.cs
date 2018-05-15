@@ -1,27 +1,52 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Net.Http;
+using System.Linq;
 using System.ServiceProcess;
 using System.Windows.Forms;
-using System.Xml;
-using SIFLess.Model;
 using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
+using SIFLess.Model.Validation;
 
 namespace SIFLess
 {
     public partial class SolrCreateProfile : Form
     {
-        private  SolrProfile _profile;
+        private SolrProfile _profile;
         private readonly IProfileManager _profileManager;
+        private readonly List<ISolrValidator> _validators;
+        private readonly List<Label> _validatorLabels;
 
         public SolrCreateProfile(IProfileManager profileManager)
         {
             _profileManager = profileManager;
             InitializeComponent();
             InitServices();
+
+
+            var configSection = (ValidationConfigurationSection)ConfigurationManager.GetSection("sifless.validation");
+
+            var typesNames = configSection.Validators.Solr.Cast<ValidatorType>().ToList();
+
+            _validators = new List<ISolrValidator>();
+            _validatorLabels = new List<Label>();
+
+            typesNames.ForEach(typeName =>
+            {
+                Type type = Type.GetType(typeName.Type);
+                var handle = Activator.CreateInstance(type);
+
+                var validator = (ISolrValidator)handle;
+                var label = new Label() { Text = validator.Text, Width = 300 };
+
+                validationPanel.Controls.Add(label);
+
+                _validators.Add(validator);
+                _validatorLabels.Add(label);
+            });
+
+            validationPanel.Controls.SetChildIndex(validateButton, 100);
         }
 
         public void SetProfile(SolrProfile profile)
@@ -34,13 +59,13 @@ namespace SIFLess
 
             validateButton.Text = "Update Profile";
         }
-        
+
         private void validateButton_Click(object sender, EventArgs e)
         {
 
             if (string.IsNullOrWhiteSpace(profileTextBox.Text))
             {
-                MessageBox.Show("Need a Profile Name!");
+                MessageBox.Show("Enter a Profile Name!");
                 return;
             }
 
@@ -62,163 +87,43 @@ namespace SIFLess
                 return;
             }
 
-            //Validate
-            #region Folder Check
-
-            try
+            var solrProfile = new SolrProfile
             {
-                if (!Directory.Exists(corePathTextBox.Text))
-                {
-                    MessageBox.Show("Core Directory doesn't exist");
-                    validateCoreFolderLabel.ForeColor = Color.Red;
-                    return;
-                }
+                Name = profileTextBox.Text,
+                Url = urlTextBox.Text,
+                ServiceName = serviceComboBox.SelectedItem.ToString(),
+                CorePath = corePathTextBox.Text
+            };
 
-                if (!File.Exists(Path.Combine(corePathTextBox.Text.EnsureEndsWith("\\"), "server\\solr\\solr.xml")))
-                {
-                    MessageBox.Show("Couldn't find solr.xml in Core Folder");
-                    validateCoreFolderLabel.ForeColor = Color.Red;
-                    return;
-                }
-
-                validateCoreFolderLabel.ForeColor = Color.Green;
-            }
-            catch (Exception ex)
+            for (var i = 0; i < _validators.Count; i++)
             {
-                MessageBox.Show("Error validating folder: " + ex.Message);
-                validateCoreFolderLabel.ForeColor = Color.Red;
-                return;
-            }
-            #endregion
+                var validator = _validators[i];
 
-            #region Service Check
+                var isValid = validator.Validate(solrProfile);
 
-            try
-            {
-                using (ServiceController sc = new ServiceController(serviceComboBox.SelectedItem.ToString()))
+                if (isValid)
                 {
-                    if (sc.Status != ServiceControllerStatus.Running)
-                    {
-                        validateServiceLabel.ForeColor = Color.Red;
-                        MessageBox.Show($"Service Not in Running State: State={sc.Status.ToString()}");
-                        return;
-                    }
-                    else
-                    {
-                        validateServiceLabel.ForeColor = Color.Green;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error checking service");
-                return;
-            }
-            #endregion
-
-            #region Url Check
-            try
-            {
-                if (!urlTextBox.Text.ToLower().StartsWith("https"))
-                {
-                    MessageBox.Show("Solr Url needs to be HTTPS");
-                    validateUrlLabel.ForeColor = Color.Red;
-                    return;
-                }
-
-                if (!urlTextBox.Text.ToLower().EndsWith("/solr"))
-                {
-                    MessageBox.Show("Solr Url should end at /solr");
-                    validateUrlLabel.ForeColor = Color.Red;
-                    return;
-                }
-
-                var request = WebRequest.Create(urlTextBox.Text + "/admin/info/system");
-
-                var response = (HttpWebResponse)request.GetResponse();
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    validateUrlLabel.ForeColor = Color.Green;
+                    _validatorLabels[i].ForeColor = Color.Green;
                 }
                 else
                 {
-                    MessageBox.Show("Non-Ok Response in Url Check: " + response.StatusDescription);
-                    validateUrlLabel.ForeColor = Color.Red;
+                    _validatorLabels[i].ForeColor = Color.Red;
+
+                    MessageBox.Show(validator.ErrorMessage, "Validation Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    //Stop.
                     return;
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Couldn't validate Url: " + ex.Message);
-                validateUrlLabel.ForeColor = Color.Red;
-                return;
-            }
-            #endregion
 
-            #region Version Check
-            try
-            {
-                var minVersion = Version.Parse("6.6.2");
-                using (var client = new HttpClient())
-                {
-                    using (var response = client.GetAsync(urlTextBox.Text + "/admin/info/system").Result)
-                    {
-                        using (var content = response.Content)
-                        {
-                            var responseXML = content.ReadAsStringAsync().Result;
-
-                            var responseDoc = new XmlDocument();
-                            responseDoc.LoadXml(responseXML);
-
-                            var versionNode =
-                                responseDoc.SelectSingleNode("//response/lst[@name='lucene']/str[@name='solr-spec-version']");
-
-                            var versionText = versionNode.InnerText;
-
-                            var runningVersion = Version.Parse(versionText);
-
-                            if (runningVersion >= minVersion)
-                            {
-                                validateVersionLabel.ForeColor = Color.Green;
-                            }
-                            else
-                            {
-                                validateVersionLabel.ForeColor = Color.Red;
-                                MessageBox.Show("Invalid Solr Version: " + runningVersion);
-                                return;
-                            }
-                        }
-                    }
-                }
-
-                validateVersionLabel.ForeColor = Color.Green;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error validating version: " + ex.Message);
-                validateVersionLabel.ForeColor = Color.Red;
-                return;
-            }
-
-            #endregion
-
-           
 
             var currentProfiles = _profileManager.Fetch();
 
             if (_profile == null)
             {
-                SolrProfile newProfile = new SolrProfile
-                {
-                    Name = profileTextBox.Text,
-                    Url = urlTextBox.Text,
-                    ServiceName = serviceComboBox.SelectedItem.ToString(),
-                    CorePath = corePathTextBox.Text,
-                    Id = Guid.NewGuid()
-                };
+                solrProfile.Id = Guid.NewGuid();
 
-                currentProfiles.SolrProfiles.Add(newProfile);
+                currentProfiles.SolrProfiles.Add(solrProfile);
             }
             else
             {
@@ -241,7 +146,7 @@ namespace SIFLess
         {
             serviceComboBox.Items.Clear();
 
-            ServiceController[] services = ServiceController.GetServices();
+            var services = ServiceController.GetServices();
 
             foreach (var serviceController in services)
             {

@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using SIFLess.Model;
 using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
-using SIFLess.Properties;
 
 namespace SIFLess
 {
     public partial class ConnectionProfileManager : Form
     {
-        private IProfileManager _profileManager;
+        private readonly IProfileManager _profileManager;
 
         public ConnectionProfileManager(IProfileManager profileManager)
         {
@@ -47,15 +38,6 @@ namespace SIFLess
             };
 
             profileGrid.Columns.Add(deleteLink);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ConnectionCreateProfile profile = new ConnectionCreateProfile(_profileManager);
-
-            profile.ShowDialog();
-
-            RefreshList();
         }
 
         private void RefreshList()
@@ -88,7 +70,30 @@ namespace SIFLess
 
                     RefreshList();
                 }
+
+                //Delete
+                if (e.ColumnIndex == 1)
+                {
+                    if (MessageBox.Show($"Are you sure you wish to remove the profile '{sqlProfile.Name}'?", "Confirm",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        currentProfiles.SqlProfiles.Remove(sqlProfile);
+
+                        _profileManager.Update(currentProfiles);
+
+                        RefreshList();
+                    }
+                }
             }
+        }
+
+        private void addProfileButton_Click(object sender, EventArgs e)
+        {
+            var profile = new ConnectionCreateProfile(_profileManager);
+
+            profile.ShowDialog();
+
+            RefreshList();
         }
     }
 }

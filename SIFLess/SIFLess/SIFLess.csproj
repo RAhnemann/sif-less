@@ -229,6 +229,10 @@
     <Content Include="Unity.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SIFless.Validation.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -247,6 +251,10 @@
     <ProjectReference Include="..\SIFLess.Model\SIFLess.Model.csproj">
       <Project>{B63368A8-04B5-49C3-A20F-00F1FDB7205E}</Project>
       <Name>SIFLess.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SIFLess.Validators.Default\SIFLess.Validators.Default.csproj">
+      <Project>{3f3a3293-5bac-4a7a-afa3-40581b020f1f}</Project>
+      <Name>SIFLess.Validators.Default</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

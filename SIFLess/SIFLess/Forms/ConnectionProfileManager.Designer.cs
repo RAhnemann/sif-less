@@ -39,33 +39,36 @@
             this.profileGrid.AllowUserToResizeRows = false;
             this.profileGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.profileGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.profileGrid.Location = new System.Drawing.Point(12, 12);
+            this.profileGrid.Location = new System.Drawing.Point(9, 10);
+            this.profileGrid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.profileGrid.MultiSelect = false;
             this.profileGrid.Name = "profileGrid";
             this.profileGrid.RowTemplate.Height = 24;
             this.profileGrid.ShowEditingIcon = false;
             this.profileGrid.ShowRowErrors = false;
-            this.profileGrid.Size = new System.Drawing.Size(728, 249);
+            this.profileGrid.Size = new System.Drawing.Size(546, 202);
             this.profileGrid.TabIndex = 0;
             this.profileGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.profileGrid_CellClick);
             // 
             // addProfileButton
             // 
-            this.addProfileButton.Location = new System.Drawing.Point(12, 267);
+            this.addProfileButton.Location = new System.Drawing.Point(9, 217);
+            this.addProfileButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.addProfileButton.Name = "addProfileButton";
-            this.addProfileButton.Size = new System.Drawing.Size(728, 43);
+            this.addProfileButton.Size = new System.Drawing.Size(546, 35);
             this.addProfileButton.TabIndex = 1;
             this.addProfileButton.Text = "Add Profile";
             this.addProfileButton.UseVisualStyleBackColor = true;
-            this.addProfileButton.Click += new System.EventHandler(this.button1_Click);
+            this.addProfileButton.Click += new System.EventHandler(this.addProfileButton_Click);
             // 
             // ConnectionProfileManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 322);
+            this.ClientSize = new System.Drawing.Size(564, 262);
             this.Controls.Add(this.addProfileButton);
             this.Controls.Add(this.profileGrid);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ConnectionProfileManager";
             this.Text = "SQL Profiles";
             ((System.ComponentModel.ISupportInitialize)(this.profileGrid)).EndInit();
