@@ -35,7 +35,7 @@ namespace SIFLess.Validators.Default.SQL
                         return false;
                     }
 
-                    return false;
+                    return true;
                 }
                 catch (Exception ex)
                 {
