@@ -1,8 +1,6 @@
-﻿using SIFLess.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Configuration;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity.Configuration;
 using SIFLess.Controls;
@@ -11,11 +9,8 @@ using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
 using Unity;
 using ioFile = System.IO.File;
-using SIFLess.Managers.Profile;
-using SIFLess.Model.Validation;
-using Unity.Lifetime;
 
-namespace SIFLess
+namespace SIFLess.Forms
 {
     public partial class MainForm : Form
     {
@@ -42,35 +37,26 @@ namespace SIFLess
             RefreshSolrProfiles();
 
             this.Text = $"SIF-less v{this.ProductVersion}";
-
-            //if (!File.Exists(_instancesListPath))
-            //    File.WriteAllText(_instancesListPath, "<Instances />");
-
-            //instanceListWatcher.Path = Path.GetDirectoryName(_instancesListPath);
-            //instanceListWatcher.Filter = Path.GetFileName(_instancesListPath);
-
-            ////We're not quite ready for prime time on this
-            //tabControl1.TabPages.Remove(tabPage3);
-            ////LoadInstances();
+            
         }
 
         private void manageSitecoreProfilesLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            SitecoreProfileManager mgr = new SitecoreProfileManager(_profileManager);
+            var mgr = new SitecoreProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshSitecoreProfiles();
         }
 
         private void manageConnectionProfileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ConnectionProfileManager mgr = new ConnectionProfileManager(_profileManager);
+            var mgr = new ConnectionProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshConnectionProfiles();
         }
 
         private void manageSolrLinkButtonsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            SolrProfileManager mgr = new SolrProfileManager(_profileManager);
+            var mgr = new SolrProfileManager(_profileManager);
             mgr.ShowDialog();
             RefreshSolrProfiles();
         }
@@ -79,9 +65,7 @@ namespace SIFLess
         {
             customFieldsGroupBox.Controls.Clear();
 
-            var profile = profileListBox.SelectedItem as SitecoreProfile;
-
-            if (profile == null)
+            if (!(profileListBox.SelectedItem is SitecoreProfile profile))
                 return;
 
             //Load all the files for the profile

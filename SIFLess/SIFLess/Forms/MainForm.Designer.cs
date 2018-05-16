@@ -1,4 +1,4 @@
-﻿namespace SIFLess
+﻿namespace SIFLess.Forms
 {
     partial class MainForm
     {

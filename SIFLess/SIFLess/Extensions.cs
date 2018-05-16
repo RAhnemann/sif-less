@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace SIFLess
 {
@@ -14,6 +16,17 @@ namespace SIFLess
             if (string.IsNullOrEmpty(formatted)) formatted = "0 seconds";
 
             return formatted;
+        }
+
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.AppendText("\r\n");
+            box.SelectionColor = box.ForeColor;
         }
     }
 }

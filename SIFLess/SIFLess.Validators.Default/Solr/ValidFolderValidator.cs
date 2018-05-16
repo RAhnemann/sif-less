@@ -9,7 +9,7 @@ namespace SIFLess.Validators.Default.Solr
    public class ValidFolderValidator :ISolrValidator
     {
         public string ErrorMessage { get; set; }
-        public string Text => "Is Valid Solr Url";
+        public string Text => "Is Valid Solr Folder";
         public bool Validate(SolrProfile profile)
         {
             if (!Directory.Exists(profile.CorePath))
