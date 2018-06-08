@@ -698,7 +698,7 @@ $LicenseFilePath = '[LICENSE_FILE]'
       </ScriptMap>
     </ScriptMaps>
   </Configuration>
-  <Configuration topology="XP0" version="9.0 Initial Release" wrapper="PSTemplates\blank.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+  <Configuration topology="XP0" version="9.0 Update 1" wrapper="PSTemplates\blank.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
     <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_single.scwdp.zip" />
     <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_xp0xconnect.scwdp.zip" />
     <File type="config" name="xconnect-createcert.json">
