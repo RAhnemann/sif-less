@@ -418,7 +418,7 @@ Install-SitecoreConfiguration @xconnectParams
   SolrURL = $SolrUrl
   XConnectCollectionService = "https://$xConnectSiteName"
   }
-  Install-SitecoreConfiguration @$sitecoreParams
+  Install-SitecoreConfiguration @sitecoreParams
         ]]>
         </ScriptMap>
         <ScriptMap location="UNINSTALL">
