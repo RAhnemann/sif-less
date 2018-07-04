@@ -181,7 +181,7 @@ namespace SIFLess.Forms
             {
                 if (control is StringControl scControl)
                 {
-                    values.Add(scControl.Field, scControl.Value);
+                    values.Add(scControl.FieldMap, scControl.Value);
                 }
             }
 
