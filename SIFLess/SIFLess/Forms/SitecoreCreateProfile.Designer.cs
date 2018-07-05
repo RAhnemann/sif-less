@@ -51,7 +51,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 99);
+            this.label1.Location = new System.Drawing.Point(9, 53);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
@@ -71,7 +71,7 @@
             // profileTextBox
             // 
             this.profileTextBox.Location = new System.Drawing.Point(28, 24);
-            this.profileTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.profileTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.profileTextBox.Name = "profileTextBox";
             this.profileTextBox.Size = new System.Drawing.Size(343, 20);
             this.profileTextBox.TabIndex = 0;
@@ -79,7 +79,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 53);
+            this.label3.Location = new System.Drawing.Point(9, 99);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
@@ -91,7 +91,7 @@
             this.configList.Enabled = false;
             this.configList.FormattingEnabled = true;
             this.configList.Location = new System.Drawing.Point(28, 259);
-            this.configList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.configList.Margin = new System.Windows.Forms.Padding(2);
             this.configList.Name = "configList";
             this.configList.Size = new System.Drawing.Size(343, 69);
             this.configList.TabIndex = 6;
@@ -132,7 +132,7 @@
             // validateButton
             // 
             this.validateButton.Location = new System.Drawing.Point(9, 557);
-            this.validateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.validateButton.Margin = new System.Windows.Forms.Padding(2);
             this.validateButton.Name = "validateButton";
             this.validateButton.Size = new System.Drawing.Size(359, 24);
             this.validateButton.TabIndex = 50;
@@ -143,9 +143,9 @@
             // fileGroupBox
             // 
             this.fileGroupBox.Location = new System.Drawing.Point(11, 378);
-            this.fileGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.fileGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.fileGroupBox.Name = "fileGroupBox";
-            this.fileGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.fileGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.fileGroupBox.Size = new System.Drawing.Size(359, 175);
             this.fileGroupBox.TabIndex = 11;
             this.fileGroupBox.TabStop = false;
@@ -154,27 +154,27 @@
             // topologyList
             // 
             this.topologyList.FormattingEnabled = true;
-            this.topologyList.Location = new System.Drawing.Point(28, 69);
-            this.topologyList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.topologyList.Location = new System.Drawing.Point(28, 116);
+            this.topologyList.Margin = new System.Windows.Forms.Padding(2);
             this.topologyList.Name = "topologyList";
             this.topologyList.Size = new System.Drawing.Size(343, 21);
-            this.topologyList.TabIndex = 10;
+            this.topologyList.TabIndex = 20;
             this.topologyList.SelectedIndexChanged += new System.EventHandler(this.topologyList_SelectedIndexChanged);
             // 
             // versionList
             // 
             this.versionList.FormattingEnabled = true;
-            this.versionList.Location = new System.Drawing.Point(28, 115);
-            this.versionList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.versionList.Location = new System.Drawing.Point(28, 69);
+            this.versionList.Margin = new System.Windows.Forms.Padding(2);
             this.versionList.Name = "versionList";
             this.versionList.Size = new System.Drawing.Size(343, 21);
-            this.versionList.TabIndex = 20;
+            this.versionList.TabIndex = 10;
             this.versionList.SelectedIndexChanged += new System.EventHandler(this.versionList_SelectedIndexChanged);
             // 
             // dataRepoTextBox
             // 
             this.dataRepoTextBox.Location = new System.Drawing.Point(28, 205);
-            this.dataRepoTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataRepoTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.dataRepoTextBox.Name = "dataRepoTextBox";
             this.dataRepoTextBox.Size = new System.Drawing.Size(343, 20);
             this.dataRepoTextBox.TabIndex = 40;
@@ -204,7 +204,7 @@
             // licenseFileTextBox
             // 
             this.licenseFileTextBox.Location = new System.Drawing.Point(28, 164);
-            this.licenseFileTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.licenseFileTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.licenseFileTextBox.Name = "licenseFileTextBox";
             this.licenseFileTextBox.Size = new System.Drawing.Size(343, 20);
             this.licenseFileTextBox.TabIndex = 30;
@@ -235,7 +235,7 @@
             this.Controls.Add(this.profileTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SitecoreCreateProfile";
             this.Text = "Create Profile";
             this.ResumeLayout(false);

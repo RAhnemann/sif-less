@@ -33,23 +33,16 @@ namespace SIFLess.Controls
 
         }
 
-        private void UserControl1_Load(object sender, EventArgs e)
+        private void FileControl_Load(object sender, EventArgs e)
         {
             fieldLabel.Text = _fieldName;
             valueTextBox.Text = _defaultValue;
             fieldTip.SetToolTip(fieldLabel, _description);
         }
-        
-        private void button1_Click(object sender, EventArgs e)
+
+        private void browseButton_Click(object sender, EventArgs e)
         {
-            var fileResult = openFileDialog1.ShowDialog();
 
-            if (fileResult == DialogResult.OK)
-            {
-                valueTextBox.Text = openFileDialog1.FileName;
-            }
         }
-
-      
     }
 }

@@ -100,28 +100,7 @@ namespace SIFLess
         }
         public static List<string> GetFilesForInstance(string topology, string version)
         {
-            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                ConfigurationManager.AppSettings["ConfigManifestPath"]);
-
-            var serializer = new XmlSerializer(typeof(ConfigurationSet));
-
-            ConfigurationSet configs;
-            using (var reader = new StreamReader(configPath))
-            {
-                try
-                {
-                    configs = (ConfigurationSet)serializer.Deserialize(reader);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    throw;
-                }
-                finally
-                {
-                    reader.Close();
-                }
-            }
+            var configs = GetConfigSets();
 
             if (configs != null)
             {
@@ -139,6 +118,31 @@ namespace SIFLess
             else
             {
                 throw new Exception($"Couldn't find associated config for [{topology}][{version}]");
+            }
+
+        }
+
+        public static ConfigurationSet GetConfigSets()
+        {
+            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                ConfigurationManager.AppSettings["ConfigManifestPath"]);
+
+            var serializer = new XmlSerializer(typeof(ConfigurationSet));
+            using (var reader = new StreamReader(configPath))
+            {
+                try
+                {
+                    return (ConfigurationSet)serializer.Deserialize(reader); ;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
+                finally
+                {
+                    reader.Close();
+                }
             }
 
         }

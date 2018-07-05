@@ -37,31 +37,29 @@
             // fieldLabel
             // 
             this.fieldLabel.AutoSize = true;
-            this.fieldLabel.Location = new System.Drawing.Point(4, 6);
-            this.fieldLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.fieldLabel.Location = new System.Drawing.Point(3, 5);
             this.fieldLabel.Name = "fieldLabel";
-            this.fieldLabel.Size = new System.Drawing.Size(46, 17);
+            this.fieldLabel.Size = new System.Drawing.Size(35, 13);
             this.fieldLabel.TabIndex = 0;
             this.fieldLabel.Text = "label1";
             // 
             // valueTextBox
             // 
-            this.valueTextBox.Location = new System.Drawing.Point(152, 2);
-            this.valueTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.valueTextBox.Location = new System.Drawing.Point(114, 2);
             this.valueTextBox.Name = "valueTextBox";
-            this.valueTextBox.Size = new System.Drawing.Size(189, 22);
+            this.valueTextBox.Size = new System.Drawing.Size(143, 20);
             this.valueTextBox.TabIndex = 1;
+            this.valueTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.valueTextBox_KeyPress);
             // 
             // StringControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.fieldLabel);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StringControl";
-            this.Size = new System.Drawing.Size(360, 30);
-            this.Load += new System.EventHandler(this.UserControl1_Load);
+            this.Size = new System.Drawing.Size(270, 24);
+            this.Load += new System.EventHandler(this.StringControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

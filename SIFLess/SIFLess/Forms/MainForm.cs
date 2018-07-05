@@ -86,14 +86,18 @@ namespace SIFLess.Forms
                     }
                 }
             }
-
+          
             var position = 20;
             foreach (var field in fields)
             {
                 switch (field.Type.ToLower())
                 {
                     case "text":
-                        customFieldsGroupBox.Controls.Add(new StringControl(field.Label, field.Map, field.Description) { Top = position, Left = 20 });
+                        var stringControl = new StringControl(field.Label, field.Map, field.Description) {Top = position, Left = 20};
+                        stringControl.Value = field.DefaultValue.Replace("[[PREFIX]]", prefixTextBox.Text);
+                        stringControl.DefaultValue = field.DefaultValue;
+                        prefixTextBox.TextChanged += stringControl.Prefix_Changed;
+                        customFieldsGroupBox.Controls.Add(stringControl);
                         break;
                 }
 

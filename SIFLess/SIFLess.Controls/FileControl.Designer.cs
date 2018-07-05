@@ -60,7 +60,7 @@
             this.browseButton.TabIndex = 2;
             this.browseButton.Text = "...";
             this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.button1_Click);
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
             // openFileDialog1
             // 
@@ -75,7 +75,7 @@
             this.Controls.Add(this.fieldLabel);
             this.Name = "FileControl";
             this.Size = new System.Drawing.Size(520, 24);
-            this.Load += new System.EventHandler(this.UserControl1_Load);
+            this.Load += new System.EventHandler(this.FileControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

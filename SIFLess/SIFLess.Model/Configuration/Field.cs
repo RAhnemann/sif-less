@@ -19,5 +19,8 @@ namespace SIFLess.Model.Configuration
 
         [XmlAttribute(AttributeName = "description")]
         public string Description { get; set; }
+
+        [XmlAttribute(AttributeName = "defaultValue")]
+        public string DefaultValue { get; set; }
     }
 }

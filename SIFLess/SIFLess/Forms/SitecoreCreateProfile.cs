@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
@@ -6,12 +7,13 @@ using System.Linq;
 using System.Windows.Forms;
 using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
+using Unity.Interception.Utilities;
 
 namespace SIFLess
 {
     public partial class SitecoreCreateProfile : Form
     {
-        private  SitecoreProfile _profile;
+        private SitecoreProfile _profile;
         private readonly IProfileManager _profileManager;
 
         private const int LABEL_WIDTH = 478;
@@ -23,7 +25,7 @@ namespace SIFLess
         {
             _profileManager = profileManager;
             InitializeComponent();
-            InitData();
+            InitVersions();
         }
 
         public void SetProfile(SitecoreProfile profile)
@@ -41,10 +43,13 @@ namespace SIFLess
             validateButton.Text = "Update Profile";
         }
 
-        private void InitData()
+        private void InitVersions()
         {
-            ConfigurationManager.AppSettings["Topologies"].Split('|').ToList().ForEach(t => topologyList.Items.Add(t));
-            ConfigurationManager.AppSettings["Versions"].Split('|').ToList().ForEach(v => versionList.Items.Add(v));
+            var configs = Utility.GetConfigSets();
+            var versions = new List<string>();
+            configs.Configurations.ForEach(c => versions.Add(c.Version));
+
+            versions.Distinct().ForEach(v => versionList.Items.Add(v));
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -118,7 +123,7 @@ namespace SIFLess
 
             //Save our profile
             var currentProfiles = _profileManager.Fetch();
-            
+
             if (_profile == null)
             {
                 var newProfile = new SitecoreProfile
@@ -170,14 +175,26 @@ namespace SIFLess
 
         private void versionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RebuildFiles();
+            topologyList.Items.Clear();
+
+            //Need to rebuild the topologies available for the version selected
+            var configs = Utility.GetConfigSets();
+
+            var topologies = new List<string>();
+
+            configs.Configurations.Where(c => c.Version == (string)versionList.SelectedItem).ForEach(t => topologies.Add(t.Topology));
+
+            topologies.Distinct().ForEach(t => topologyList.Items.Add(t));
+
+            topologyList.SelectedIndex = 0;
+
         }
 
         private void topologyList_SelectedIndexChanged(object sender, EventArgs e)
         {
             RebuildFiles();
         }
-        
+
         private void RebuildFiles()
         {
             fileGroupBox.Controls.Clear();
