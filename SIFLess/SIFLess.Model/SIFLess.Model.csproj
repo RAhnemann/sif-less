@@ -50,7 +50,7 @@
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\Configurations.cs" />
     <Compile Include="Configuration\Field.cs" />
-    <Compile Include="Configuration\FieldMaps.cs" />
+    <Compile Include="Configuration\Fields.cs" />
     <Compile Include="Configuration\File.cs" />
     <Compile Include="Configuration\ScriptMaps.cs" />
     <Compile Include="Configuration\ScriptMap.cs" />

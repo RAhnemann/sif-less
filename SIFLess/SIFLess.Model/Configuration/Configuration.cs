@@ -27,5 +27,9 @@ namespace SIFLess.Model.Configuration
 
         [XmlAttribute(AttributeName = "scriptmaps")]
         public string ScriptMapNames { get; set; }
+
+        [XmlElement(ElementName = "Fields")]
+        public FieldSet FieldSet { get; set; }
+
     }
 }

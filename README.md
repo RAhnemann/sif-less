@@ -2,6 +2,22 @@
 
 SIF-less 2 is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
 
+## Version 2.0.2.0 - Beta 1 Update 2 ##
+
+* Completely revamped the uninstall process. Rather than using SIF for uninstall, we're going with plain PowerShell.  This might not be the end-game here, but this is a lot cleaner and fault tolerant.  It can also be re-run multiple times to clean up an instance, and it won't fail.
+* Added checks in the generated PS1 file for SIF install, SitecoreFundamentals, Admin mode and PowerShell version.
+* Simplified the Configuration Manifest file.  Moved fields to a configuration, rather than a file.  Files now shouldn't contain Script Maps, as those really just belong at the Version/Topology Combo level.
+* On the Main Window, all the Configurations should sort alphabetically.
+* Name the topologies something more meaningful: XM0, XM1, and XP0. (Note: If you have existing configurations saved, you may need to re-save them.  It shouldn't drop them from SIF-less..if it does, let me know in the comments)
+
+## Version 2.0.1.0 - Beta 1 Update 1 ##
+
+* No longer crashes when selecting certain topologies
+* Fixed an error when replacing bookmarks in the EZ ps1 files
+* Changed Versions and Typologies to be dynamic based on configurations available. This will allow the addition of new versions/configs with a single file change (for now)
+* Addition of Dynamic Field values and defaults.  Much like SIF-less 1, when you change the prefix, it updates the corresponding field values for it.  This is stored in the form of a bookmark in the ConfigurationManfest file in a defaultValue attribute.
+* Added in Sitecore 9.0 Update 2 for the configurations
+
 ## Version 2.0.0.0 - Beta 1 ##
 
 * Rewrote almost the whole damn thing.

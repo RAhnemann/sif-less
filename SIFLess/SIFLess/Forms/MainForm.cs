@@ -37,7 +37,7 @@ namespace SIFLess.Forms
             RefreshSolrProfiles();
 
             this.Text = $"SIF-less v{this.ProductVersion}";
-            
+
         }
 
         private void manageSitecoreProfilesLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -73,27 +73,21 @@ namespace SIFLess.Forms
 
             var fields = new List<Field>();
 
-            foreach (var file in configuration.Files)
+            foreach (var field in configuration.FieldSet.Fields)
             {
-                if (file.FieldMaps != null)
+                if (field != null)
                 {
-                    foreach (var fieldMap in file.FieldMaps.Fields)
-                    {
-                        if (fields.Find(f => f.Name == fieldMap.Name) == null)
-                        {
-                            fields.Add(fieldMap);
-                        }
-                    }
+                    fields.Add(field);
                 }
             }
-          
+
             var position = 20;
             foreach (var field in fields)
             {
                 switch (field.Type.ToLower())
                 {
                     case "text":
-                        var stringControl = new StringControl(field.Label, field.Map, field.Description) {Top = position, Left = 20};
+                        var stringControl = new StringControl(field.Label, field.Map, field.Description) { Top = position, Left = 20 };
                         stringControl.Value = field.DefaultValue.Replace("[[PREFIX]]", prefixTextBox.Text);
                         stringControl.DefaultValue = field.DefaultValue;
                         prefixTextBox.TextChanged += stringControl.Prefix_Changed;
@@ -156,7 +150,10 @@ namespace SIFLess.Forms
 
             var currentProfiles = _profileManager.Fetch();
 
+            currentProfiles.SitecoreProfiles?.Sort((p1, p2) => string.Compare(p1.Name, p2.Name, StringComparison.Ordinal));
+
             currentProfiles.SitecoreProfiles?.ForEach(p => profileListBox.Items.Add(p));
+
         }
 
         public void RefreshConnectionProfiles()
@@ -164,6 +161,8 @@ namespace SIFLess.Forms
             connectionListBox.Items.Clear();
 
             var currentProfiles = _profileManager.Fetch();
+
+            currentProfiles.SqlProfiles?.Sort((p1, p2) => string.Compare(p1.Name, p2.Name, StringComparison.Ordinal));
 
             currentProfiles.SqlProfiles?.ForEach(p => connectionListBox.Items.Add(p));
         }
@@ -173,6 +172,8 @@ namespace SIFLess.Forms
             solrListBox.Items.Clear();
 
             var currentProfiles = _profileManager.Fetch();
+
+            currentProfiles.SolrProfiles?.Sort((p1, p2) => string.Compare(p1.Name, p2.Name, StringComparison.Ordinal));
 
             currentProfiles.SolrProfiles?.ForEach(p => solrListBox.Items.Add(p));
         }

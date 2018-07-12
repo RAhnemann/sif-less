@@ -44,14 +44,6 @@ namespace SIFLess
                 allMaps[scriptMap.Location].Add(scriptMap);
             }
 
-            foreach (var file in configuration.Files.Where(f => f.Type == "config"))
-            {
-                foreach (var scriptMap in file.ScriptMaps.ScriptMapList)
-                {
-                    allMaps[scriptMap.Location].Add(scriptMap);
-                }
-            }
-
             foreach (var mapType in allMaps)
             {
                 var scriptText = new StringBuilder();
