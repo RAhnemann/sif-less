@@ -2,6 +2,16 @@
 
 SIF-less 2 is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
 
+
+## Version 2.0.3.0 - Beta 1 Update 3 ##
+
+* Added a Secure Password to the configs.  This is used in all non-admin connections in order to ensure installation is not halted by using passwords that don't adhere to the local password plolicy
+* Added in support for Habitat Topologies.  This is only available for Sitecore 9.0 Update 2 and can be found in the Topology list when selecting Version 9.0 Update 2.
+* Fixed issues with the File Selector and added in a Folder Selector Control.
+* Fixed an issue where not having a default value caused an error when updating a custom field.
+* Added a timer so you can see an overall execution time for the entire script.
+* 
+
 ## Version 2.0.2.0 - Beta 1 Update 2 ##
 
 * Completely revamped the uninstall process. Rather than using SIF for uninstall, we're going with plain PowerShell.  This might not be the end-game here, but this is a lot cleaner and fault tolerant.  It can also be re-run multiple times to clean up an instance, and it won't fail.
