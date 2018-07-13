@@ -1,10 +1,15 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace SIFLess.Model.Configuration
 {
     [XmlRoot(ElementName = "Field")]
     public class Field
     {
+        public Field()
+        {
+            DefaultValue = "";
+        }
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 

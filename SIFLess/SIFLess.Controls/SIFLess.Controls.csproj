@@ -44,6 +44,12 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="FolderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FolderControl.Designer.cs">
+      <DependentUpon>FolderControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FolderControl.resx">
+      <DependentUpon>FolderControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
     </EmbeddedResource>

@@ -16,7 +16,8 @@
   $SqlAdminPassword = '[SQL_PASSWORD]'
   $LicenseFilePath = '[LICENSE_FILE]'
   $SiteName = '[SITENAME]'
-  $SiteFolder = "C:\inetpub\wwwroot\$SiteName"    
+  $SiteFolder = "C:\inetpub\wwwroot\$SiteName" 
+  $SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -41,6 +42,10 @@
       SqlServer = $SqlServer
       SqlAdminPassword = $SqlAdminPassword
       SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecoreParams
       ]]>
@@ -86,6 +91,7 @@ $CMSiteName = '[CM_SITENAME]'
 $CDSiteName = '[CD_SITENAME]'
 $CMSiteFolder = "C:\inetpub\wwwroot\$CMSiteName"    
 $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"    
+$SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -110,6 +116,10 @@ $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
       SqlServer = $SqlServer
       SqlAdminPassword = $SqlAdminPassword
       SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecore_cm_Params
     
@@ -122,6 +132,9 @@ $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
       SolrUrl = $SolrUrl
       SiteName = $CDSiteName
       SqlServer = $SqlServer
+      SqlCorePassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecore_cd_Params
         ]]>
@@ -173,7 +186,7 @@ $xConnectSiteName = '[XCONNECT_SITE]'
 $SiteName = '[SITENAME]'
 $SiteFolder = "C:\inetpub\wwwroot\$SiteName"      
 $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"    
-
+$SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -205,6 +218,10 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     SqlAdminPassword = $SqlAdminPassword
     SolrCorePrefix = $Prefix
     SolrURL = $SolrUrl
+    SqlCollectionPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
   }
   Install-SitecoreConfiguration @xconnectParams
   
@@ -229,6 +246,15 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     SqlAdminPassword = $SqlAdminPassword
     SolrCorePrefix = $Prefix
     SolrURL = $SolrUrl
+    SqlCorePassword = $SecurePassword
+    SqlMasterPassword = $SecurePassword
+    SqlWebPassword = $SecurePassword
+    SqlReportingPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlProcessingTasksPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlFormsPassword = $SecurePassword
     XConnectCollectionService = "https://$xConnectSiteName"
   }
   Install-SitecoreConfiguration @sitecoreParams
@@ -287,7 +313,8 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
   $SqlAdminPassword = '[SQL_PASSWORD]'
   $LicenseFilePath = '[LICENSE_FILE]'
   $SiteName = '[SITENAME]'
-  $SiteFolder = "C:\inetpub\wwwroot\$SiteName"    
+  $SiteFolder = "C:\inetpub\wwwroot\$SiteName"
+  $SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -312,6 +339,10 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
       SqlServer = $SqlServer
       SqlAdminPassword = $SqlAdminPassword
       SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecoreParams
       ]]>
@@ -356,7 +387,8 @@ $LicenseFilePath = '[LICENSE_FILE]'
 $CMSiteName = '[CM_SITENAME]'
 $CDSiteName = '[CD_SITENAME]'
 $CMSiteFolder = "C:\inetpub\wwwroot\$CMSiteName"    
-$CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"   
+$CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName" 
+$SecurePassword = 'Sitecor3SecureP4ssword!'
 ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -381,6 +413,10 @@ $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
       SqlServer = $SqlServer
       SqlAdminPassword = $SqlAdminPassword
       SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecore_cm_Params
     
@@ -393,6 +429,9 @@ $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
       SolrUrl = $SolrUrl
       SiteName = $CDSiteName
       SqlServer = $SqlServer
+      SqlCorePassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecore_cd_Params
         ]]>
@@ -444,6 +483,7 @@ $xConnectSiteName = '[XCONNECT_SITE]'
 $SiteName = '[SITENAME]'
 $SiteFolder = "C:\inetpub\wwwroot\$SiteName"      
 $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"   
+$SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -475,6 +515,11 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     SqlAdminPassword = $SqlAdminPassword
     SolrCorePrefix = $Prefix
     SolrURL = $SolrUrl
+    SqlCollectionPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword
   }
   Install-SitecoreConfiguration @xconnectParams
   
@@ -499,6 +544,17 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     SqlAdminPassword = $SqlAdminPassword
     SolrCorePrefix = $Prefix
     SolrURL = $SolrUrl
+    SqlCorePassword = $SecurePassword
+    SqlMasterPassword = $SecurePassword
+    SqlWebPassword = $SecurePassword
+    SqlReportingPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlProcessingTasksPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlFormsPassword = $SecurePassword
+    SqlExmMasterPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword    
     XConnectCollectionService = "https://$xConnectSiteName"
   }
   Install-SitecoreConfiguration @sitecoreParams
@@ -557,7 +613,8 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
   $SqlAdminPassword = '[SQL_PASSWORD]'
   $LicenseFilePath = '[LICENSE_FILE]'
   $SiteName = '[SITENAME]'
-  $SiteFolder = "C:\inetpub\wwwroot\$SiteName"    
+  $SiteFolder = "C:\inetpub\wwwroot\$SiteName" 
+  $SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -582,6 +639,10 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
       SqlServer = $SqlServer
       SqlAdminPassword = $SqlAdminPassword
       SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecoreParams
       ]]>
@@ -626,7 +687,8 @@ $LicenseFilePath = '[LICENSE_FILE]'
 $CMSiteName = '[CM_SITENAME]'
 $CDSiteName = '[CD_SITENAME]'
 $CMSiteFolder = "C:\inetpub\wwwroot\$CMSiteName"    
-$CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName" 
+$CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
+$SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
@@ -651,6 +713,10 @@ $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
       SqlServer = $SqlServer
       SqlAdminPassword = $SqlAdminPassword
       SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecore_cm_Params
     
@@ -663,6 +729,9 @@ $CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName"
       SolrUrl = $SolrUrl
       SiteName = $CDSiteName
       SqlServer = $SqlServer
+      SqlCorePassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
     }
     Install-SitecoreConfiguration @sitecore_cd_Params
         ]]>
@@ -713,11 +782,18 @@ $xConnectCertName = "$Prefix.xconnect_client"
 $xConnectSiteName = '[XCONNECT_SITE]'
 $SiteName = '[SITENAME]'
 $SiteFolder = "C:\inetpub\wwwroot\$SiteName"      
-$xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"    
+$xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
+$SecurePassword = 'Sitecor3SecureP4ssword!'
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
         <![CDATA[
+          
+        if(-not (Get-command npm)){
+          Write-Host "NPM not detected"
+          Return
+        }
+        
   $certParams = @{
     Path = "$PSScriptRoot\xconnect-createcert.json"
     CertificateName = $xConnectCertName 
@@ -745,6 +821,11 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     SqlAdminPassword = $SqlAdminPassword
     SolrCorePrefix = $Prefix
     SolrURL = $SolrUrl
+    SqlCollectionPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword
   }
   Install-SitecoreConfiguration @xconnectParams
   
@@ -769,6 +850,17 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     SqlAdminPassword = $SqlAdminPassword
     SolrCorePrefix = $Prefix
     SolrURL = $SolrUrl
+    SqlCorePassword = $SecurePassword
+    SqlMasterPassword = $SecurePassword
+    SqlWebPassword = $SecurePassword
+    SqlReportingPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlProcessingTasksPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlFormsPassword = $SecurePassword
+    SqlExmMasterPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword
     XConnectCollectionService = "https://$xConnectSiteName"
   }
   Install-SitecoreConfiguration @sitecoreParams
@@ -808,6 +900,185 @@ $xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
     <Fields>
       <Field name="xconnectsitename" type="text" map="XCONNECT_SITE" label="X Connect Site Name" description="The Name of the xConnect Website"  defaultValue="[[PREFIX]].xconnect"/>
       <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+    </Fields>
+  </Configuration>
+  <Configuration topology="XP0 with Habitat" version="9.0 Update 2" wrapper="PSTemplates\blank.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+    <File type="data" name="Sitecore 9.0.2 rev. 180604 (OnPrem)_single.scwdp.zip" />
+    <File type="data" name="Sitecore 9.0.2 rev. 180604 (OnPrem)_xp0xconnect.scwdp.zip" />
+    <File type="config" name="xconnect-createcert.json" />
+    <File type="config" name="xconnect-solr.json"/>
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="xconnect-xp0.json" />
+    <File type="config" name="sitecore-XP0.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+$Prefix = '[PREFIX]'
+$PSScriptRoot = '[DATA_FOLDER]'
+$SolrUrl = '[SOLR_URL]'
+$SolrRoot = '[SOLR_ROOT]'
+$SolrService = '[SOLR_SERVICE]'
+$SqlServer = '[SQL_SERVER]'
+$SqlAdminUser = '[SQL_USER]'
+$SqlAdminPassword = '[SQL_PASSWORD]'
+$LicenseFilePath = '[LICENSE_FILE]'
+$xConnectCertName = "$Prefix.xconnect_client"
+$xConnectSiteName = '[XCONNECT_SITE]'
+$SiteName = '[SITENAME]'
+$SiteFolder = "C:\inetpub\wwwroot\$SiteName"      
+$xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"
+$HabitatRootPath = '[HABITAT_ROOT]'
+$SecurePassword = 'Sitecor3SecureP4ssword!'
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+        
+        if(-not (Get-command npm)){
+          Write-Host "NPM not detected"
+          Return
+        }
+        
+  $certParams = @{
+    Path = "$PSScriptRoot\xconnect-createcert.json"
+    CertificateName = $xConnectCertName 
+  }
+  Install-SitecoreConfiguration @certParams -Verbose
+    
+  $solrParams = @{
+    Path = "$PSScriptRoot\xconnect-solr.json"
+    SolrUrl = $SolrUrl
+    SolrRoot = $SolrRoot
+    SolrService = $SolrService
+    CorePrefix = $Prefix
+  }
+  Install-SitecoreConfiguration @solrParams
+  
+  $xconnectParams = @{
+    Path = "$PSScriptRoot\xconnect-xp0.json"
+    Package = "$PSScriptRoot\Sitecore 9.0.2 rev. 180604 (OnPrem)_xp0xconnect.scwdp.zip"
+    LicenseFile = $LicenseFilePath
+    Sitename = $xConnectSiteName
+    XConnectCert = $xConnectCertName 
+    SqlDbPrefix = $Prefix
+    SqlServer = $SqlServer
+    SqlAdminUser = $SqlAdminUser
+    SqlAdminPassword = $SqlAdminPassword
+    SolrCorePrefix = $Prefix
+    SolrURL = $SolrUrl
+    SqlCollectionPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword
+  }
+  Install-SitecoreConfiguration @xconnectParams
+  
+  $solrParams = @{
+    Path = "$PSScriptRoot\sitecore-solr.json"
+    SolrUrl = $SolrUrl
+    SolrRoot = $SolrRoot
+    SolrService = $SolrService
+    CorePrefix = $Prefix
+  }
+  Install-SitecoreConfiguration @solrParams
+    
+  $sitecoreParams = @{
+    Path = "$PSScriptRoot\sitecore-XP0.json"
+    Package = "$PSScriptRoot\Sitecore 9.0.2 rev. 180604 (OnPrem)_single.scwdp.zip"
+    LicenseFile = $LicenseFilePath
+    Sitename = $SiteName
+    XConnectCert = $xConnectCertName 
+    SqlDbPrefix = $Prefix
+    SqlServer = $SqlServer
+    SqlAdminUser = $SqlAdminUser
+    SqlAdminPassword = $SqlAdminPassword
+    SolrCorePrefix = $Prefix
+    SolrURL = $SolrUrl
+    SqlCorePassword = $SecurePassword
+    SqlMasterPassword = $SecurePassword
+    SqlWebPassword = $SecurePassword
+    SqlReportingPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlProcessingTasksPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlFormsPassword = $SecurePassword
+    SqlExmMasterPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword
+    XConnectCollectionService = "https://$xConnectSiteName"
+  }
+  Install-SitecoreConfiguration @sitecoreParams
+  
+  Write-Host "Installing Node Packages"
+ 
+  $npmProcess = Start-Process "npm" -ArgumentList "install" -WorkingDirectory $HabitatRootPath
+  $npmProcess.WaitForExit()
+
+  Write-Host "Copying User file for gulp"
+  (Get-Content "$HabitatRootPath\gulp-config.js").replace('habitat.dev.local', "$SiteName") | Set-Content "$HabitatRootPath\gulp-config.js.user"
+
+  #Update a couple hard-coded values
+  if(-not (Test-Path -Path "$HabitatRootPath\src\Project\Habitat\code\App_Config\Environment\Project\Habitat.Dev.config.original")){
+    Copy-Item "$HabitatRootPath\src\Project\Habitat\code\App_Config\Environment\Project\Habitat.Dev.config" "$HabitatRootPath\src\Project\Habitat\code\App_Config\Environment\Project\Habitat.Dev.config.original"
+  }
+  
+  (Get-Content "$HabitatRootPath\src\Project\Habitat\code\App_Config\Environment\Project\Habitat.Dev.config.original").replace('C:\projects\Habitat\src', "$HabitatRootPath\src") | Set-Content "$HabitatRootPath\src\Project\Habitat\code\App_Config\Environment\Project\Habitat.Dev.config"
+
+  if(-not (Test-Path -Path "$HabitatRootPath\publishsettings.targets.original")){
+    Copy-Item "$HabitatRootPath\publishsettings.targets" "$HabitatRootPath\publishsettings.targets.original"
+  }
+  
+  (Get-Content "$HabitatRootPath\publishsettings.targets.original").replace('habitat.dev.local', "$SiteName") | Set-Content "$HabitatRootPath\publishsettings.targets"
+
+  #Need to keep this sucker running
+  Unblock-File -Path "$HabitatRootPath\scripts\Unicorn\Sync.ps1"
+  Unblock-File -Path "$HabitatRootPath\scripts\Unicorn\Unicorn.psm1"
+  Unblock-File -Path "$HabitatRootPath\scripts\Unicorn\MicroCHAP.dll"
+
+  
+  Write-Host "Starting Gulp. Get a beverage."
+  $gulpProcess = Start-Process "gulp" -WorkingDirectory $HabitatRootPath -PassThru
+  $gulpProcess.WaitForExit()
+ 
+  Write-Host "Gulp is done..finally"
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+     
+  RemoveService("$xConnectSiteName-MarketingAutomationService")
+  RemoveService("$xConnectSiteName-IndexWorker")
+  
+  RemoveSolrCores
+  
+  RemoveDatabase("Core")
+  RemoveDatabase("EXM.Master")
+  RemoveDatabase("ExperienceForms")
+  RemoveDatabase("MarketingAutomation")
+  RemoveDatabase("Master")
+  RemoveDatabase("Messaging")
+  RemoveDatabase("Processing.Pools")
+  RemoveDatabase("Processing.Tasks")
+  RemoveDatabase("ReferenceData")
+  RemoveDatabase("Reporting")
+  RemoveDatabase("Web")
+  RemoveDatabase("Xdb.Collection.Shard0")
+  RemoveDatabase("Xdb.Collection.Shard1")
+  RemoveDatabase("Xdb.Collection.ShardMapManager")
+  
+  RemoveWebsite($xConnectSiteName)
+  RemoveWebsite($SiteName)   
+  
+  RemoveFolder($SiteFolder)
+  RemoveFolder($xConnectSiteFolder)   
+        ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="xconnectsitename" type="text" map="XCONNECT_SITE" label="X Connect Site Name" description="The Name of the xConnect Website"  defaultValue="[[PREFIX]].xconnect"/>
+      <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+      <Field name="habitatroot" type="folder" map="HABITAT_ROOT" label="Habitat Root" description="Where the habitat Source is extracted to" />
     </Fields>
   </Configuration>
 </Configurations>

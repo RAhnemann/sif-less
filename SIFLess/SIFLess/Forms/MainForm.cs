@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity.Configuration;
 using SIFLess.Controls;
+using SIFLess.Model;
 using SIFLess.Model.Configuration;
 using SIFLess.Model.Managers;
 using SIFLess.Model.Profiles;
@@ -92,6 +93,10 @@ namespace SIFLess.Forms
                         stringControl.DefaultValue = field.DefaultValue;
                         prefixTextBox.TextChanged += stringControl.Prefix_Changed;
                         customFieldsGroupBox.Controls.Add(stringControl);
+                        break;
+                    case "folder":
+                        var folderControl = new FolderControl(field.Label, field.Map, field.Description) { Top = position, Left = 20 };
+                        customFieldsGroupBox.Controls.Add(folderControl);
                         break;
                 }
 
@@ -184,7 +189,7 @@ namespace SIFLess.Forms
 
             foreach (var control in customFieldsGroupBox.Controls)
             {
-                if (control is StringControl scControl)
+                if (control is IParameterControl scControl)
                 {
                     values.Add(scControl.FieldMap, scControl.Value);
                 }

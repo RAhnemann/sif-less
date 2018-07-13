@@ -1,6 +1,6 @@
 ﻿namespace SIFLess.Controls
 {
-    partial class FileControl
+    partial class FolderControl
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             this.valueTextBox = new System.Windows.Forms.TextBox();
             this.fieldTip = new System.Windows.Forms.ToolTip(this.components);
             this.browseButton = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // fieldLabel
@@ -62,20 +62,16 @@
             this.browseButton.UseVisualStyleBackColor = true;
             this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // FileControl
+            // FolderControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.fieldLabel);
-            this.Name = "FileControl";
+            this.Name = "FolderControl";
             this.Size = new System.Drawing.Size(270, 24);
-            this.Load += new System.EventHandler(this.FileControl_Load);
+            this.Load += new System.EventHandler(this.FolderControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -87,6 +83,6 @@
         private System.Windows.Forms.TextBox valueTextBox;
         private System.Windows.Forms.ToolTip fieldTip;
         private System.Windows.Forms.Button browseButton;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

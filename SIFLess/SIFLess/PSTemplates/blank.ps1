@@ -2,6 +2,9 @@
     [switch]$uninstall
 );
 
+
+$start = Get-Date
+
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
 #Requires -Modules SitecoreInstallFramework
@@ -96,3 +99,8 @@ else
 {
 	[INSTALL]
 }
+
+
+$timeSpan = New-TimeSpan -Start $start -End (Get-Date)
+
+Write-Host ("SIF-less completed in {0:HH:mm:ss}" -f ([datetime]$timeSpan.Ticks))

@@ -8,7 +8,7 @@ namespace SIFLess.Model
 {
     public interface IParameterControl
     {
-        string Field { get; }
+        string FieldMap { get; }
         string Value { get; }
 
     }

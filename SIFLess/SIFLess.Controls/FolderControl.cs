@@ -11,13 +11,13 @@ using SIFLess.Model;
 
 namespace SIFLess.Controls
 {
-    public partial class FileControl: UserControl, IParameterControl
+    public partial class FolderControl : UserControl, IParameterControl
     {
         private readonly string _fieldName;
         private readonly string _defaultValue;
         private readonly string _description;
 
-        public FileControl()
+        public FolderControl()
         {
             InitializeComponent();
         }
@@ -32,14 +32,14 @@ namespace SIFLess.Controls
             set => valueTextBox.Text = value;
         }
 
-        public FileControl(string fieldName, string fieldMapName, string description) : this()
+        public FolderControl(string fieldName, string fieldMapName, string description) : this()
         {
             Field = fieldName;
             _description = description;
             FieldMap = fieldMapName;
         }
 
-        private void FileControl_Load(object sender, EventArgs e)
+        private void FolderControl_Load(object sender, EventArgs e)
         {
             fieldLabel.Text = Field;
             fieldTip.SetToolTip(fieldLabel, _description);
@@ -47,11 +47,11 @@ namespace SIFLess.Controls
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            var result = openFileDialog1.ShowDialog();
+            var result = folderBrowserDialog1.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                valueTextBox.Text = openFileDialog1.FileName;
+                valueTextBox.Text = folderBrowserDialog1.SelectedPath;
             }
 
         }
