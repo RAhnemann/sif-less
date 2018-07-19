@@ -1012,7 +1012,7 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   
   Write-Host "Installing Node Packages"
  
-  $npmProcess = Start-Process "npm" -ArgumentList "install" -WorkingDirectory $HabitatRootPath
+  $npmProcess = Start-Process "npm" -ArgumentList "install" -WorkingDirectory $HabitatRootPath -PassThru
   $npmProcess.WaitForExit()
 
   Write-Host "Copying User file for gulp"
