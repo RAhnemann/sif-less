@@ -1,0 +1,302 @@
+﻿<Configurations>
+  <Configuration topology="XM0" version="9.0 Update 1" wrapper="PSTemplates\Sitecore9.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+    <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_cm.scwdp.zip" />
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="sitecore-XM1-cm.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+  $Prefix = '[PREFIX]'
+  $PSScriptRoot = '[DATA_FOLDER]'
+  $SolrUrl = '[SOLR_URL]'
+  $SolrRoot = '[SOLR_ROOT]'
+  $SolrService = '[SOLR_SERVICE]'
+  $SqlServer = '[SQL_SERVER]'
+  $SqlAdminUser = '[SQL_USER]'
+  $SqlAdminPassword = '[SQL_PASSWORD]'
+  $LicenseFilePath = '[LICENSE_FILE]'
+  $SiteName = '[SITENAME]'
+  $SiteFolder = "C:\inetpub\wwwroot\$SiteName"
+  $SecurePassword = 'Sitecor3SecureP4ssword!'
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+  $solrParams = @{
+      Path = "$PSScriptRoot\sitecore-solr.json"
+      SolrUrl = $SolrUrl
+      SolrRoot = $SolrRoot
+      SolrService = $SolrService
+      CorePrefix = $Prefix
+    }
+    Install-SitecoreConfiguration @solrParams
+     
+  $sitecoreParams = @{
+      Path = "$PSScriptRoot\sitecore-XM1-cm.json"
+      Package = "$PSScriptRoot\Sitecore 9.0.1 rev. 171219 (OnPrem)_cm.scwdp.zip"
+      LicenseFile = $LicenseFilePath
+      SqlDbPrefix = $Prefix
+      SolrCorePrefix = $Prefix
+      SolrUrl = $SolrUrl
+      SiteName = $SiteName
+      SqlServer = $SqlServer
+      SqlAdminPassword = $SqlAdminPassword
+      SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
+    }
+    Install-SitecoreConfiguration @sitecoreParams
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+  RemoveSolrCores
+  
+  RemoveDatabase("Core")
+  RemoveDatabase("ExperienceForms")
+  RemoveDatabase("Master")
+  RemoveDatabase("Web")
+
+  RemoveWebsite($SiteName)
+  
+  RemoveFolder($SiteFolder)
+        ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+    </Fields>
+  </Configuration>
+  <Configuration topology="XM1" version="9.0 Update 1" wrapper="PSTemplates\Sitecore9.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+    <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_cm.scwdp.zip" />
+    <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_cd.scwdp.zip" />
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="sitecore-XM1-cm.json" />
+    <File type="config" name="sitecore-XM1-cd.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+$Prefix = '[PREFIX]'
+$PSScriptRoot = '[DATA_FOLDER]'
+$SolrUrl = '[SOLR_URL]'
+$SolrRoot = '[SOLR_ROOT]'
+$SolrService = '[SOLR_SERVICE]'
+$SqlServer = '[SQL_SERVER]'
+$SqlAdminUser = '[SQL_USER]'
+$SqlAdminPassword = '[SQL_PASSWORD]'
+$LicenseFilePath = '[LICENSE_FILE]'
+$CMSiteName = '[CM_SITENAME]'
+$CDSiteName = '[CD_SITENAME]'
+$CMSiteFolder = "C:\inetpub\wwwroot\$CMSiteName"    
+$CDSiteFolder = "C:\inetpub\wwwroot\$CDSiteName" 
+$SecurePassword = 'Sitecor3SecureP4ssword!'
+]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+  $solrParams = @{
+      Path = "$PSScriptRoot\sitecore-solr.json"
+      SolrUrl = $SolrUrl
+      SolrRoot = $SolrRoot
+      SolrService = $SolrService
+      CorePrefix = $Prefix
+    }
+    Install-SitecoreConfiguration @solrParams
+    
+  $sitecore_cm_Params = @{
+      Path = "$PSScriptRoot\sitecore-XM1-cm.json"
+      Package = "$PSScriptRoot\Sitecore 9.0.1 rev. 171219 (OnPrem)_cm.scwdp.zip"
+      LicenseFile = $LicenseFilePath
+      SqlDbPrefix = $Prefix
+      SolrCorePrefix = $Prefix
+      SolrUrl = $SolrUrl
+      SiteName = $CMSiteName
+      SqlServer = $SqlServer
+      SqlAdminPassword = $SqlAdminPassword
+      SqlAdminUser = $SqlAdminUser
+      SqlCorePassword = $SecurePassword
+      SqlMasterPassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
+    }
+    Install-SitecoreConfiguration @sitecore_cm_Params
+    
+  $sitecore_cd_Params = @{
+      Path = "$PSScriptRoot\sitecore-XM1-cd.json"
+      Package = "$PSScriptRoot\Sitecore 9.0.1 rev. 171219 (OnPrem)_cd.scwdp.zip"
+      LicenseFile = $LicenseFilePath
+      SqlDbPrefix = $Prefix
+      SolrCorePrefix = $Prefix
+      SolrUrl = $SolrUrl
+      SiteName = $CDSiteName
+      SqlServer = $SqlServer
+      SqlCorePassword = $SecurePassword
+      SqlFormsPassword = $SecurePassword
+      SqlWebPassword = $SecurePassword
+    }
+    Install-SitecoreConfiguration @sitecore_cd_Params
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+    RemoveSolrCores
+  
+    RemoveDatabase("Core")
+    RemoveDatabase("ExperienceForms")
+    RemoveDatabase("Master")
+    RemoveDatabase("Web")
+    
+    RemoveWebsite($CMSiteName)
+    RemoveWebsite($CDSiteName)
+      
+    RemoveFolder($CMSiteFolder)
+    RemoveFolder($CDSiteFolder)
+  ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="cm_sitename" type="text" map="CM_SITENAME" label="CM Site Name" description="The Name of the CM Website"  defaultValue="[[PREFIX]].sc-cm"/>
+      <Field name="cd_sitename" type="text" map="CD_SITENAME" label="CD Site Name" description="The Name of the CD Website"  defaultValue="[[PREFIX]].sc-cd"/>
+    </Fields>
+  </Configuration>
+  <Configuration topology="XP0" version="9.0 Update 1" wrapper="PSTemplates\Sitecore9.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+    <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_single.scwdp.zip" />
+    <File type="data" name="Sitecore 9.0.1 rev. 171219 (OnPrem)_xp0xconnect.scwdp.zip" />
+    <File type="config" name="xconnect-createcert.json" />
+    <File type="config" name="xconnect-solr.json"/>
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="xconnect-xp0.json" />
+    <File type="config" name="sitecore-XP0.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+$Prefix = '[PREFIX]'
+$PSScriptRoot = '[DATA_FOLDER]'
+$SolrUrl = '[SOLR_URL]'
+$SolrRoot = '[SOLR_ROOT]'
+$SolrService = '[SOLR_SERVICE]'
+$SqlServer = '[SQL_SERVER]'
+$SqlAdminUser = '[SQL_USER]'
+$SqlAdminPassword = '[SQL_PASSWORD]'
+$LicenseFilePath = '[LICENSE_FILE]'
+$xConnectCertName = "$Prefix.xconnect_client"
+$xConnectSiteName = '[XCONNECT_SITE]'
+$SiteName = '[SITENAME]'
+$SiteFolder = "C:\inetpub\wwwroot\$SiteName"      
+$xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"   
+$SecurePassword = 'Sitecor3SecureP4ssword!'
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+  $certParams = @{
+    Path = "$PSScriptRoot\xconnect-createcert.json"
+    CertificateName = $xConnectCertName 
+  }
+  Install-SitecoreConfiguration @certParams -Verbose
+    
+  $solrParams = @{
+    Path = "$PSScriptRoot\xconnect-solr.json"
+    SolrUrl = $SolrUrl
+    SolrRoot = $SolrRoot
+    SolrService = $SolrService
+    CorePrefix = $Prefix
+  }
+  Install-SitecoreConfiguration @solrParams
+  
+  $xconnectParams = @{
+    Path = "$PSScriptRoot\xconnect-xp0.json"
+    Package = "$PSScriptRoot\Sitecore 9.0.1 rev. 171219 (OnPrem)_xp0xconnect.scwdp.zip"
+    LicenseFile = $LicenseFilePath
+    Sitename = $xConnectSiteName
+    XConnectCert = $xConnectCertName 
+    SqlDbPrefix = $Prefix
+    SqlServer = $SqlServer
+    SqlAdminUser = $SqlAdminUser
+    SqlAdminPassword = $SqlAdminPassword
+    SolrCorePrefix = $Prefix
+    SolrURL = $SolrUrl
+    SqlCollectionPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword
+  }
+  Install-SitecoreConfiguration @xconnectParams
+  
+  $solrParams = @{
+    Path = "$PSScriptRoot\sitecore-solr.json"
+    SolrUrl = $SolrUrl
+    SolrRoot = $SolrRoot
+    SolrService = $SolrService
+    CorePrefix = $Prefix
+  }
+  Install-SitecoreConfiguration @solrParams
+    
+  $sitecoreParams = @{
+    Path = "$PSScriptRoot\sitecore-XP0.json"
+    Package = "$PSScriptRoot\Sitecore 9.0.1 rev. 171219 (OnPrem)_single.scwdp.zip"
+    LicenseFile = $LicenseFilePath
+    Sitename = $SiteName
+    XConnectCert = $xConnectCertName 
+    SqlDbPrefix = $Prefix
+    SqlServer = $SqlServer
+    SqlAdminUser = $SqlAdminUser
+    SqlAdminPassword = $SqlAdminPassword
+    SolrCorePrefix = $Prefix
+    SolrURL = $SolrUrl
+    SqlCorePassword = $SecurePassword
+    SqlMasterPassword = $SecurePassword
+    SqlWebPassword = $SecurePassword
+    SqlReportingPassword = $SecurePassword
+    SqlProcessingPoolsPassword = $SecurePassword
+    SqlProcessingTasksPassword = $SecurePassword
+    SqlReferenceDataPassword = $SecurePassword
+    SqlMarketingAutomationPassword = $SecurePassword
+    SqlFormsPassword = $SecurePassword
+    SqlExmMasterPassword = $SecurePassword
+    SqlMessagingPassword = $SecurePassword    
+    XConnectCollectionService = "https://$xConnectSiteName"
+  }
+  Install-SitecoreConfiguration @sitecoreParams
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+     
+  RemoveService("$xConnectSiteName-MarketingAutomationService")
+  RemoveService("$xConnectSiteName-IndexWorker")
+  
+  RemoveSolrCores
+  
+  RemoveDatabase("Core")
+  RemoveDatabase("EXM.Master")
+  RemoveDatabase("ExperienceForms")
+  RemoveDatabase("MarketingAutomation")
+  RemoveDatabase("Master")
+  RemoveDatabase("Messaging")
+  RemoveDatabase("Processing.Pools")
+  RemoveDatabase("Processing.Tasks")
+  RemoveDatabase("ReferenceData")
+  RemoveDatabase("Reporting")
+  RemoveDatabase("Web")
+  RemoveDatabase("Xdb.Collection.Shard0")
+  RemoveDatabase("Xdb.Collection.Shard1")
+  RemoveDatabase("Xdb.Collection.ShardMapManager")
+  
+  RemoveWebsite($xConnectSiteName)
+  RemoveWebsite($SiteName)  
+  
+  RemoveFolder($SiteFolder)
+  RemoveFolder($xConnectSiteFolder)  
+        ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="xconnectsitename" type="text" map="XCONNECT_SITE" label="X Connect Site Name" description="The Name of the xConnect Website"  defaultValue="[[PREFIX]].xconnect"/>
+      <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+    </Fields>
+  </Configuration>
+</Configurations>

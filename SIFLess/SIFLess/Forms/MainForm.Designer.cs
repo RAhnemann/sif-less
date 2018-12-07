@@ -87,9 +87,9 @@
             this.installTab.Controls.Add(this.label2);
             this.installTab.Controls.Add(this.profileListBox);
             this.installTab.Location = new System.Drawing.Point(4, 22);
-            this.installTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.installTab.Margin = new System.Windows.Forms.Padding(2);
             this.installTab.Name = "installTab";
-            this.installTab.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.installTab.Padding = new System.Windows.Forms.Padding(2);
             this.installTab.Size = new System.Drawing.Size(501, 498);
             this.installTab.TabIndex = 3;
             this.installTab.Text = "Install Sitecore";
@@ -98,7 +98,7 @@
             // generateScriptsButton
             // 
             this.generateScriptsButton.Location = new System.Drawing.Point(14, 258);
-            this.generateScriptsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.generateScriptsButton.Margin = new System.Windows.Forms.Padding(2);
             this.generateScriptsButton.Name = "generateScriptsButton";
             this.generateScriptsButton.Size = new System.Drawing.Size(164, 27);
             this.generateScriptsButton.TabIndex = 40;
@@ -109,9 +109,9 @@
             // customFieldsGroupBox
             // 
             this.customFieldsGroupBox.Location = new System.Drawing.Point(190, 12);
-            this.customFieldsGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.customFieldsGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.customFieldsGroupBox.Name = "customFieldsGroupBox";
-            this.customFieldsGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.customFieldsGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.customFieldsGroupBox.Size = new System.Drawing.Size(292, 483);
             this.customFieldsGroupBox.TabIndex = 68;
             this.customFieldsGroupBox.TabStop = false;
@@ -162,7 +162,7 @@
             // 
             this.solrListBox.FormattingEnabled = true;
             this.solrListBox.Location = new System.Drawing.Point(32, 141);
-            this.solrListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.solrListBox.Margin = new System.Windows.Forms.Padding(2);
             this.solrListBox.Name = "solrListBox";
             this.solrListBox.Size = new System.Drawing.Size(147, 21);
             this.solrListBox.TabIndex = 20;
@@ -171,7 +171,7 @@
             // 
             this.connectionListBox.FormattingEnabled = true;
             this.connectionListBox.Location = new System.Drawing.Point(32, 96);
-            this.connectionListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.connectionListBox.Margin = new System.Windows.Forms.Padding(2);
             this.connectionListBox.Name = "connectionListBox";
             this.connectionListBox.Size = new System.Drawing.Size(147, 21);
             this.connectionListBox.TabIndex = 10;
@@ -220,9 +220,11 @@
             // 
             // profileListBox
             // 
+            this.profileListBox.DropDownHeight = 200;
             this.profileListBox.FormattingEnabled = true;
+            this.profileListBox.IntegralHeight = false;
             this.profileListBox.Location = new System.Drawing.Point(32, 33);
-            this.profileListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.profileListBox.Margin = new System.Windows.Forms.Padding(2);
             this.profileListBox.Name = "profileListBox";
             this.profileListBox.Size = new System.Drawing.Size(147, 21);
             this.profileListBox.TabIndex = 0;
@@ -337,7 +339,7 @@
             // instancesListBox
             // 
             this.instancesListBox.Location = new System.Drawing.Point(0, 0);
-            this.instancesListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.instancesListBox.Margin = new System.Windows.Forms.Padding(2);
             this.instancesListBox.Name = "instancesListBox";
             this.instancesListBox.Size = new System.Drawing.Size(91, 69);
             this.instancesListBox.TabIndex = 4;

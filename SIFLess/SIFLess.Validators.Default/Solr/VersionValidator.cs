@@ -1,14 +1,14 @@
-﻿using System;
-using System.Configuration;
-using System.Net;
-using System.Net.Http;
-using System.Xml;
+﻿using Newtonsoft.Json.Linq;
 using SIFLess.Model.Profiles;
 using SIFLess.Model.Validation;
+using System;
+using System.Configuration;
+using System.Net.Http;
+using System.Xml;
 
 namespace SIFLess.Validators.Default.Solr
 {
-   public class VersionValidator :ISolrValidator
+    public class VersionValidator : ISolrValidator
     {
         public string ErrorMessage { get; set; }
         public string Text => "Is Valid Solr Version";
@@ -22,15 +22,26 @@ namespace SIFLess.Validators.Default.Solr
                 {
                     using (var content = response.Content)
                     {
-                        var responseXML = content.ReadAsStringAsync().Result;
+                        var responseText = content.ReadAsStringAsync().Result.Trim();
+                        var versionText = "";
 
-                        var responseDoc = new XmlDocument();
-                        responseDoc.LoadXml(responseXML);
+                        if (responseText.StartsWith("<"))
+                        {
+                            var responseDoc = new XmlDocument();
+                            responseDoc.LoadXml(responseText);
 
-                        var versionNode =
-                            responseDoc.SelectSingleNode("//response/lst[@name='lucene']/str[@name='solr-spec-version']");
+                            var versionNode =
+                                responseDoc.SelectSingleNode("//response/lst[@name='lucene']/str[@name='solr-spec-version']");
 
-                        var versionText = versionNode.InnerText;
+                            versionText = versionNode.InnerText;
+                        }
+                        else
+                        {
+                            var jObj = JObject.Parse(responseText);
+
+                            var verNode = jObj.SelectToken("$..solr-spec-version");
+                            versionText = verNode.ToString();
+                        }
 
                         var runningVersion = Version.Parse(versionText);
 

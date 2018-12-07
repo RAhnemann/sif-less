@@ -87,6 +87,20 @@ namespace SIFLess
                     profile.ShowDialog();
                     RefreshList();
                 }
+
+                //Delete
+                if (e.ColumnIndex == 1)
+                {
+                    if (MessageBox.Show($"Are you sure you wish to remove the profile '{scProfile.Name}'?", "Confirm",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        currentProfiles.SolrProfiles.Remove(scProfile);
+
+                        _profileManager.Update(currentProfiles);
+
+                        RefreshList();
+                    }
+                }
             }
         }
     }

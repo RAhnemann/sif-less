@@ -12,5 +12,10 @@ namespace SIFLess.Model.Configuration
     {
         [XmlElement(ElementName = "Configuration")]
         public List<Configuration> Configurations { get; set; }
+
+        public ConfigurationSet()
+        {
+            Configurations = new List<Configuration>();
+        }
     }
 }

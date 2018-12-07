@@ -62,28 +62,8 @@ namespace SIFLess
 
         public static Configuration GetInstanceConfiguration(string topology, string version)
         {
-            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                ConfigurationManager.AppSettings["ConfigManifestPath"]);
 
-            var serializer = new XmlSerializer(typeof(ConfigurationSet));
-
-            ConfigurationSet configs;
-            using (var reader = new StreamReader(configPath))
-            {
-                try
-                {
-                    configs = (ConfigurationSet)serializer.Deserialize(reader);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    throw;
-                }
-                finally
-                {
-                    reader.Close();
-                }
-            }
+            ConfigurationSet configs = GetConfigSets();
 
             if (configs != null)
             {
@@ -127,23 +107,32 @@ namespace SIFLess
             var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 ConfigurationManager.AppSettings["ConfigManifestPath"]);
 
-            var serializer = new XmlSerializer(typeof(ConfigurationSet));
-            using (var reader = new StreamReader(configPath))
+            var mainSet = new ConfigurationSet();
+
+            foreach (var filePath in Directory.GetFiles(configPath))
             {
-                try
+
+                var serializer = new XmlSerializer(typeof(ConfigurationSet));
+                using (var reader = new StreamReader(filePath))
                 {
-                    return (ConfigurationSet)serializer.Deserialize(reader); ;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    return null;
-                }
-                finally
-                {
-                    reader.Close();
+                    try
+                    {
+                        var versionSet = (ConfigurationSet) serializer.Deserialize(reader);
+                        mainSet.Configurations.AddRange(versionSet.Configurations);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        return null;
+                    }
+                    finally
+                    {
+                        reader.Close();
+                    }
                 }
             }
+
+            return mainSet;
 
         }
     }

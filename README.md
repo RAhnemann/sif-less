@@ -5,7 +5,15 @@ SIF-less 2 is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not 
 
 ## Version 2.0.3.0 - Beta 1 Update 3 ##
 
-* Added a Secure Password to the configs.  This is used in all non-admin connections in order to ensure installation is not halted by using passwords that don't adhere to the local password plolicy
+* Split configuration scripts into a single file per version, to allow for more flexibility.
+* Added in support for Habitat Topologies.  This is only available for Sitecore 9.0 Update 2 and can be found in the Topology list when selecting Version 9.0 Update 2.
+* Fixed issues with the File Selector and added in a Folder Selector Control.
+* Fixed an issue where not having a default value caused an error when updating a custom field.
+* Added a timer so you can see an overall execution time for the entire script.
+
+## Version 2.0.3.0 - Beta 1 Update 3 ##
+
+* Added a Secure Password to the configs.  This is used in all non-admin connections in order to ensure installation is not halted by using passwords that don't adhere to the local password policy
 * Added in support for Habitat Topologies.  This is only available for Sitecore 9.0 Update 2 and can be found in the Topology list when selecting Version 9.0 Update 2.
 * Fixed issues with the File Selector and added in a Folder Selector Control.
 * Fixed an issue where not having a default value caused an error when updating a custom field.

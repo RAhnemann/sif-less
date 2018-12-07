@@ -183,7 +183,10 @@
       <DependentUpon>TestWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="PSTemplates\blank.ps1">
+    <None Include="PSTemplates\Sitecore91.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="PSTemplates\Sitecore9.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -226,6 +229,19 @@
     <None Include="Scripts\remove-xconnect-xp0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Data\Sitecore 9.1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Data\Sitecore 9.0.2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sitecore 9.0.1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sitecore 9.0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Unity.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -256,11 +272,6 @@
       <Project>{3f3a3293-5bac-4a7a-afa3-40581b020f1f}</Project>
       <Name>SIFLess.Validators.Default</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data\ConfigurationManifest.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

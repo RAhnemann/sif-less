@@ -1,5 +1,6 @@
 ﻿param (
-    [switch]$uninstall
+    [switch]$uninstall,
+	[switch]$SkipPreReqCheck
 );
 
 
@@ -7,11 +8,11 @@ $start = Get-Date
 
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
-#Requires -Modules SitecoreInstallFramework
-#Requires -Modules SitecoreFundamentals
+#Requires -Modules @{ ModuleName="SitecoreInstallFramework"; ModuleVersion="2.0.0" }
 
 
-Import-Module SitecoreInstallFramework
+
+Import-Module SitecoreInstallFramework -RequiredVersion 2.0.0
 [GLOBAL]
 
 if($uninstall)
@@ -36,13 +37,12 @@ if($uninstall)
 
   function RemoveSolrCores(){
     $client = (New-Object System.Net.WebClient)
-    [xml]$coresXML = $client.DownloadString("$SolrUrl/admin/cores")
-    $cores = $coresXML.response.lst[2].lst | % {$_.name}
+    $cores = $client.DownloadString("$SolrUrl/admin/cores") | ConvertFrom-Json | Select -expand Status | foreach{ $_.psobject.properties.name}
     $success = 0
     $error = 0
     
     foreach ($core in $cores) {
-      if ($core.StartsWith($prefix)) {
+      if ($core.StartsWith("${prefix}_")) {
         $url = "$SolrUrl/admin/cores?action=UNLOAD&deleteIndex=true&deleteInstanceDir=true&core=$core"
         Write-Host "Deleting Core: '$core'"
         $client.DownloadString($url)
@@ -58,7 +58,7 @@ if($uninstall)
     Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "IF EXISTS(SELECT * FROM sys.databases WHERe NAME = '${prefix}_$dbName') BEGIN ALTER DATABASE [${prefix}_$dbName] SET SINGLE_USER WITH ROllBACK IMMEDIATE; DROP DATABASE [${prefix}_$dbName];END"
   }
 
-    function RemoveWebsite([string]$site){
+  function RemoveWebsite([string]$site){
     Write-Host "Removing Site '$site'"
     $webSite = Get-Website -Name $site -ErrorAction SilentlyContinue
     $sitePath = $webSite.PhysicalPath
