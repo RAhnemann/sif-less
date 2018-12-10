@@ -8,11 +8,11 @@ $start = Get-Date
 
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
-#Requires -Modules @{ ModuleName="SitecoreInstallFramework"; ModuleVersion="2.0.0" }
 
 
-
+Remove-Module SitecoreInstallFramework
 Import-Module SitecoreInstallFramework -RequiredVersion 2.0.0
+
 [GLOBAL]
 
 if($uninstall)
@@ -97,6 +97,10 @@ if($uninstall)
 }
 else
 {
+	if(!$SkipPreReqCheck){
+		Install-SitecoreConfiguration -Path "$SCInstallRoot\Prerequisites.json"
+	}
+
 	[INSTALL]
 }
 

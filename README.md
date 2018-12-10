@@ -2,6 +2,15 @@
 
 SIF-less 2 is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
 
+## Version 2.1.0.0 ##
+
+* Support for Sitecore 9.1 Initial Release (XM0, XM1, XP0)
+* Fixed an error preventing the deletion of solr configs
+* Support for Solr 7.2.1+
+* Manifest files are now stored in a folder, allowing for custom manifests and templates
+* Minor UI enhancements.  Still is ugly.
+* Sitecore 9.1: Forced the default password for Sitecore Admin to "b".  Change it if you want, it won't hurt my feelings.
+* Removed the #Requires from the install templates.  This caused some nasty issues trying to install SC9.0 and 9.1 side by side
 
 ## Version 2.0.3.0 - Beta 1 Update 3 ##
 

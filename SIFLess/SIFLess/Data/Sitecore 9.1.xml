@@ -260,10 +260,11 @@
       <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
     </Fields>
   </Configuration>
-  <Configuration topology="XP0" version="9.0 Initial Release" wrapper="PSTemplates\Sitecore9.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
-    <File type="data" name="Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip" />
-    <File type="data" name="Sitecore 9.0.0 rev. 171002 (OnPrem)_xp0xconnect.scwdp.zip" />
-    <File type="config" name="xconnect-createcert.json" />
+  <Configuration topology="XP0" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+    <File type="data" name="Sitecore 9.1.0 rev. 001564 (OnPrem)_single.scwdp.zip" />
+    <File type="data" name="Sitecore 9.1.0 rev. 001564 (OnPrem)_xp0xconnect.scwdp.zip" />
+    <File type="data" name="Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip" />
+    <File type="config" name="createcert.json" />
     <File type="config" name="xconnect-solr.json"/>
     <File type="config" name="sitecore-solr.json" />
     <File type="config" name="xconnect-xp0.json" />
@@ -271,92 +272,142 @@
     <ScriptMaps>
       <ScriptMap location="GLOBAL">
         <![CDATA[
-$Prefix = '[PREFIX]'
-$PSScriptRoot = '[DATA_FOLDER]'
+
+$Prefix = "[PREFIX]"
+$SitecoreAdminPassword = "b"
+$SCInstallRoot = "[DATA_FOLDER]"
+$XConnectSiteName = "[XCONNECT_SITE]"
+$SitecoreSiteName = "[SITENAME]"
+$IdentityServerSiteName = "[ID_SITENAME]"
+$LicenseFile = "[LICENSE_FILE]"
 $SolrUrl = '[SOLR_URL]'
 $SolrRoot = '[SOLR_ROOT]'
 $SolrService = '[SOLR_SERVICE]'
 $SqlServer = '[SQL_SERVER]'
 $SqlAdminUser = '[SQL_USER]'
 $SqlAdminPassword = '[SQL_PASSWORD]'
-$LicenseFilePath = '[LICENSE_FILE]'
-$xConnectCertName = "$Prefix.xconnect_client"
-$xConnectSiteName = '[XCONNECT_SITE]'
-$SiteName = '[SITENAME]'
-$SiteFolder = "C:\inetpub\wwwroot\$SiteName"      
-$xConnectSiteFolder = "C:\inetpub\wwwroot\$xConnectSiteName"    
-$SecurePassword = 'Sitecor3SecureP4ssword!'
+$XConnectPackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.0 rev. 001564 (OnPrem)_xp0xconnect.scwdp.zip").FullName
+$SitecorePackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.0 rev. 001564 (OnPrem)_single.scwdp.zip").FullName
+$IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip").FullName
+$PasswordRecoveryUrl = "http://$SitecoreSiteName"
+$SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
+$XConnectCollectionService = "https://$XConnectSiteName"
+$ClientSecret = "SIF-Default"
+$AllowedCorsOrigins = "http://$SitecoreSiteName"
+$SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
+
+$SiteFolder = "C:\inetpub\wwwroot\$SitecoreSiteName"      
+$xConnectSiteFolder = "C:\inetpub\wwwroot\$XConnectSiteName"    
+$IdSiteFolder = "C:\inetpub\wwwroot\$IdentityServerSiteName"      
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
         <![CDATA[
-  $certParams = @{
-    Path = "$PSScriptRoot\xconnect-createcert.json"
-    CertificateName = $xConnectCertName 
-  }
-  Install-SitecoreConfiguration @certParams -Verbose
-    
-  $solrParams = @{
-    Path = "$PSScriptRoot\xconnect-solr.json"
+  
+$idCertParams = @{
+    Path = "$SCInstallRoot\createcert.json"
+    CertificateName = $IdentityServerSiteName
+}
+
+Install-SitecoreConfiguration @idCertParams
+
+$idServerParams = @{
+    Path = "$SCInstallRoot\identityserver.json"
+    Package = $IdentityServerPackage
+    SqlDbPrefix = $Prefix
+    SitecoreIdentityCert = $IdentityServerSiteName
+    LicenseFile = $LicenseFile
+    SiteName = $IdentityServerSiteName
+    SqlCorePassword = $SitecoresecurePassword
+    SqlServer = $SqlServer
+    PasswordRecoveryUrl = $PasswordRecoveryUrl
+    AllowedCorsOrigins = $AllowedCorsOrigins
+    ClientSecret = $ClientSecret
+}
+
+Install-SitecoreConfiguration @idServerParams
+
+
+$xcCertParams = @{
+    Path = "$SCInstallRoot\createcert.json"
+    CertificateName = $XConnectSiteName
+}
+
+Install-SitecoreConfiguration @xcCertParams
+
+$xcSolrParams = @{
+    Path = "$SCInstallRoot\xconnect-solr.json"
     SolrUrl = $SolrUrl
     SolrRoot = $SolrRoot
     SolrService = $SolrService
     CorePrefix = $Prefix
-  }
-  Install-SitecoreConfiguration @solrParams
-  
-  $xconnectParams = @{
-    Path = "$PSScriptRoot\xconnect-xp0.json"
-    Package = "$PSScriptRoot\Sitecore 9.0.0 rev. 171002 (OnPrem)_xp0xconnect.scwdp.zip"
-    LicenseFile = $LicenseFilePath
-    Sitename = $xConnectSiteName
-    XConnectCert = $xConnectCertName 
-    SqlDbPrefix = $Prefix
+}
+
+Install-SitecoreConfiguration @xcSolrParams
+
+$xcSiteParams = @{
+    Path = "$SCInstallRoot\xconnect-xp0.json"
+    Package = $XConnectPackage
+    SiteName = $XConnectSiteName
     SqlServer = $SqlServer
+    SolrUrl = $SolrUrl
+    SqlDbPrefix = $Prefix
+    SolrCorePrefix = $Prefix
+    XConnectCert = $XConnectSiteName
+    LicenseFile = $LicenseFile
     SqlAdminUser = $SqlAdminUser
     SqlAdminPassword = $SqlAdminPassword
-    SolrCorePrefix = $Prefix
-    SolrURL = $SolrUrl
-    SqlCollectionPassword = $SecurePassword
-    SqlProcessingPoolsPassword = $SecurePassword
-    SqlReferenceDataPassword = $SecurePassword
-    SqlMarketingAutomationPassword = $SecurePassword
-  }
-  Install-SitecoreConfiguration @xconnectParams
-  
-  $solrParams = @{
-    Path = "$PSScriptRoot\sitecore-solr.json"
+    SqlProcessingPoolsPassword = $SitecoreSecurePassword
+    SqlReferenceDataPassword = $SitecoreSecurePassword
+    SqlMarketingAutomationPassword = $SitecoreSecurePassword
+    SqlMessagingPassword = $SitecoreSecurePassword
+    SqlProcessingEnginePassword = $SitecoreSecurePassword
+    SqlReportingPassword = $SitecoreSecurePassword
+}
+
+Install-SitecoreConfiguration @xcSiteParams
+
+$scSolrParams = @{
+    Path = "$SCInstallRoot\sitecore-solr.json"
     SolrUrl = $SolrUrl
     SolrRoot = $SolrRoot
     SolrService = $SolrService
     CorePrefix = $Prefix
-  }
-  Install-SitecoreConfiguration @solrParams
-    
-  $sitecoreParams = @{
-    Path = "$PSScriptRoot\sitecore-XP0.json"
-    Package = "$PSScriptRoot\Sitecore 9.0.0 rev. 171002 (OnPrem)_single.scwdp.zip"
-    LicenseFile = $LicenseFilePath
-    Sitename = $SiteName
-    XConnectCert = $xConnectCertName 
-    SqlDbPrefix = $Prefix
+}
+
+Install-SitecoreConfiguration @scSolrParams
+
+$scSiteParams = @{
+    Path = "$SCInstallRoot\sitecore-xp0.json"
+    Package = $SitecorePackage
+    SiteName = $SitecoreSiteName
+    SitecoreIdentityAuthority = $SitecoreIdentityAuthority
+    XConnectCollectionService = $XConnectCollectionService
     SqlServer = $SqlServer
     SqlAdminUser = $SqlAdminUser
     SqlAdminPassword = $SqlAdminPassword
+    SolrUrl = $SolrUrl
+    SqlDbPrefix = $Prefix
     SolrCorePrefix = $Prefix
-    SolrURL = $SolrUrl
-    SqlCorePassword = $SecurePassword
-    SqlMasterPassword = $SecurePassword
-    SqlWebPassword = $SecurePassword
-    SqlReportingPassword = $SecurePassword
-    SqlProcessingPoolsPassword = $SecurePassword
-    SqlProcessingTasksPassword = $SecurePassword
-    SqlReferenceDataPassword = $SecurePassword
-    SqlMarketingAutomationPassword = $SecurePassword
-    SqlFormsPassword = $SecurePassword
-    XConnectCollectionService = "https://$xConnectSiteName"
-  }
-  Install-SitecoreConfiguration @sitecoreParams
+    XConnectCert = $XConnectSiteName
+    LicenseFile = $LicenseFile
+    SitecoreAdminPassword = $SitecoreAdminPassword
+    SqlCorePassword = $SitecoreSecurePassword
+    SqlSecurityPassword = $SitecoreSecurePassword
+    SqlMasterPassword = $SitecoreSecurePassword
+    SqlWebPassword = $SitecoreSecurePassword
+    SqlReportingPassword = $SitecoreSecurePassword
+    SqlProcessingPoolsPassword = $SitecoreSecurePassword
+    SqlProcessingTasksPassword = $SitecoreSecurePassword
+    SqlReferenceDataPassword = $SitecoreSecurePassword
+    SqlMarketingAutomationPassword = $SitecoreSecurePassword
+    SqlFormsPassword = $SitecoreSecurePassword
+    SqlExmMasterPassword = $SitecoreSecurePassword
+    SqlMessagingPassword = $SitecoreSecurePassword
+}
+
+ Install-SitecoreConfiguration @scSiteParams
+
         ]]>
       </ScriptMap>
       <ScriptMap location="UNINSTALL">
@@ -375,6 +426,8 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   RemoveDatabase("Messaging")
   RemoveDatabase("Processing.Pools")
   RemoveDatabase("Processing.Tasks")
+  RemoveDatabase("ProcessingEngineStorage")
+  RemoveDatabase("ProcessingEngineTasks")
   RemoveDatabase("ReferenceData")
   RemoveDatabase("Reporting")
   RemoveDatabase("Web")
@@ -382,17 +435,20 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   RemoveDatabase("Xdb.Collection.Shard1")
   RemoveDatabase("Xdb.Collection.ShardMapManager")
   
+  RemoveWebsite($IdentityServerSiteName)
   RemoveWebsite($xConnectSiteName)
-  RemoveWebsite($SiteName)   
+  RemoveWebsite($SitecoreSiteName)   
   
   RemoveFolder($SiteFolder)
   RemoveFolder($xConnectSiteFolder)   
+  RemoveFolder($IdSiteFolder)   
         ]]>
       </ScriptMap>
     </ScriptMaps>
     <Fields>
       <Field name="xconnectsitename" type="text" map="XCONNECT_SITE" label="X Connect Site Name" description="The Name of the xConnect Website"  defaultValue="[[PREFIX]].xconnect"/>
       <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+      <Field name="idsitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Indentity Website"  defaultValue="[[PREFIX]].identityserver"/>
     </Fields>
   </Configuration>
 </Configurations>

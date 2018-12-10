@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SIF-Less")]
-[assembly: AssemblyCopyright("Copyright ©  2017 Rob Ahnemann")]
+[assembly: AssemblyCopyright("Copyright ©  2018 Rob Ahnemann")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

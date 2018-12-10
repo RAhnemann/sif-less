@@ -7,11 +7,11 @@ $start = Get-Date
 
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
-#Requires -Modules SitecoreInstallFramework 1.2.1
 #Requires -Modules SitecoreFundamentals
 
+Remove-Module SitecoreInstallFramework
+Import-Module SitecoreInstallFramework -RequiredVersion 1.2.1
 
-Import-Module SitecoreInstallFramework
 [GLOBAL]
 
 if($uninstall)
