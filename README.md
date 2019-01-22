@@ -2,6 +2,17 @@
 
 SIF-less 2 is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
 
+
+## Version 2.1.1.0 ##
+
+* XP0 installs will now be forced to run in HTTPs.
+* The Password Recovery Url should now be HTTPS by default.
+* The role for a XM0 server should now be "StandAlone", rather than "ContentManagement"
+* When editing a Sitecore profile, SIF-less won't default to XM0 anymore.
+* SIF-less will only try to uninstall SIF (to ensure the right version) if it's loaded.
+* I changed "SkipPreReqCheck" to "ForcePreReqCheck" so by default, you don't try to keep installing stuff over and over....and over...
+* Removed the Scripts folder from the solution, as we're pure PowerShell for uninstalls
+
 ## Version 2.1.0.0 ##
 
 * Support for Sitecore 9.1 Initial Release (XM0, XM1, XP0)

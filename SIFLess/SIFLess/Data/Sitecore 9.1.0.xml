@@ -23,7 +23,7 @@
         $SqlAdminPassword = "[SQL_PASSWORD]"
         $SiteCoreContentManagementPackage = (Get-ChildItem "$SCInstallRoot\Sitecore XM 9.1.0 rev. 001564 (OnPrem)_cm.scwdp.zip").FullName
         $IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip").FullName
-        $PasswordRecoveryUrl = "http://$SitecoreContentManagementSitename"
+        $PasswordRecoveryUrl = "https://$SitecoreContentManagementSitename"
         $SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
         $ClientSecret = "SIF-Default"
         $SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
@@ -92,6 +92,10 @@
       }
 
       Install-SitecoreConfiguration @cmParams
+      
+      Write-Host "Setting XM0 Role to Standalone"
+      $webConfigPath = "$SiteFolder\web.config"
+      ((Get-Content -path $webConfigPath -Raw) -replace '<add key="role:define" value="ContentManagement" />','<add key="role:define" value="Standalone" />') | Set-Content -Path $webConfigPath
       ]]>
       </ScriptMap>
       <ScriptMap location="UNINSTALL">
@@ -145,7 +149,7 @@
         $SiteCoreContentManagementPackage = (Get-ChildItem "$SCInstallRoot\Sitecore XM 9.1.0 rev. 001564 (OnPrem)_cm.scwdp.zip").FullName
         $SiteCoreContentDeliveryPackage = (Get-ChildItem "$SCInstallRoot\Sitecore XM 9.1.0 rev. 001564 (OnPrem)_cd.scwdp.zip").FullName
         $IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip").FullName
-        $PasswordRecoveryUrl = "http://$SitecoreContentManagementSitename"
+        $PasswordRecoveryUrl = "https://$SitecoreContentManagementSitename"
         $SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
         $ClientSecret = "SIF-Default"
         $SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
@@ -289,11 +293,11 @@ $SqlAdminPassword = '[SQL_PASSWORD]'
 $XConnectPackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.0 rev. 001564 (OnPrem)_xp0xconnect.scwdp.zip").FullName
 $SitecorePackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.0 rev. 001564 (OnPrem)_single.scwdp.zip").FullName
 $IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip").FullName
-$PasswordRecoveryUrl = "http://$SitecoreSiteName"
+$PasswordRecoveryUrl = "https://$SitecoreSiteName"
 $SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
 $XConnectCollectionService = "https://$XConnectSiteName"
 $ClientSecret = "SIF-Default"
-$AllowedCorsOrigins = "http://$SitecoreSiteName"
+$AllowedCorsOrigins = "https://$SitecoreSiteName"
 $SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
 
 $SiteFolder = "C:\inetpub\wwwroot\$SitecoreSiteName"      
@@ -408,6 +412,9 @@ $scSiteParams = @{
 
  Install-SitecoreConfiguration @scSiteParams
 
+Write-Host "Enabling SSL on Site"
+Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteName -Port 443 -ClientCertLocation LocalMachine -OutputDirectory "C:\certificates" -RootDnsName "DO_NOT_TRUST_SitecoreRootCert" -RootCertName "root-authority"
+  Remove-WebBinding -Port 80 -HostHeader $SitecoreSiteName        
         ]]>
       </ScriptMap>
       <ScriptMap location="UNINSTALL">

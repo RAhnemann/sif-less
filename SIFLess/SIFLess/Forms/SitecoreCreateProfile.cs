@@ -33,8 +33,10 @@ namespace SIFLess
             _profile = profile;
 
             profileTextBox.Text = profile.Name;
-            topologyList.SelectedIndex = topologyList.FindStringExact(profile.Topology);
+
             versionList.SelectedIndex = versionList.FindStringExact(profile.Version);
+            topologyList.SelectedIndex = topologyList.FindStringExact(profile.Topology);
+           
             dataRepoTextBox.Text = profile.DataFolder;
             licenseFileTextBox.Text = profile.LicenseFile;
 
@@ -47,9 +49,14 @@ namespace SIFLess
         {
             var configs = Utility.GetConfigSets();
             var versions = new List<string>();
+            var topologies = new List<string>();
+
             configs.Configurations.ForEach(c => versions.Add(c.Version));
+            configs.Configurations.ForEach(t => topologies.Add(t.Topology));
 
             versions.Distinct().ForEach(v => versionList.Items.Add(v));
+            topologies.Distinct().ForEach(t => topologyList.Items.Add(t));
+
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

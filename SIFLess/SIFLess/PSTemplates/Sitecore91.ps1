@@ -1,6 +1,6 @@
 ﻿param (
     [switch]$uninstall,
-	[switch]$SkipPreReqCheck
+	[switch]$ForcePreReqCheck
 );
 
 
@@ -10,7 +10,13 @@ $start = Get-Date
 #Requires -RunAsAdministrator
 
 
-Remove-Module SitecoreInstallFramework
+#Let's check if we have SIF installed...might be an older version..might not be.
+if (Get-Module -Name SitecoreInstallFramework) {
+  Write-Host "Removing SIF" 
+  Remove-Module SitecoreInstallFramework
+}
+
+Write-Host "Loading SIF 2.0"
 Import-Module SitecoreInstallFramework -RequiredVersion 2.0.0
 
 [GLOBAL]
@@ -97,7 +103,7 @@ if($uninstall)
 }
 else
 {
-	if(!$SkipPreReqCheck){
+	if($ForcePreReqCheck){
 		Install-SitecoreConfiguration -Path "$SCInstallRoot\Prerequisites.json"
 	}
 

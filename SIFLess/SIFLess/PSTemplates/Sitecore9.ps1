@@ -9,7 +9,12 @@ $start = Get-Date
 #Requires -RunAsAdministrator
 #Requires -Modules SitecoreFundamentals
 
-Remove-Module SitecoreInstallFramework
+#Let's check if we have SIF installed...might be an older version..might not be.
+if (Get-Module -Name SitecoreInstallFramework) {
+  Write-Host "Removing SIF" 
+  Remove-Module SitecoreInstallFramework
+}
+Write-Host "Loading SIF 1.2.1" 
 Import-Module SitecoreInstallFramework -RequiredVersion 1.2.1
 
 [GLOBAL]
