@@ -1,5 +1,8 @@
 ﻿param (
-    [switch]$uninstall
+    [switch]$Uninstall,
+	[switch]$ValidateOnly,
+	[switch]$SkipValidation,
+	[switch]$IgnoreSQL2016SP2
 );
 
 
@@ -8,6 +11,11 @@ $start = Get-Date
 #Requires -Version 5.1
 #Requires -RunAsAdministrator
 #Requires -Modules SitecoreFundamentals
+
+if($SkipValidation -and $ValidateOnly){
+	Write-Host "What?"
+	Exit
+}
 
 #Let's check if we have SIF installed...might be an older version..might not be.
 if (Get-Module -Name SitecoreInstallFramework) {
@@ -102,7 +110,19 @@ if($uninstall)
 }
 else
 {
-	[INSTALL]
+	function ValidateSystem()
+	{
+		[VALIDATE]
+		Write-Host "Validation Complete! Yay!" -ForegroundColor Green
+	}
+
+	if(!$SkipValidation){
+		ValidateSystem
+	}
+	
+	if(!$Validateonly){
+		[INSTALL]
+	}
 }
 
 

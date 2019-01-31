@@ -1,6 +1,8 @@
 ﻿param (
-    [switch]$uninstall,
-	[switch]$ForcePreReqCheck
+    [switch]$Uninstall,
+	[switch]$ForcePreReqCheck,
+	[switch]$SkipValidation,
+	[switch]$ValidateOnly
 );
 
 
@@ -10,6 +12,10 @@ $start = Get-Date
 #Requires -RunAsAdministrator
 
 
+if($SkipValidation -and $ValidateOnly){
+	Write-Host "What?"
+	Exit
+}
 #Let's check if we have SIF installed...might be an older version..might not be.
 if (Get-Module -Name SitecoreInstallFramework) {
   Write-Host "Removing SIF" 
@@ -103,11 +109,22 @@ if($uninstall)
 }
 else
 {
+	function ValidateSystem()
+	{
+		[VALIDATE]
+		Write-Host "Validation Complete! Yay!" -ForegroundColor Green
+	}
+
 	if($ForcePreReqCheck){
 		Install-SitecoreConfiguration -Path "$SCInstallRoot\Prerequisites.json"
 	}
 
-	[INSTALL]
+	if(!$SkipValidation){
+		ValidateSystem
+	}
+	if(!$Validateonly){
+		[INSTALL]
+	}
 }
 
 

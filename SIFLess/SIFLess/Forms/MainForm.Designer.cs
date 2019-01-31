@@ -344,6 +344,10 @@
             this.instancesListBox.Size = new System.Drawing.Size(91, 69);
             this.instancesListBox.TabIndex = 4;
             // 
+            // saveScriptDialog
+            // 
+            this.saveScriptDialog.Filter = "PowerShell Files (*.ps1)|*.ps1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

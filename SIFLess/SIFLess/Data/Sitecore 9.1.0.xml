@@ -1,5 +1,5 @@
 ﻿<Configurations>
-  <Configuration topology="XM0" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+  <Configuration topology="XM0" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore XM 9.1.0 rev. 001564 (OnPrem)_cm.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip" />
     <File type="config" name="identityserver.json" />
@@ -114,13 +114,79 @@
   RemoveFolder($IdentitySiteFolder)
         ]]>
       </ScriptMap>
+      <ScriptMap location="VALIDATE">
+        <![CDATA[
+         #Check Solr Service Status
+    $service = Get-Service -Name $SolrService
+    
+    if($service.Status -ne "Running")
+    {
+      throw "Solr service '$SolrService' is not running. Current state is '$($service.Status)'"
+    }
+
+    #Check Solr Version
+    $solrVerClient = (New-Object System.Net.WebClient)
+    $solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") | ConvertFrom-Json
+    $solrVersion = $SolrAdminResp.lucene."solr-spec-version"
+    
+    if($solrVersion -ne "7.2.1"){
+      throw "Invalid solr version '$solrVersion'."
+    }
+    
+    #Check Solr Folder
+    if(!(Test-Path $SolrRoot))
+    {
+      throw "Solr Folder doesn't exist at '$SolrRoot'"
+    }
+
+    
+    #Check Solr Folder config sets for _default
+    $configSetPath = "$SolrRoot\server\solr\configsets\_default"
+    if(!(Test-Path $configSetPath))
+    {
+      throw "Solr Configsets Folder doesn't exist at '$configSetPath'"
+    }
+
+    #Check for our license file
+    if(!(Test-Path $LicenseFile))
+    {
+      throw "License File doesn't exist at '$LicenseFile'"
+    }
+
+    #Check Login
+    Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT GETDATE()" -ErrorAction Stop | Out-Null
+
+    #Check our SQL version
+    [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | out-null
+    $sqlServerSmo = New-Object "Microsoft.SqlServer.Management.Smo.Server" $SqlServer
+    $sqlVersion = $sqlServerSmo.Version.Major
+    $sqlBuild = $sqlServerSmo.Version.Build
+
+    #Check for 2016 or 2017
+    if($sqlVersion -ne 13 -and $sqlVersion -ne 14){
+      throw "Invalid SQL Server Version"
+    }
+
+    #if 2016, we need at least SP2 installed
+    if($sqlVersion -eq 13 -and $sqlBuild -lt 5026){
+      throw "SQL Server 2016 must have SP2 installed"
+      }
+
+      #Finally check if they can actually create DBs or not. It helps.
+      $canCreateDBs = (Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE') AS DBPerm") | Select -expand DBPerm
+      
+      if($canCreateDBs -ne "1"){
+        throw "Specified SQL user does not have DB Creation permissions"
+      }
+        ]]>
+      </ScriptMap>
     </ScriptMaps>
     <Fields>
       <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
       <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
     </Fields>
   </Configuration>
-  <Configuration topology="XM1" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+  <Configuration topology="XM1" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore XM 9.1.0 rev. 001564 (OnPrem)_cm.scwdp.zip" />
     <File type="data" name="Sitecore XM 9.1.0 rev. 001564 (OnPrem)_cd.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip" />
@@ -257,6 +323,72 @@
   RemoveFolder($IdentitySiteFolder)
         ]]>
       </ScriptMap>
+      <ScriptMap location="VALIDATE">
+        <![CDATA[
+         #Check Solr Service Status
+    $service = Get-Service -Name $SolrService
+    
+    if($service.Status -ne "Running")
+    {
+      throw "Solr service '$SolrService' is not running. Current state is '$($service.Status)'"
+    }
+
+    #Check Solr Version
+    $solrVerClient = (New-Object System.Net.WebClient)
+    $solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") | ConvertFrom-Json
+    $solrVersion = $SolrAdminResp.lucene."solr-spec-version"
+    
+    if($solrVersion -ne "7.2.1"){
+      throw "Invalid solr version '$solrVersion'."
+    }
+    
+    #Check Solr Folder
+    if(!(Test-Path $SolrRoot))
+    {
+      throw "Solr Folder doesn't exist at '$SolrRoot'"
+    }
+
+    
+    #Check Solr Folder config sets for _default
+    $configSetPath = "$SolrRoot\server\solr\configsets\_default"
+    if(!(Test-Path $configSetPath))
+    {
+      throw "Solr Configsets Folder doesn't exist at '$configSetPath'"
+    }
+
+    #Check for our license file
+    if(!(Test-Path $LicenseFile))
+    {
+      throw "License File doesn't exist at '$LicenseFile'"
+    }
+
+    #Check Login
+    Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT GETDATE()" -ErrorAction Stop | Out-Null
+
+    #Check our SQL version
+    [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | out-null
+    $sqlServerSmo = New-Object "Microsoft.SqlServer.Management.Smo.Server" $SqlServer
+    $sqlVersion = $sqlServerSmo.Version.Major
+    $sqlBuild = $sqlServerSmo.Version.Build
+
+    #Check for 2016 or 2017
+    if($sqlVersion -ne 13 -and $sqlVersion -ne 14){
+      throw "Invalid SQL Server Version"
+    }
+
+    #if 2016, we need at least SP2 installed
+    if($sqlVersion -eq 13 -and $sqlBuild -lt 5026){
+      throw "SQL Server 2016 must have SP2 installed"
+      }
+
+      #Finally check if they can actually create DBs or not. It helps.
+      $canCreateDBs = (Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE') AS DBPerm") | Select -expand DBPerm
+      
+      if($canCreateDBs -ne "1"){
+        throw "Specified SQL user does not have DB Creation permissions"
+      }
+        ]]>
+      </ScriptMap>
     </ScriptMaps>
     <Fields>
       <Field name="cm_sitename" type="text" map="CM_SITENAME" label="CM Site Name" description="The Name of the Content Authoring Website"  defaultValue="[[PREFIX]].sc-cm"/>
@@ -264,7 +396,7 @@
       <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
     </Fields>
   </Configuration>
-  <Configuration topology="XP0" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL">
+  <Configuration topology="XP0" version="9.1 Initial Release" wrapper="PSTemplates\Sitecore91.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore 9.1.0 rev. 001564 (OnPrem)_single.scwdp.zip" />
     <File type="data" name="Sitecore 9.1.0 rev. 001564 (OnPrem)_xp0xconnect.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 2.0.0 rev. 00157 (OnPrem)_identityserver.scwdp.zip" />
@@ -449,6 +581,72 @@ Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteN
   RemoveFolder($SiteFolder)
   RemoveFolder($xConnectSiteFolder)   
   RemoveFolder($IdSiteFolder)   
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="VALIDATE">
+        <![CDATA[
+         #Check Solr Service Status
+    $service = Get-Service -Name $SolrService
+    
+    if($service.Status -ne "Running")
+    {
+      throw "Solr service '$SolrService' is not running. Current state is '$($service.Status)'"
+    }
+
+    #Check Solr Version
+    $solrVerClient = (New-Object System.Net.WebClient)
+    $solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") | ConvertFrom-Json
+    $solrVersion = $SolrAdminResp.lucene."solr-spec-version"
+    
+    if($solrVersion -ne "7.2.1"){
+      throw "Invalid solr version '$solrVersion'."
+    }
+    
+    #Check Solr Folder
+    if(!(Test-Path $SolrRoot))
+    {
+      throw "Solr Folder doesn't exist at '$SolrRoot'"
+    }
+
+    
+    #Check Solr Folder config sets for _default
+    $configSetPath = "$SolrRoot\server\solr\configsets\_default"
+    if(!(Test-Path $configSetPath))
+    {
+      throw "Solr Configsets Folder doesn't exist at '$configSetPath'"
+    }
+
+    #Check for our license file
+    if(!(Test-Path $LicenseFile))
+    {
+      throw "License File doesn't exist at '$LicenseFile'"
+    }
+
+    #Check Login
+    Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT GETDATE()" -ErrorAction Stop | Out-Null
+
+    #Check our SQL version
+    [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | out-null
+    $sqlServerSmo = New-Object "Microsoft.SqlServer.Management.Smo.Server" $SqlServer
+    $sqlVersion = $sqlServerSmo.Version.Major
+    $sqlBuild = $sqlServerSmo.Version.Build
+
+    #Check for 2016 or 2017
+    if($sqlVersion -ne 13 -and $sqlVersion -ne 14){
+      throw "Invalid SQL Server Version"
+    }
+
+    #if 2016, we need at least SP2 installed
+    if($sqlVersion -eq 13 -and $sqlBuild -lt 5026){
+      throw "SQL Server 2016 must have SP2 installed"
+      }
+
+      #Finally check if they can actually create DBs or not. It helps.
+      $canCreateDBs = (Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE') AS DBPerm") | Select -expand DBPerm
+      
+      if($canCreateDBs -ne "1"){
+        throw "Specified SQL user does not have DB Creation permissions"
+      }
         ]]>
       </ScriptMap>
     </ScriptMaps>
