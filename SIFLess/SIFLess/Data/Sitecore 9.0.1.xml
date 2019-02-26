@@ -81,7 +81,7 @@
     #Check Solr Version
     $solrVerClient = (New-Object System.Net.WebClient)
     [xml]$solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") 
-    $solrVersion =  select-xml -xml $xml -xpath "//str[@name='solr-spec-version']/text()" | % { $_.Node.Value }
+    $solrVersion =  select-xml -xml $solrAdminResp -xpath "//str[@name='solr-spec-version']/text()" | % { $_.Node.Value }
     
     if($solrVersion -ne "6.6.2" -and $solrVersion -ne "6.6.3"){
       throw "Invalid solr version '$solrVersion'."
@@ -446,7 +446,7 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
     #Check Solr Version
     $solrVerClient = (New-Object System.Net.WebClient)
     [xml]$solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") 
-    $solrVersion =  select-xml -xml $xml -xpath "//str[@name='solr-spec-version']/text()" | % { $_.Node.Value }
+    $solrVersion =  select-xml -xml $solrAdminResp -xpath "//str[@name='solr-spec-version']/text()" | % { $_.Node.Value }
     
     if($solrVersion -ne "6.6.2" -and $solrVersion -ne "6.6.3"){
       throw "Invalid solr version '$solrVersion'."
