@@ -30,6 +30,7 @@
         {
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.installTab = new System.Windows.Forms.TabPage();
+            this.runButton = new System.Windows.Forms.Button();
             this.generateScriptsButton = new System.Windows.Forms.Button();
             this.customFieldsGroupBox = new System.Windows.Forms.GroupBox();
             this.manageSolrLinkButtonsLink = new System.Windows.Forms.LinkLabel();
@@ -56,16 +57,22 @@
             this.label1 = new System.Windows.Forms.Label();
             this.instancesListBox = new System.Windows.Forms.ListBox();
             this.saveScriptDialog = new System.Windows.Forms.SaveFileDialog();
+            this.updateStrip = new System.Windows.Forms.MenuStrip();
+            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runExternalButton = new System.Windows.Forms.Button();
+            this.selectExternalScriptDialog = new System.Windows.Forms.OpenFileDialog();
             this.mainTabControl.SuspendLayout();
             this.installTab.SuspendLayout();
             this.instanceTab.SuspendLayout();
+            this.updateStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
             // 
             this.mainTabControl.Controls.Add(this.installTab);
             this.mainTabControl.Controls.Add(this.instanceTab);
-            this.mainTabControl.Location = new System.Drawing.Point(12, 12);
+            this.mainTabControl.Location = new System.Drawing.Point(12, 40);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(509, 524);
@@ -73,6 +80,8 @@
             // 
             // installTab
             // 
+            this.installTab.Controls.Add(this.runExternalButton);
+            this.installTab.Controls.Add(this.runButton);
             this.installTab.Controls.Add(this.generateScriptsButton);
             this.installTab.Controls.Add(this.customFieldsGroupBox);
             this.installTab.Controls.Add(this.manageSolrLinkButtonsLink);
@@ -95,9 +104,19 @@
             this.installTab.Text = "Install Sitecore";
             this.installTab.UseVisualStyleBackColor = true;
             // 
+            // runButton
+            // 
+            this.runButton.Location = new System.Drawing.Point(16, 269);
+            this.runButton.Name = "runButton";
+            this.runButton.Size = new System.Drawing.Size(164, 23);
+            this.runButton.TabIndex = 69;
+            this.runButton.Text = "Generate and Run";
+            this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            // 
             // generateScriptsButton
             // 
-            this.generateScriptsButton.Location = new System.Drawing.Point(14, 258);
+            this.generateScriptsButton.Location = new System.Drawing.Point(16, 237);
             this.generateScriptsButton.Margin = new System.Windows.Forms.Padding(2);
             this.generateScriptsButton.Name = "generateScriptsButton";
             this.generateScriptsButton.Size = new System.Drawing.Size(164, 27);
@@ -348,12 +367,53 @@
             // 
             this.saveScriptDialog.Filter = "PowerShell Files (*.ps1)|*.ps1";
             // 
+            // updateStrip
+            // 
+            this.updateStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateToolStripMenuItem,
+            this.settingsToolStripMenuItem});
+            this.updateStrip.Location = new System.Drawing.Point(0, 0);
+            this.updateStrip.Name = "updateStrip";
+            this.updateStrip.Size = new System.Drawing.Size(532, 24);
+            this.updateStrip.TabIndex = 3;
+            this.updateStrip.Text = "Update";
+            // 
+            // updateToolStripMenuItem
+            // 
+            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.updateToolStripMenuItem.Text = "Update";
+            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // runExternalButton
+            // 
+            this.runExternalButton.Location = new System.Drawing.Point(16, 331);
+            this.runExternalButton.Name = "runExternalButton";
+            this.runExternalButton.Size = new System.Drawing.Size(164, 23);
+            this.runExternalButton.TabIndex = 4;
+            this.runExternalButton.Text = "Run External Script";
+            this.runExternalButton.UseVisualStyleBackColor = true;
+            this.runExternalButton.Click += new System.EventHandler(this.runExternalButton_Click);
+            // 
+            // selectExternalScriptDialog
+            // 
+            this.selectExternalScriptDialog.Filter = "PS1 Files|*.ps1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 548);
+            this.ClientSize = new System.Drawing.Size(532, 574);
             this.Controls.Add(this.mainTabControl);
+            this.Controls.Add(this.updateStrip);
+            this.MainMenuStrip = this.updateStrip;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -364,7 +424,10 @@
             this.installTab.PerformLayout();
             this.instanceTab.ResumeLayout(false);
             this.instanceTab.PerformLayout();
+            this.updateStrip.ResumeLayout(false);
+            this.updateStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -397,6 +460,12 @@
         private System.Windows.Forms.GroupBox customFieldsGroupBox;
         private System.Windows.Forms.Button generateScriptsButton;
         private System.Windows.Forms.SaveFileDialog saveScriptDialog;
+        private System.Windows.Forms.MenuStrip updateStrip;
+        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.Button runButton;
+        private System.Windows.Forms.Button runExternalButton;
+        private System.Windows.Forms.OpenFileDialog selectExternalScriptDialog;
     }
 }
 

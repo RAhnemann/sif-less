@@ -24,9 +24,10 @@ namespace SIFLess
             box.SelectionLength = 0;
 
             box.SelectionColor = color;
-            box.AppendText(text);
+            box.AppendText($"[{DateTime.Now:HH:mm:ss}] {text}");
             box.AppendText("\r\n");
             box.SelectionColor = box.ForeColor;
+
         }
     }
 }

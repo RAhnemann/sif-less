@@ -87,6 +87,12 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Forms\CheckConfigs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CheckConfigs.Designer.cs">
+      <DependentUpon>CheckConfigs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Execute.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,12 @@
       <DependentUpon>Execute.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Forms\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SolrProfileManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,15 +151,15 @@
       <DependentUpon>SitecoreProfileManager.cs</DependentUpon>
     </Compile>
     <Compile Include="SIFGenerator.cs" />
-    <Compile Include="TestWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestWindow.Designer.cs">
-      <DependentUpon>TestWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utility.cs" />
+    <EmbeddedResource Include="Forms\CheckConfigs.resx">
+      <DependentUpon>CheckConfigs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Execute.resx">
       <DependentUpon>Execute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SolrProfileManager.resx">
       <DependentUpon>SolrProfileManager.cs</DependentUpon>
@@ -179,9 +191,6 @@
     <EmbeddedResource Include="Forms\SitecoreProfileManager.resx">
       <DependentUpon>SitecoreProfileManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestWindow.resx">
-      <DependentUpon>TestWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="PSTemplates\Sitecore91.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -199,6 +208,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Data\Manifest.xml" />
     <Content Include="Data\Sitecore 9.1.0.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -229,6 +239,10 @@
     <ProjectReference Include="..\SIFLess.Controls\SIFLess.Controls.csproj">
       <Project>{0211a093-d391-4c20-902a-888613936a9f}</Project>
       <Name>SIFLess.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SIFLess.Host\SIFLess.Host.csproj">
+      <Project>{cda60c03-1f22-4e75-b9e4-56d8c6f23094}</Project>
+      <Name>SIFLess.Host</Name>
     </ProjectReference>
     <ProjectReference Include="..\SIFLess.Managers.Profile\SIFLess.Managers.Profile.csproj">
       <Project>{f80f9e5b-c610-4c9b-ba9c-1e9a66277796}</Project>

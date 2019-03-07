@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIFLess.Managers.Profile", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIFLess.Validators.Default", "SIFLess.Validators.Default\SIFLess.Validators.Default.csproj", "{3F3A3293-5BAC-4A7A-AFA3-40581B020F1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIFLess.Host", "SIFLess.Host\SIFLess.Host.csproj", "{CDA60C03-1F22-4E75-B9E4-56D8C6F23094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{3F3A3293-5BAC-4A7A-AFA3-40581B020F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F3A3293-5BAC-4A7A-AFA3-40581B020F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F3A3293-5BAC-4A7A-AFA3-40581B020F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA60C03-1F22-4E75-B9E4-56D8C6F23094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA60C03-1F22-4E75-B9E4-56D8C6F23094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA60C03-1F22-4E75-B9E4-56D8C6F23094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA60C03-1F22-4E75-B9E4-56D8C6F23094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

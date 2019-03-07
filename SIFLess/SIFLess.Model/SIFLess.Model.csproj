@@ -66,6 +66,7 @@
     <Compile Include="Profiles\SolrProfile.cs" />
     <Compile Include="Profiles\SQLProfile.cs" />
     <Compile Include="Profiles\SitecoreProfile.cs" />
+    <Compile Include="Update\UpdateFile.cs" />
     <Compile Include="Validation\ISitecoreValidator.cs" />
     <Compile Include="Validation\ISolrValidator.cs" />
     <Compile Include="Validation\ISqlValidator.cs" />
