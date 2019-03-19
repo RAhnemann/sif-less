@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SIFLess.Model.Update;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Windows.Forms;
-using SIFLess.Model.Update;
 
 namespace SIFLess.Forms
 {
@@ -46,7 +47,7 @@ namespace SIFLess.Forms
                     return;
                 }
 
-                var updateFile = (UpdateFile) Items[e.Index];
+                var updateFile = (UpdateFile)Items[e.Index];
                 var foreColor = new Color();
 
                 switch (updateFile.FileStatus)
@@ -76,7 +77,7 @@ namespace SIFLess.Forms
         {
             foreach (var item in fileCheckboxList.CheckedItems)
             {
-                var updateItem = (UpdateFile) item;
+                var updateItem = (UpdateFile)item;
 
                 if (updateItem == null)
                     continue;
@@ -92,7 +93,8 @@ namespace SIFLess.Forms
                     var fileContents = webClient.DownloadString(updateItem.Url);
                     fileContents = fileContents.Replace("\n", "\r\n");
 
-                    File.WriteAllText(fullFilePath, fileContents);
+
+                    File.WriteAllText(fullFilePath, fileContents, Encoding.UTF8);
                 }
             }
 

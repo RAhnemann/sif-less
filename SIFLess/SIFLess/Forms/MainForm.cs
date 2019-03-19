@@ -40,23 +40,7 @@ namespace SIFLess.Forms
 
             Text = $"SIF-less v{ProductVersion}";
 
-            if (Properties.Settings.Default.CheckForUpdates)
-            {
-                var fileList = Utility.GetUpdateFiles();
-
-                if (fileList?.Find(f => f.FileStatus == UpdateFile.Status.Missing || f.FileStatus == UpdateFile.Status.Outdated) != null)
-                {
-                    var showResult = MessageBox.Show("Updates are available. Would you like to view them?",
-                        "Updates Available", MessageBoxButtons.YesNo);
-
-                    if (showResult == DialogResult.Yes)
-                    {
-                        CheckConfigs configs = new CheckConfigs();
-                        configs.ShowDialog();
-                        configs.UpdateFileList();
-                    }
-                }
-            }
+           
 
         }
 
@@ -289,6 +273,27 @@ namespace SIFLess.Forms
                 executeForm.ShowDialog();
             }
 
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.CheckForUpdates)
+            {
+                var fileList = Utility.GetUpdateFiles();
+
+                if (fileList?.Find(f => f.FileStatus == UpdateFile.Status.Missing || f.FileStatus == UpdateFile.Status.Outdated) != null)
+                {
+                    var showResult = MessageBox.Show("Updates are available. Would you like to view them?",
+                        "Updates Available", MessageBoxButtons.YesNo);
+
+                    if (showResult == DialogResult.Yes)
+                    {
+                        CheckConfigs configs = new CheckConfigs();
+                        configs.ShowDialog();
+                        configs.UpdateFileList();
+                    }
+                }
+            }
         }
     }
 }

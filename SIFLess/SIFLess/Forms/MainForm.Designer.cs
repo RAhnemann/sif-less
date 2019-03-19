@@ -30,6 +30,7 @@
         {
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.installTab = new System.Windows.Forms.TabPage();
+            this.runExternalButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
             this.generateScriptsButton = new System.Windows.Forms.Button();
             this.customFieldsGroupBox = new System.Windows.Forms.GroupBox();
@@ -60,7 +61,6 @@
             this.updateStrip = new System.Windows.Forms.MenuStrip();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.runExternalButton = new System.Windows.Forms.Button();
             this.selectExternalScriptDialog = new System.Windows.Forms.OpenFileDialog();
             this.mainTabControl.SuspendLayout();
             this.installTab.SuspendLayout();
@@ -103,6 +103,16 @@
             this.installTab.TabIndex = 3;
             this.installTab.Text = "Install Sitecore";
             this.installTab.UseVisualStyleBackColor = true;
+            // 
+            // runExternalButton
+            // 
+            this.runExternalButton.Location = new System.Drawing.Point(16, 331);
+            this.runExternalButton.Name = "runExternalButton";
+            this.runExternalButton.Size = new System.Drawing.Size(164, 23);
+            this.runExternalButton.TabIndex = 4;
+            this.runExternalButton.Text = "Run External Script";
+            this.runExternalButton.UseVisualStyleBackColor = true;
+            this.runExternalButton.Click += new System.EventHandler(this.runExternalButton_Click);
             // 
             // runButton
             // 
@@ -392,16 +402,6 @@
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
-            // runExternalButton
-            // 
-            this.runExternalButton.Location = new System.Drawing.Point(16, 331);
-            this.runExternalButton.Name = "runExternalButton";
-            this.runExternalButton.Size = new System.Drawing.Size(164, 23);
-            this.runExternalButton.TabIndex = 4;
-            this.runExternalButton.Text = "Run External Script";
-            this.runExternalButton.UseVisualStyleBackColor = true;
-            this.runExternalButton.Click += new System.EventHandler(this.runExternalButton_Click);
-            // 
             // selectExternalScriptDialog
             // 
             this.selectExternalScriptDialog.Filter = "PS1 Files|*.ps1";
@@ -419,6 +419,7 @@
             this.Name = "MainForm";
             this.Text = "SIF-less";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.mainTabControl.ResumeLayout(false);
             this.installTab.ResumeLayout(false);
             this.installTab.PerformLayout();
