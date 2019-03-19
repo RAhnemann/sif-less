@@ -49,7 +49,7 @@
     }
     Install-SitecoreConfiguration @sitecoreParams
     
-     Write-Host "Setting XM0 Role to Standalone"
+     Write-Information "Setting XM0 Role to Standalone"
      $webConfigPath = "$SiteFolder\web.config"
      ((Get-Content -path $webConfigPath -Raw) -replace '<add key="role:define" value="ContentManagement" />','<add key="role:define" value="Standalone" />') | Set-Content -Path $webConfigPath
       ]]>
@@ -329,7 +329,7 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
         <![CDATA[
           
         if(-not (Get-command npm)){
-          Write-Host "NPM not detected"
+          Write-Error "NPM not detected"
           Return
         }
         
@@ -404,7 +404,7 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   }
   Install-SitecoreConfiguration @sitecoreParams
     
-  Write-Host "Enabling SSL on Site"
+  Write-Information "Enabling SSL on Site"
   Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteName -Port 443 -ClientCertLocation LocalMachine -OutputDirectory "C:\certificates" -RootDnsName "DO_NOT_TRUST_SitecoreRootCert" -RootCertName "root-authority"
   Remove-WebBinding -Port 80 -HostHeader $SitecoreSiteName
         ]]>
@@ -544,7 +544,7 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
         <![CDATA[
         
         if(-not (Get-command npm)){
-          Write-Host "NPM not detected"
+          Write-Information "NPM not detected"
           Return
         }
         
@@ -620,16 +620,16 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   Install-SitecoreConfiguration @sitecoreParams
   
   
-  Write-Host "Enabling SSL on Site"
+  Write-Information "Enabling SSL on Site"
   Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteName -Port 443 -ClientCertLocation LocalMachine -OutputDirectory "C:\certificates" -RootDnsName "DO_NOT_TRUST_SitecoreRootCert" -RootCertName "root-authority"
 
   
-  Write-Host "Installing Node Packages"
+  Write-Information "Installing Node Packages"
  
   $npmProcess = Start-Process "npm" -ArgumentList "install" -WorkingDirectory $HabitatRootPath -PassThru
   $npmProcess.WaitForExit()
 
-  Write-Host "Copying User file for gulp"
+  Write-Information "Copying User file for gulp"
   (Get-Content "$HabitatRootPath\gulp-config.js").replace('habitat.dev.local', "$SiteName") | Set-Content "$HabitatRootPath\gulp-config.js.user"
 
   #Update a couple hard-coded values
@@ -651,11 +651,11 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   Unblock-File -Path "$HabitatRootPath\scripts\Unicorn\MicroCHAP.dll"
 
   
-  Write-Host "Starting Gulp. Get a beverage."
+  Write-Information "Starting Gulp. Get a beverage."
   $gulpProcess = Start-Process "gulp" -WorkingDirectory $HabitatRootPath -PassThru
   $gulpProcess.WaitForExit()
  
-  Write-Host "Gulp is done..finally"
+  Write-Information "Gulp is done..finally"
         ]]>
       </ScriptMap>
       <ScriptMap location="UNINSTALL">
