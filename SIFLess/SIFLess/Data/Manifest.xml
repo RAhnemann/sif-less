@@ -1,8 +1,8 @@
 ﻿<Manifest>
-  <Item name="Sitecore 9.0 Initial Release" fileName="Data\Sitecore 9.0.0.xml" hash="520aaab5739c192f8ccce091b42bde14" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.0.0.xml" />
-  <Item name="Sitecore 9.0 Update 1" fileName="Data\Sitecore 9.0.1.xml" hash="d94dc00503cd40fd4f88a19fd472cd57" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.0.1.xml" />
+  <Item name="Sitecore 9.0 Initial Release" fileName="Data\Sitecore 9.0.0.xml" hash="9815eb69c3e26eb322968a63ba01d6be" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.0.0.xml" />
+  <Item name="Sitecore 9.0 Update 1" fileName="Data\Sitecore 9.0.1.xml" hash="46a1386608094a783158dbd13acf37e2" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.0.1.xml" />
   <Item name="Sitecore 9.0 Update 2" fileName="Data\Sitecore 9.0.2.xml" hash="2f50466eb9d37401a071e8dd12d8a4eb" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.0.2.xml" />
-  <Item name="Sitecore 9.1 Initial Release" fileName="Data\Sitecore 9.1.0.xml" hash="b7992c0e7106afff902df15d88a1c6ed" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.1.0.xml" />
-  <Item name="Sitecore 9.0 Wrapper" fileName="PSTemplates\Sitecore9.ps1" hash="1a72dc37aded82b780e47509252745ce" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore9.ps1" />
-  <Item name="Sitecore 9.1 Wrapper" fileName="PSTemplates\Sitecore91.ps1" hash="db80b68d365db8c8a01bce85e5c56c1d" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore91.ps1"/>
+  <Item name="Sitecore 9.1 Initial Release" fileName="Data\Sitecore 9.1.0.xml" hash="61ad93d8609e0275496edce8fe9af4e3" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/Data/Sitecore%209.1.0.xml" />
+  <Item name="Sitecore 9.0 Wrapper" fileName="PSTemplates\Sitecore9.ps1" hash="63c3eff40a34f2665abaaf774ab7bcb7" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore9.ps1" />
+  <Item name="Sitecore 9.1 Wrapper" fileName="PSTemplates\Sitecore91.ps1" hash="8caa4a8b093574e6ff27e199935a4080" url="https://gitcdn.xyz/repo/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore91.ps1"/>
 </Manifest>
