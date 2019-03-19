@@ -17,7 +17,7 @@
   $LicenseFilePath = '[LICENSE_FILE]'
   $SiteName = '[SITENAME]'
   $SiteFolder = "C:\inetpub\wwwroot\$SiteName" 
-  $SecurePassword = 'Sitecor3SecureP4ssword!'
+  $SecurePassword = 'Sitecor3SecureP4ssword!' #test cache clear
       ]]>
       </ScriptMap>
       <ScriptMap location="INSTALL">
