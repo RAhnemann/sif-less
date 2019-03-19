@@ -2,6 +2,21 @@
 
 SIF-less 2 is a UI Wrapper for Sitecore Installation Framework (SIF).  It's not called "SIF-non", as it still requires SIF to operate.  For those who don't want to mess with parameters and the command line, this is for you.
 
+## Version 2.2.0 ##
+
+* SIF-less now has a way to run the generated PS1 files for you, rather than having to launch PowerShell and running it manually.  A couple neat features here:
+	* The SIFless-EZ file is still written to disk, so you're able to run it by hand if you want to. Yay for legacy!
+	* The UI that launches determines runtime switches of the PS1.  It uses some fancy technology called 'Regular Expressions' to sniff these out. See also: Satan.  Simply check the box to pass the parameter into the file.
+	* Output is timestamped when written to the UI textboxes
+	* Output is segmented by level. There are different tabs for each type: Error, Verbose, Information, and Warning.  There's also a 'All' window.
+	* Progress bars and status bars work to let you know how things are progressing.  I guess that's why they're called 'Progress Bars'
+	* EXPERIMENTAL: You can run external SIF-EZ script files through this feature.  Click on the 'Run External Script' button to launch a file browser. Use at your own risk though.  
+* SIF-less now allows for the automatic downloading of SIF-less configuration files.  You can check the validity of your files by clicking the 'Update' Menu. This window essentially downloads a manifest file, checks some hashes and lets you know what needs to change.
+	* You're gonna need an internet connection to do this.  Also access to GitHub.
+	* You can disable this feature at startup by clicking the 'Settings' Menu and unchecking the box.  This should persist across sessions.
+	* By default this feature is enabled.
+	* This is going to make getting updated configs (Future Sitecore releases) super easy, and require no application downloads.  Yay!
+
 ## Version 2.1.2 ##
 
 * Saving your SIFless-EZ file will now try to make you save it as '.ps1' because well... that's who he is.

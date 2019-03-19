@@ -49,7 +49,7 @@
     }
     Install-SitecoreConfiguration @sitecoreParams
     
-     Write-Host "Setting XM0 Role to Standalone"
+     Write-Information "Setting XM0 Role to Standalone"
      $webConfigPath = "$SiteFolder\web.config"
      ((Get-Content -path $webConfigPath -Raw) -replace '<add key="role:define" value="ContentManagement" />','<add key="role:define" value="Standalone" />') | Set-Content -Path $webConfigPath
       ]]>
@@ -398,7 +398,7 @@ $SecurePassword = 'Sitecor3SecureP4ssword!'
   }
   Install-SitecoreConfiguration @sitecoreParams
     
-  Write-Host "Enabling SSL on Site"
+  Write-Information "Enabling SSL on Site"
   Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteName -Port 443 -ClientCertLocation LocalMachine -OutputDirectory "C:\certificates" -RootDnsName "DO_NOT_TRUST_SitecoreRootCert" -RootCertName "root-authority"
   Remove-WebBinding -Port 80 -HostHeader $SitecoreSiteName
         ]]>
