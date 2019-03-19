@@ -88,7 +88,11 @@ namespace SIFLess.Forms
 
                 using (var webClient = new WebClient())
                 {
-                    webClient.DownloadFile(updateItem.Url, fullFilePath);
+                    //We need to replcae the unix line breaks
+                    var fileContents = webClient.DownloadString(updateItem.Url);
+                    fileContents = fileContents.Replace("\n", "\r\n");
+
+                    File.WriteAllText(fullFilePath, fileContents);
                 }
             }
 
