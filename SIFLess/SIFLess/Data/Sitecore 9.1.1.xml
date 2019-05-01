@@ -1,0 +1,659 @@
+﻿<Configurations>
+  <Configuration topology="XM0" version="9.1 Update 1" wrapper="PSTemplates\Sitecore911.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
+    <File type="data" name="Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cm.scwdp.zip" />
+    <File type="data" name="Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip" />
+    <File type="config" name="identityserver.json" />
+    <File type="config" name="createcert.json" />
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="sitecore-XM1-cm.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+        $Prefix = "[PREFIX]"
+        $SitecoreAdminPassword = "b" #neverForget
+        $SCInstallRoot = "[DATA_FOLDER]"
+        $SitecoreContentManagementSitename = "[SITENAME]"
+        $IdentityServerSiteName = "[ID_SITENAME]"
+        $LicenseFile = "[LICENSE_FILE]"
+        $SolrUrl = "[SOLR_URL]"
+        $SolrRoot = "[SOLR_ROOT]"
+        $SolrService = "[SOLR_SERVICE]"
+        $SqlServer = "[SQL_SERVER]"
+        $SqlAdminUser = "[SQL_USER]"
+        $SqlAdminPassword = "[SQL_PASSWORD]"
+        $SiteCoreContentManagementPackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cm.scwdp.zip").FullName
+        $IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip").FullName
+        $PasswordRecoveryUrl = "https://$SitecoreContentManagementSitename"
+        $SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
+        $ClientSecret = "SIF-Default"
+        $SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
+        $AllowedCorsOrigins = "https://$SitecoreContentManagementSitename"
+        
+        $SiteFolder = "C:\inetpub\wwwroot\$SitecoreContentManagementSitename"    
+        $IdentitySiteFolder = "C:\inetpub\wwwroot\$IdentityServerSiteName"  
+
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+      $certParams = @{
+          Path = "$SCInstallRoot\createcert.json"
+          CertificateName = $IdentityServerSiteName
+      }
+
+      Install-SitecoreConfiguration @certParams
+
+      $idServerParams = @{
+          Path = "$SCInstallRoot\identityserver.json"
+          Package = $IdentityServerPackage
+          SqlDbPrefix = $Prefix
+          SitecoreIdentityCert = $IdentityServerSiteName
+          LicenseFile = $LicenseFile
+          SiteName = $IdentityServerSiteName
+          SqlCorePassword = $SitecoresecurePassword
+          SqlServer = $SqlServer
+          PasswordRecoveryUrl = $PasswordRecoveryUrl
+          AllowedCorsOrigins = $AllowedCorsOrigins
+          ClientSecret = $ClientSecret
+      }
+
+
+      Install-SitecoreConfiguration @idServerParams
+
+      $solrParams = @{
+          Path = "$SCInstallRoot\sitecore-solr.json"
+          SolrUrl = $SolrUrl
+          SolrRoot = $SolrRoot
+          SolrService = $SolrService
+          CorePrefix = $Prefix
+      }
+
+      Install-SitecoreConfiguration @solrParams
+
+      $cmParams = @{
+          Path = "$SCInstallRoot\sitecore-XM1-cm.json"
+          Package = $SiteCoreContentManagementPackage
+          LicenseFile = $LicenseFile
+          SqlDbPrefix = $Prefix
+          SolrCorePrefix = $Prefix
+          SiteName = $SitecoreContentManagementSitename
+          SitecoreAdminPassword = $SitecoreAdminPassword
+          SqlServer = $SqlServer
+          SqlAdminUser = $SqlAdminUser
+          SqlAdminPassword = $SqlAdminPassword
+          SqlSecurityPassword = $SitecoresecurePassword
+          SqlCorePassword = $SitecoresecurePassword
+          SqlMasterPassword = $SitecoresecurePassword
+          SqlWebPassword = $SitecoresecurePassword
+          SqlFormsPassword = $SitecoresecurePassword
+          SolrUrl = $SolrUrl
+          SitecoreIdentityAuthority = $SitecoreIdentityAuthority
+   
+      }
+
+      Install-SitecoreConfiguration @cmParams
+      
+      Write-Information "Setting XM0 Role to Standalone"
+      $webConfigPath = "$SiteFolder\web.config"
+      ((Get-Content -path $webConfigPath -Raw) -replace '<add key="role:define" value="ContentManagement" />','<add key="role:define" value="Standalone" />') | Set-Content -Path $webConfigPath
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+  RemoveSolrCores
+  
+  RemoveDatabase("Core")
+  RemoveDatabase("ExperienceForms")
+  RemoveDatabase("Master")
+  RemoveDatabase("Web")
+
+  RemoveWebsite($SitecoreContentManagementSitename)
+  RemoveWebsite($IdentityServerSiteName)
+  
+  RemoveFolder($SiteFolder) 
+  RemoveFolder($IdentitySiteFolder)
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="VALIDATE">
+        <![CDATA[
+         #Check Solr Service Status
+    $service = Get-Service -Name $SolrService
+    
+    if($service.Status -ne "Running")
+    {
+      throw "Solr service '$SolrService' is not running. Current state is '$($service.Status)'"
+    }
+
+    #Check Solr Version
+    $solrVerClient = (New-Object System.Net.WebClient)
+    $solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") | ConvertFrom-Json
+    $solrVersion = $SolrAdminResp.lucene."solr-spec-version"
+    
+    if($solrVersion -ne "7.2.1"){
+      throw "Invalid solr version '$solrVersion'."
+    }
+    
+    #Check Solr Folder
+    if(!(Test-Path $SolrRoot))
+    {
+      throw "Solr Folder doesn't exist at '$SolrRoot'"
+    }
+
+    
+    #Check Solr Folder config sets for _default
+    $configSetPath = "$SolrRoot\server\solr\configsets\_default"
+    if(!(Test-Path $configSetPath))
+    {
+      throw "Solr Configsets Folder doesn't exist at '$configSetPath'"
+    }
+
+    #Check for our license file
+    if(!(Test-Path $LicenseFile))
+    {
+      throw "License File doesn't exist at '$LicenseFile'"
+    }
+
+    #Check Login
+    Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT GETDATE()" -ErrorAction Stop | Out-Null
+
+    #Check our SQL version
+    [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | out-null
+    $sqlServerSmo = New-Object "Microsoft.SqlServer.Management.Smo.Server" $SqlServer
+    $sqlVersion = $sqlServerSmo.Version.Major
+    $sqlBuild = $sqlServerSmo.Version.Build
+
+    #Check for 2016 or 2017
+    if($sqlVersion -ne 13 -and $sqlVersion -ne 14){
+      throw "Invalid SQL Server Version"
+    }
+
+    #if 2016, we need at least SP2 installed
+    if($sqlVersion -eq 13 -and $sqlBuild -lt 5026){
+      throw "SQL Server 2016 must have SP2 installed"
+      }
+
+      #Finally check if they can actually create DBs or not. It helps.
+      $canCreateDBs = (Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE') AS DBPerm") | Select -expand DBPerm
+      
+      if($canCreateDBs -ne "1"){
+        throw "Specified SQL user does not have DB Creation permissions"
+      }
+        ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+      <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
+    </Fields>
+  </Configuration>
+  <Configuration topology="XM1" version="9.1 Update 1" wrapper="PSTemplates\Sitecore911.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
+    <File type="data" name="Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cm.scwdp.zip" />
+    <File type="data" name="Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cd.scwdp.zip" />
+    <File type="data" name="Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip" />
+
+    <File type="config" name="identityserver.json" />
+    <File type="config" name="createcert.json" />
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="sitecore-XM1-cm.json" />
+    <File type="config" name="sitecore-XM1-cd.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+        $Prefix = "[PREFIX]"
+        $SitecoreAdminPassword = "b" #neverForget
+        $SCInstallRoot = "[DATA_FOLDER]"
+        $SitecoreContentManagementSitename = "[CM_SITENAME]"
+        $SitecoreContentDeliverySitename = "[CD_SITENAME]"
+        $IdentityServerSiteName = "[ID_SITENAME]"
+        $LicenseFile = "[LICENSE_FILE]"
+        $SolrUrl = "[SOLR_URL]"
+        $SolrRoot = "[SOLR_ROOT]"
+        $SolrService = "[SOLR_SERVICE]"
+        $SqlServer = "[SQL_SERVER]"
+        $SqlAdminUser = "[SQL_USER]"
+        $SqlAdminPassword = "[SQL_PASSWORD]"
+        $SiteCoreContentManagementPackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cm.scwdp.zip").FullName
+        $SiteCoreContentDeliveryPackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cd.scwdp.zip").FullName
+        $IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip").FullName
+        $PasswordRecoveryUrl = "https://$SitecoreContentManagementSitename"
+        $SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
+        $ClientSecret = "SIF-Default"
+        $SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
+        $AllowedCorsOrigins = "https://$SitecoreContentManagementSitename"
+        
+        $SiteFolder = "C:\inetpub\wwwroot\$SitecoreContentManagementSitename"    
+        $SiteFolderCD = "C:\inetpub\wwwroot\$SitecoreContentDeliverySitename"    
+        $IdentitySiteFolder = "C:\inetpub\wwwroot\$IdentityServerSiteName"  
+
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+      $certParams = @{
+          Path = "$SCInstallRoot\createcert.json"
+          CertificateName = $IdentityServerSiteName
+      }
+
+      Install-SitecoreConfiguration @certParams
+
+      $idServerParams = @{
+          Path = "$SCInstallRoot\identityserver.json"
+          Package = $IdentityServerPackage
+          SqlDbPrefix = $Prefix
+          SitecoreIdentityCert = $IdentityServerSiteName
+          LicenseFile = $LicenseFile
+          SiteName = $IdentityServerSiteName
+          SqlCorePassword = $SitecoresecurePassword
+          SqlServer = $SqlServer
+          PasswordRecoveryUrl = $PasswordRecoveryUrl
+          AllowedCorsOrigins = $AllowedCorsOrigins
+          ClientSecret = $ClientSecret
+      }
+
+
+      Install-SitecoreConfiguration @idServerParams
+
+      $solrParams = @{
+          Path = "$SCInstallRoot\sitecore-solr.json"
+          SolrUrl = $SolrUrl
+          SolrRoot = $SolrRoot
+          SolrService = $SolrService
+          CorePrefix = $Prefix
+      }
+
+      Install-SitecoreConfiguration @solrParams
+
+      $cmParams = @{
+          Path = "$SCInstallRoot\sitecore-XM1-cm.json"
+          Package = $SiteCoreContentManagementPackage
+          LicenseFile = $LicenseFile
+          SqlDbPrefix = $Prefix
+          SolrCorePrefix = $Prefix
+          SiteName = $SitecoreContentManagementSitename
+          SitecoreAdminPassword = $SitecoreAdminPassword
+          SqlServer = $SqlServer
+          SqlAdminUser = $SqlAdminUser
+          SqlAdminPassword = $SqlAdminPassword
+          SqlSecurityPassword = $SitecoresecurePassword
+          SqlCorePassword = $SitecoresecurePassword
+          SqlMasterPassword = $SitecoresecurePassword
+          SqlWebPassword = $SitecoresecurePassword
+          SqlFormsPassword = $SitecoresecurePassword
+          SolrUrl = $SolrUrl
+          SitecoreIdentityAuthority = $SitecoreIdentityAuthority
+   
+      }
+
+      Install-SitecoreConfiguration @cmParams
+      
+       $cdParams = @{
+          Path = "$SCInstallRoot\sitecore-XM1-cd.json"
+          Package = $SiteCoreContentDeliveryPackage
+          LicenseFile = $LicenseFile
+          SqlDbPrefix = $Prefix
+          SolrCorePrefix = $Prefix
+          SiteName = $SitecoreContentDeliverySitename
+          SqlServer = $SqlServer
+          SqlSecurityPassword = $SitecoresecurePassword
+          SqlWebPassword = $SitecoresecurePassword
+          SqlFormsPassword = $SitecoresecurePassword
+          SolrUrl = $SolrUrl
+          SitecoreIdentityAuthority = $SitecoreIdentityAuthority
+   
+      }
+
+      Install-SitecoreConfiguration @cdParams
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+  RemoveSolrCores
+  
+  RemoveDatabase("Core")
+  RemoveDatabase("ExperienceForms")
+  RemoveDatabase("Master")
+  RemoveDatabase("Web")
+
+  RemoveWebsite($SitecoreContentManagementSitename)
+  RemoveWebsite($SitecoreContentDeliverySitename)
+  RemoveWebsite($IdentityServerSiteName)
+  
+  RemoveFolder($SiteFolder) 
+  RemoveFolder($SiteFolderCD)
+  RemoveFolder($IdentitySiteFolder)
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="VALIDATE">
+        <![CDATA[
+         #Check Solr Service Status
+    $service = Get-Service -Name $SolrService
+    
+    if($service.Status -ne "Running")
+    {
+      throw "Solr service '$SolrService' is not running. Current state is '$($service.Status)'"
+    }
+
+    #Check Solr Version
+    $solrVerClient = (New-Object System.Net.WebClient)
+    $solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") | ConvertFrom-Json
+    $solrVersion = $SolrAdminResp.lucene."solr-spec-version"
+    
+    if($solrVersion -ne "7.2.1"){
+      throw "Invalid solr version '$solrVersion'."
+    }
+    
+    #Check Solr Folder
+    if(!(Test-Path $SolrRoot))
+    {
+      throw "Solr Folder doesn't exist at '$SolrRoot'"
+    }
+
+    
+    #Check Solr Folder config sets for _default
+    $configSetPath = "$SolrRoot\server\solr\configsets\_default"
+    if(!(Test-Path $configSetPath))
+    {
+      throw "Solr Configsets Folder doesn't exist at '$configSetPath'"
+    }
+
+    #Check for our license file
+    if(!(Test-Path $LicenseFile))
+    {
+      throw "License File doesn't exist at '$LicenseFile'"
+    }
+
+    #Check Login
+    Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT GETDATE()" -ErrorAction Stop | Out-Null
+
+    #Check our SQL version
+    [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | out-null
+    $sqlServerSmo = New-Object "Microsoft.SqlServer.Management.Smo.Server" $SqlServer
+    $sqlVersion = $sqlServerSmo.Version.Major
+    $sqlBuild = $sqlServerSmo.Version.Build
+
+    #Check for 2016 or 2017
+    if($sqlVersion -ne 13 -and $sqlVersion -ne 14){
+      throw "Invalid SQL Server Version"
+    }
+
+    #if 2016, we need at least SP2 installed
+    if($sqlVersion -eq 13 -and $sqlBuild -lt 5026){
+      throw "SQL Server 2016 must have SP2 installed"
+      }
+
+      #Finally check if they can actually create DBs or not. It helps.
+      $canCreateDBs = (Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE') AS DBPerm") | Select -expand DBPerm
+      
+      if($canCreateDBs -ne "1"){
+        throw "Specified SQL user does not have DB Creation permissions"
+      }
+        ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="cm_sitename" type="text" map="CM_SITENAME" label="CM Site Name" description="The Name of the Content Authoring Website"  defaultValue="[[PREFIX]].sc-cm"/>
+      <Field name="cd_sitename" type="text" map="CD_SITENAME" label="CD Site Name" description="The Name of the Content Delivery Website"  defaultValue="[[PREFIX]].sc-cd"/>
+      <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
+    </Fields>
+  </Configuration>
+  <Configuration topology="XP0" version="9.1 Update 1" wrapper="PSTemplates\Sitecore911.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
+    <File type="data" name="Sitecore 9.1.1 rev. 002459 (OnPrem)_single.scwdp.zip" />
+    <File type="data" name="Sitecore 9.1.1 rev. 002459 (OnPrem)_xp0xconnect.scwdp.zip" />
+    <File type="data" name="Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip" />
+    <File type="config" name="createcert.json" />
+    <File type="config" name="xconnect-solr.json"/>
+    <File type="config" name="sitecore-solr.json" />
+    <File type="config" name="xconnect-xp0.json" />
+    <File type="config" name="sitecore-XP0.json" />
+    <ScriptMaps>
+      <ScriptMap location="GLOBAL">
+        <![CDATA[
+
+$Prefix = "[PREFIX]"
+$SitecoreAdminPassword = "b"
+$SCInstallRoot = "[DATA_FOLDER]"
+$XConnectSiteName = "[XCONNECT_SITE]"
+$SitecoreSiteName = "[SITENAME]"
+$IdentityServerSiteName = "[ID_SITENAME]"
+$LicenseFile = "[LICENSE_FILE]"
+$SolrUrl = '[SOLR_URL]'
+$SolrRoot = '[SOLR_ROOT]'
+$SolrService = '[SOLR_SERVICE]'
+$SqlServer = '[SQL_SERVER]'
+$SqlAdminUser = '[SQL_USER]'
+$SqlAdminPassword = '[SQL_PASSWORD]'
+$XConnectPackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.1 rev. 002459 (OnPrem)_xp0xconnect.scwdp.zip").FullName
+$SitecorePackage = (Get-ChildItem "$SCInstallRoot\Sitecore 9.1.1 rev. 002459 (OnPrem)_single.scwdp.zip").FullName
+$IdentityServerPackage = (Get-ChildItem "$SCInstallRoot\Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip").FullName
+$PasswordRecoveryUrl = "https://$SitecoreSiteName"
+$SitecoreIdentityAuthority = "https://$IdentityServerSiteName"
+$XConnectCollectionService = "https://$XConnectSiteName"
+$ClientSecret = "SIF-Default"
+$AllowedCorsOrigins = "https://$SitecoreSiteName"
+$SitecoreSecurePassword = 'Sitecor3SecureP4ssword!'
+
+$SiteFolder = "C:\inetpub\wwwroot\$SitecoreSiteName"      
+$xConnectSiteFolder = "C:\inetpub\wwwroot\$XConnectSiteName"    
+$IdSiteFolder = "C:\inetpub\wwwroot\$IdentityServerSiteName"      
+      ]]>
+      </ScriptMap>
+      <ScriptMap location="INSTALL">
+        <![CDATA[
+  
+$idCertParams = @{
+    Path = "$SCInstallRoot\createcert.json"
+    CertificateName = $IdentityServerSiteName
+}
+
+Install-SitecoreConfiguration @idCertParams
+
+$idServerParams = @{
+    Path = "$SCInstallRoot\identityserver.json"
+    Package = $IdentityServerPackage
+    SqlDbPrefix = $Prefix
+    SitecoreIdentityCert = $IdentityServerSiteName
+    LicenseFile = $LicenseFile
+    SiteName = $IdentityServerSiteName
+    SqlCorePassword = $SitecoresecurePassword
+    SqlServer = $SqlServer
+    PasswordRecoveryUrl = $PasswordRecoveryUrl
+    AllowedCorsOrigins = $AllowedCorsOrigins
+    ClientSecret = $ClientSecret
+}
+
+Install-SitecoreConfiguration @idServerParams
+
+
+$xcCertParams = @{
+    Path = "$SCInstallRoot\createcert.json"
+    CertificateName = $XConnectSiteName
+}
+
+Install-SitecoreConfiguration @xcCertParams
+
+$xcSolrParams = @{
+    Path = "$SCInstallRoot\xconnect-solr.json"
+    SolrUrl = $SolrUrl
+    SolrRoot = $SolrRoot
+    SolrService = $SolrService
+    CorePrefix = $Prefix
+}
+
+Install-SitecoreConfiguration @xcSolrParams
+
+$xcSiteParams = @{
+    Path = "$SCInstallRoot\xconnect-xp0.json"
+    Package = $XConnectPackage
+    SiteName = $XConnectSiteName
+    SqlServer = $SqlServer
+    SolrUrl = $SolrUrl
+    SqlDbPrefix = $Prefix
+    SolrCorePrefix = $Prefix
+    XConnectCert = $XConnectSiteName
+    LicenseFile = $LicenseFile
+    SqlAdminUser = $SqlAdminUser
+    SqlAdminPassword = $SqlAdminPassword
+    SqlProcessingPoolsPassword = $SitecoreSecurePassword
+    SqlReferenceDataPassword = $SitecoreSecurePassword
+    SqlMarketingAutomationPassword = $SitecoreSecurePassword
+    SqlMessagingPassword = $SitecoreSecurePassword
+    SqlProcessingEnginePassword = $SitecoreSecurePassword
+    SqlReportingPassword = $SitecoreSecurePassword
+}
+
+Install-SitecoreConfiguration @xcSiteParams
+
+$scSolrParams = @{
+    Path = "$SCInstallRoot\sitecore-solr.json"
+    SolrUrl = $SolrUrl
+    SolrRoot = $SolrRoot
+    SolrService = $SolrService
+    CorePrefix = $Prefix
+}
+
+Install-SitecoreConfiguration @scSolrParams
+
+$scSiteParams = @{
+    Path = "$SCInstallRoot\sitecore-xp0.json"
+    Package = $SitecorePackage
+    SiteName = $SitecoreSiteName
+    SitecoreIdentityAuthority = $SitecoreIdentityAuthority
+    XConnectCollectionService = $XConnectCollectionService
+    SqlServer = $SqlServer
+    SqlAdminUser = $SqlAdminUser
+    SqlAdminPassword = $SqlAdminPassword
+    SolrUrl = $SolrUrl
+    SqlDbPrefix = $Prefix
+    SolrCorePrefix = $Prefix
+    XConnectCert = $XConnectSiteName
+    LicenseFile = $LicenseFile
+    SitecoreAdminPassword = $SitecoreAdminPassword
+    SqlCorePassword = $SitecoreSecurePassword
+    SqlSecurityPassword = $SitecoreSecurePassword
+    SqlMasterPassword = $SitecoreSecurePassword
+    SqlWebPassword = $SitecoreSecurePassword
+    SqlReportingPassword = $SitecoreSecurePassword
+    SqlProcessingPoolsPassword = $SitecoreSecurePassword
+    SqlProcessingTasksPassword = $SitecoreSecurePassword
+    SqlReferenceDataPassword = $SitecoreSecurePassword
+    SqlMarketingAutomationPassword = $SitecoreSecurePassword
+    SqlFormsPassword = $SitecoreSecurePassword
+    SqlExmMasterPassword = $SitecoreSecurePassword
+    SqlMessagingPassword = $SitecoreSecurePassword
+}
+
+ Install-SitecoreConfiguration @scSiteParams
+
+Write-Information "Enabling SSL on Site"
+Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteName -Port 443 -ClientCertLocation LocalMachine -OutputDirectory "C:\certificates" -RootDnsName "DO_NOT_TRUST_SitecoreRootCert" -RootCertName "root-authority"
+  Remove-WebBinding -Port 80 -HostHeader $SitecoreSiteName        
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="UNINSTALL">
+        <![CDATA[
+     
+  RemoveService("$xConnectSiteName-MarketingAutomationService")
+  RemoveService("$xConnectSiteName-IndexWorker")
+  
+  RemoveSolrCores
+  
+  RemoveDatabase("Core")
+  RemoveDatabase("EXM.Master")
+  RemoveDatabase("ExperienceForms")
+  RemoveDatabase("MarketingAutomation")
+  RemoveDatabase("Master")
+  RemoveDatabase("Messaging")
+  RemoveDatabase("Processing.Pools")
+  RemoveDatabase("Processing.Tasks")
+  RemoveDatabase("ProcessingEngineStorage")
+  RemoveDatabase("ProcessingEngineTasks")
+  RemoveDatabase("ReferenceData")
+  RemoveDatabase("Reporting")
+  RemoveDatabase("Web")
+  RemoveDatabase("Xdb.Collection.Shard0")
+  RemoveDatabase("Xdb.Collection.Shard1")
+  RemoveDatabase("Xdb.Collection.ShardMapManager")
+  
+  RemoveWebsite($IdentityServerSiteName)
+  RemoveWebsite($xConnectSiteName)
+  RemoveWebsite($SitecoreSiteName)   
+  
+  RemoveFolder($SiteFolder)
+  RemoveFolder($xConnectSiteFolder)   
+  RemoveFolder($IdSiteFolder)   
+        ]]>
+      </ScriptMap>
+      <ScriptMap location="VALIDATE">
+        <![CDATA[
+         #Check Solr Service Status
+    $service = Get-Service -Name $SolrService
+    
+    if($service.Status -ne "Running")
+    {
+      throw "Solr service '$SolrService' is not running. Current state is '$($service.Status)'"
+    }
+
+    #Check Solr Version
+    $solrVerClient = (New-Object System.Net.WebClient)
+    $solrAdminResp = $solrVerClient.DownloadString("$SolrUrl/admin/info/system") | ConvertFrom-Json
+    $solrVersion = $SolrAdminResp.lucene."solr-spec-version"
+    
+    if($solrVersion -ne "7.2.1"){
+      throw "Invalid solr version '$solrVersion'."
+    }
+    
+    #Check Solr Folder
+    if(!(Test-Path $SolrRoot))
+    {
+      throw "Solr Folder doesn't exist at '$SolrRoot'"
+    }
+
+    
+    #Check Solr Folder config sets for _default
+    $configSetPath = "$SolrRoot\server\solr\configsets\_default"
+    if(!(Test-Path $configSetPath))
+    {
+      throw "Solr Configsets Folder doesn't exist at '$configSetPath'"
+    }
+
+    #Check for our license file
+    if(!(Test-Path $LicenseFile))
+    {
+      throw "License File doesn't exist at '$LicenseFile'"
+    }
+
+    #Check Login
+    Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT GETDATE()" -ErrorAction Stop | Out-Null
+
+    #Check our SQL version
+    [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | out-null
+    $sqlServerSmo = New-Object "Microsoft.SqlServer.Management.Smo.Server" $SqlServer
+    $sqlVersion = $sqlServerSmo.Version.Major
+    $sqlBuild = $sqlServerSmo.Version.Build
+
+    #Check for 2016 or 2017
+    if($sqlVersion -ne 13 -and $sqlVersion -ne 14){
+      throw "Invalid SQL Server Version"
+    }
+
+    #if 2016, we need at least SP2 installed
+    if($sqlVersion -eq 13 -and $sqlBuild -lt 5026){
+      throw "SQL Server 2016 must have SP2 installed"
+      }
+
+      #Finally check if they can actually create DBs or not. It helps.
+      $canCreateDBs = (Invoke-SQLCmd -ServerInstance $SqlServer -U $SqlAdminUser -P $SqlAdminPassword -Query "SELECT has_perms_by_name(null, null, 'CREATE ANY DATABASE') AS DBPerm") | Select -expand DBPerm
+      
+      if($canCreateDBs -ne "1"){
+        throw "Specified SQL user does not have DB Creation permissions"
+      }
+        ]]>
+      </ScriptMap>
+    </ScriptMaps>
+    <Fields>
+      <Field name="xconnectsitename" type="text" map="XCONNECT_SITE" label="X Connect Site Name" description="The Name of the xConnect Website"  defaultValue="[[PREFIX]].xconnect"/>
+      <Field name="sitename" type="text" map="SITENAME" label="Site Name" description="The Name of the Website"  defaultValue="[[PREFIX]].sc"/>
+      <Field name="idsitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Indentity Website"  defaultValue="[[PREFIX]].identityserver"/>
+    </Fields>
+  </Configuration>
+</Configurations>
