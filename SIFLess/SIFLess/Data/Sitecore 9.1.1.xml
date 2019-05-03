@@ -1,4 +1,12 @@
 ﻿<Configurations>
+  <Notes>
+    <Note date="5/2/2019">
+      <![CDATA[Initial Release]]>
+    </Note>
+    <Note date="5/3/2019">
+      <![CDATA[Fixed an issue where one of the xConnect Services wasn't getting uninstalled]]>
+    </Note>
+  </Notes>
   <Configuration topology="XM0" version="9.1 Update 1" wrapper="PSTemplates\Sitecore911.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore 9.1.1 rev. 002459 (XM) (OnPrem)_cm.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 2.0.1 rev. 00166 (OnPrem)_identityserver.scwdp.zip" />
@@ -553,6 +561,7 @@ Invoke-AddWebFeatureSSLTask -Hostname $SitecoreSiteName -SiteName $SitecoreSiteN
         <![CDATA[
      
   RemoveService("$xConnectSiteName-MarketingAutomationService")
+  RemoveService("$xConnectSiteName-ProcessingEngineService")
   RemoveService("$xConnectSiteName-IndexWorker")
   
   RemoveSolrCores
