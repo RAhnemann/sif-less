@@ -196,3 +196,4 @@ ModelManifest.xml
 !.nuget/**
 /SIFLess/.vs/SIFLess/v15/sqlite3/storage.ide
 /SIFLess/.vs/SIFLess/v15/Server/sqlite3
+/SIFLess/.vs/SIFLess/v16/Server/sqlite3
