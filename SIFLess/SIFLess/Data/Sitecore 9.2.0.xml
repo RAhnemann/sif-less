@@ -7,7 +7,7 @@
       <![CDATA[Fixed an issue where one of the xConnect Services wasn't getting uninstalled]]>
     </Note>
   </Notes>
-  <Configuration topology="XM0" version="9.2" wrapper="PSTemplates\Sitecore92.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
+  <Configuration topology="XM0" version="9.2 Initial Release" wrapper="PSTemplates\Sitecore92.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore 9.2 rev. 002893 (XM) (OnPrem)_cm.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 3.0.0 rev. 00211 (OnPrem)_identityserver.scwdp.zip" />
     <File type="config" name="identityserver.json" />
@@ -194,7 +194,7 @@
       <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
     </Fields>
   </Configuration>
-  <Configuration topology="XM1" version="9.2" wrapper="PSTemplates\Sitecore92.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
+  <Configuration topology="XM1" version="9.2 Initial Release" wrapper="PSTemplates\Sitecore92.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore 9.2 rev. 002893 (XM) (OnPrem)_cm.scwdp.zip" />
     <File type="data" name="Sitecore 9.2 rev. 002893 (XM) (OnPrem)_cd.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 3.0.0 rev. 00211 (OnPrem)_identityserver.scwdp.zip" />
@@ -404,7 +404,7 @@
       <Field name="id_sitename" type="text" map="ID_SITENAME" label="Identity Site Name" description="The Name of the Identify Server Website"  defaultValue="[[PREFIX]].identityserver"/>
     </Fields>
   </Configuration>
-  <Configuration topology="XP0" version="9.2" wrapper="PSTemplates\Sitecore92.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
+  <Configuration topology="XP0" version="9.2 Initial Release" wrapper="PSTemplates\Sitecore92.ps1" scriptmaps="GLOBAL|INSTALL|UNINSTALL|VALIDATE">
     <File type="data" name="Sitecore 9.2.0 rev. 002893 (OnPrem)_single.scwdp.zip" />
     <File type="data" name="Sitecore 9.2.0 rev. 002893 (OnPrem)_xp0xconnect.scwdp.zip" />
     <File type="data" name="Sitecore.IdentityServer 3.0.0 rev. 00211 (OnPrem)_identityserver.scwdp.zip" />
