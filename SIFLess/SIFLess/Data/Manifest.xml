@@ -7,4 +7,5 @@
   <Item name="Sitecore 9.0 Wrapper" fileName="PSTemplates\Sitecore9.ps1" hash="63c3eff40a34f2665abaaf774ab7bcb7" url="https://raw.githubusercontent.com/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore9.ps1" />
   <Item name="Sitecore 9.1 Wrapper" fileName="PSTemplates\Sitecore91.ps1" hash="8caa4a8b093574e6ff27e199935a4080" url="https://raw.githubusercontent.com/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore91.ps1"/>
   <Item name="Sitecore 9.1.1 Wrapper" fileName="PSTemplates\Sitecore911.ps1" hash="8b5ed2b150e8e2bf6a43a9751cac011b" url="https://raw.githubusercontent.com/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore911.ps1"/>
+  <Item name="Sitecore 9.2 Wrapper" fileName="PSTemplates\Sitecore92.ps1" hash="8b5ed2b150e8e2bf6a43a9751cac011b" url="https://raw.githubusercontent.com/RAhnemann/sif-less/master/SIFLess/SIFLess/PSTemplates/Sitecore92.ps1"/>
 </Manifest>
